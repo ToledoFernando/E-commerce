@@ -1,8 +1,10 @@
-import { LOGIN, LOGOUT, REGISTER, TOKENVALIDATE, UPLOADPRODUCT } from './action'
+import { LOGIN, LOGOUT, REGISTER, TOKENVALIDATE, UPLOADPRODUCT, GETPRODUCTSLIST, UPDATEPRODUCT } from './action'
 
 const initialState = {
   myAcount: {},
-  isLogin: false
+  isLogin: false,
+  products: [],
+  productDetail: {}
 }
 
 export default function rootReducer(state = initialState, action) {
@@ -22,6 +24,7 @@ export default function rootReducer(state = initialState, action) {
         isLogin: false
       }
     case LOGIN:
+      localStorage.clear();
       localStorage.setItem('tokenUser', action.payload.tokenUser)
       localStorage.setItem('rol', action.payload.usuario.rol)
       return {
@@ -37,6 +40,15 @@ export default function rootReducer(state = initialState, action) {
         isLogin: true
       }
     case UPLOADPRODUCT:
+      return {
+        ...state
+      }
+    case GETPRODUCTSLIST:
+      return {
+        ...state,
+        products: action.payload
+      }
+    case UPDATEPRODUCT:
       return {
         ...state
       }

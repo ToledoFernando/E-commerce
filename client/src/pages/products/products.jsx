@@ -1,9 +1,9 @@
-import { getProducts } from "../../../store/action";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
+import { getProducts } from "../../store/action";
 import { Link } from "react-router-dom";
 
-function ProductsList() {
+function Products() {
   const dispatch = useDispatch();
   const productos = useSelector((state) => state.products);
 
@@ -13,13 +13,12 @@ function ProductsList() {
 
   return (
     <div>
-      <h1>Product List</h1>
       {!productos.length ? (
-        <p>Cargando....</p>
+        <h1>Cargando</h1>
       ) : (
         productos.map((producto) => {
           return (
-            <div key={producto._id} id={producto._id}>
+            <div key={producto._id}>
               <img
                 src={producto.productIMG}
                 id={producto.imgid}
@@ -38,7 +37,7 @@ function ProductsList() {
                 ))}
               </ul>
               <button>
-                <Link to={`edit/${producto._id}`}>Editar</Link>
+                <Link to={`detailP/${producto._id}`}>Ver Detalle</Link>
               </button>
             </div>
           );
@@ -48,4 +47,4 @@ function ProductsList() {
   );
 }
 
-export default ProductsList;
+export default Products;

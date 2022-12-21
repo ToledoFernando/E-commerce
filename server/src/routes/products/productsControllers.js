@@ -10,6 +10,16 @@ const getProducts = async (req, res) => {
   }
 }
 
+const getProductDetail = async (req, res) => {
+  try {
+    const result = await Products.findOne({ '_id': req.params.id })
+    console.log(result)
+    res.json(result)
+  } catch (error) {
+    res.tstaus(400).json({ Error: error.message })
+  }
+}
+
 const postProduct = async (req, res) => {
   try {
     const userData = req.user;
@@ -26,9 +36,11 @@ const postProduct = async (req, res) => {
 const updateProducts = async (req, res) => {
   try {
     const userData = req.user;
+    console.log(req.body)
     const user = await User.findOne({ email: userData.email });
     if (!user.rol.includes('SuperAdmin')) throw Error('Rol no suficiente');
     const productUpdate = await Products.updateOne({ "_id": req.body.id }, req.body);
+    console.log(productUpdate)
     res.send(productUpdate);
   } catch (error) {
     res.status(400).json({ Error: error.message });
@@ -38,7 +50,6 @@ const updateProducts = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
-
     const userData = req.user;
     const user = await User.findOne({ email: userData.email });
     if (!user.rol.includes('SuperAdmin')) throw Error('Rol no suficiente');
@@ -50,4 +61,4 @@ const deleteProduct = async (req, res) => {
   }
 }
 
-module.exports = { getProducts, postProduct, updateProducts, deleteProduct }
+module.exports = { getProducts, getProductDetail, postProduct, updateProducts, deleteProduct }

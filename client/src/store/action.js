@@ -5,6 +5,8 @@ export const LOGOUT = "LOGOUT";
 export const REGISTER = "REGISTER";
 export const TOKENVALIDATE = "TOKENVALIDATE";
 export const UPLOADPRODUCT = "UPLOADPRODUCT";
+export const GETPRODUCTSLIST = "GETPRODUCTSLIST";
+export const UPDATEPRODUCT = "UPDATEPRODUCT";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -70,7 +72,8 @@ export const validarToken = (token) => {
 
 export const uploadProduct = (newProduct, token, img) => {
   return async (dispatch) => {
-    newProduct.productIMG = img;
+    newProduct.productIMG = img.url;
+    newProduct.imgid = img.id;
     const result = await axios.post(`${api}/products/newProduct`, newProduct, {
       headers: { authorization: `Bearer ${token}` },
     });
@@ -78,5 +81,36 @@ export const uploadProduct = (newProduct, token, img) => {
     return dispatch({
       type: UPLOADPRODUCT
     })
+  }
+}
+
+export const getProducts = () => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.get(`${api}/products/`)
+      return dispatch({
+        type: GETPRODUCTSLIST,
+        payload: result.data
+      })
+    } catch (error) {
+      console.log('Error')
+      console.log(error)
+    }
+  }
+}
+
+export const updateProduct = (data, token) => {
+  return async (dispatch) => {
+    try {
+      await axios.put(`${api}/products/updateProduct`, data, {
+        headers: { authorization: `Bearer ${token}` },
+      })
+      return dispatch({
+        type: UPDATEPRODUCT,
+      })
+    } catch (error) {
+      console.log('error')
+      console.log(error)
+    }
   }
 }
