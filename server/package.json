@@ -7,7 +7,6 @@
     "node": "18.x"
   },
   "scripts": {
-    "build": "node index.js",
     "dev": "cls && nodemon index.js",
     "start": "node index.js"
   },
