@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "cls && nodemon src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/app.js"
   },
   "keywords": [],
   "author": "",
