@@ -7,7 +7,8 @@
     "node": "18.x"
   },
   "scripts": {
-    "dev": "cls && nodemon src/index.js",
+    "build": "node src/app.js",
+    "dev": "cls && nodemon src/app.js",
     "start": "node src/app.js"
   },
   "keywords": [],
