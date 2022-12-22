@@ -15,4 +15,6 @@ route.use('/getRol', rol);
 
 route.use('/admin', admin);
 
+route.get("/*", (req, res) => res.send('Not found pibe xd'))
+
 module.exports = route;
