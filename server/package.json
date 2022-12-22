@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "18.12.1"
+  },
   "scripts": {
-    "start": "cls && nodemon src/index.js"
+    "dev": "cls && nodemon src/index.js",
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
