@@ -50,6 +50,7 @@ function ListUsers() {
                 Username:<b>{cuenta.username}</b>
               </p>
               <p>Genero: {cuenta.profileIMG ? "Femenino" : "Masculino"}</p>
+              <p>Email: {cuenta.email}</p>
               <p>
                 Cuenta Verificada:{" "}
                 {cuenta.verify ? "Verificada" : "NO verificada"}

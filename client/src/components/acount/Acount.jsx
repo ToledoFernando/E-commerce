@@ -1,16 +1,26 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import iconF from "../../pages/EdithAcoutn/iconF.png";
 import iconM from "../../pages/EdithAcoutn/iconM.png";
+import { pedirVerificacion } from "../../store/action";
 
 function Acount({ data }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const solicitud = async () => {
+    const token = localStorage.getItem("tokenUser");
+    await dispatch(pedirVerificacion(token));
+    alert("Verifique su correo");
+  };
 
   return (
     <div>
       {!data.verify ? (
         <p>
-          <b>Debes verificar tu cuenta</b> <button>Varificar</button>
+          <b>Debes verificar tu cuenta</b>{" "}
+          <button onClick={solicitud}>Varificar</button>
         </p>
       ) : null}
       {data.profileIMG ? (

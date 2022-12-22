@@ -9,7 +9,10 @@ import {
   GETPRODUCTDETAIL,
   UPDATEACOUNT,
   GETUSERS,
-  SEARCHUSER
+  SEARCHUSER,
+  DELETEUSER,
+  VERIFYACOUNT,
+  PEDIRVERIFICACION
 } from './action'
 
 const initialState = {
@@ -49,6 +52,10 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state
       }
+    case DELETEUSER:
+      return {
+        ...state
+      }
     case TOKENVALIDATE:
       localStorage.setItem('rol', action.payload.rol)
       return {
@@ -62,6 +69,10 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         users: userFiltro
+      }
+    case PEDIRVERIFICACION:
+      return {
+        ...state
       }
     case UPLOADPRODUCT:
       return {
@@ -81,6 +92,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         productDetail: producto[0]
+      }
+    case VERIFYACOUNT:
+      return {
+        ...state,
+        myAcount: action.payload
       }
     case GETUSERS:
       return {

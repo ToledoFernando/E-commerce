@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllUsers, searchUser, updateAcout } from "../../../store/action";
+import {
+  deleteUser,
+  getAllUsers,
+  searchUser,
+  updateAcout,
+} from "../../../store/action";
 
 function SuperAdminUsers() {
   const cuentas = useSelector((state) => state.users);
@@ -31,6 +36,15 @@ function SuperAdminUsers() {
     return dispatch(searchUser(e.target.value));
   };
 
+  const deleteUserAcoutn = async (id, username) => {
+    if (confirm(`Seguro de eliminar la cuenta de ${username}?`)) {
+      const token = localStorage.getItem("tokenUser");
+      await dispatch(deleteUser(id, token));
+      await dispatch(getAllUsers(token));
+      alert("cuenta eliminada");
+    }
+  };
+
   return (
     <div>
       <input
@@ -59,6 +73,13 @@ function SuperAdminUsers() {
               </p>
               <button onClick={() => suspender(cuenta._id, !cuenta.status)}>
                 {cuenta.status ? "Suspender Cuenta" : "Activar Cuenta"}
+              </button>
+              <button
+                onClick={() => {
+                  deleteUserAcoutn(cuenta._id, cuenta.username);
+                }}
+              >
+                Eliminar Cuenta
               </button>
             </div>
           );

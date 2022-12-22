@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Acount from "../../components/acount/Acount";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { validarToken } from "../../store/action";
+import { pedirVerificacion, validarToken } from "../../store/action";
 
 function MyAcount() {
   const usuario = useSelector((state) => state.myAcount);
@@ -13,7 +13,7 @@ function MyAcount() {
   useEffect(() => {
     const token = localStorage.getItem("tokenUser");
     dispatch(validarToken(token));
-  });
+  }, []);
 
   return (
     <div>

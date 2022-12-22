@@ -11,6 +11,9 @@ export const UPDATEACOUNT = "UPDATEACOUNT";
 export const GETPRODUCTDETAIL = "GETPRODUCTDETAIL";
 export const GETUSERS = "GETUSERS";
 export const SEARCHUSER = "SEARCHUSER";
+export const DELETEUSER = "DELETEUSER";
+export const VERIFYACOUNT = "VERIFYACOUNT";
+export const PEDIRVERIFICACION = "PEDIRVERIFICACION";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -38,6 +41,7 @@ export const register = (datas) => {
 export const login = (data) => {
   return async (dispatch) => {
     const result = await axios.post(`${api}/user/`, data)
+    if (!result.data.usuario.status) throw Error('Cuenta suspendida')
     return dispatch({
       type: LOGIN,
       payload: result.data
@@ -95,6 +99,48 @@ export const searchUser = (value) => {
       type: SEARCHUSER,
       payload: value
     })
+  }
+}
+
+export const deleteUser = (id, token) => {
+  return async (dispatch) => {
+    await axios.delete(`${api}/user/deleteUser/${id}`, {
+      headers: { authorization: `Bearer ${token}` }
+    })
+    return dispatch({
+      type: DELETEUSER
+    })
+  }
+}
+
+export const verifiAcoutnBT = (token) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.get(`${api}/user/acountVerify`, {
+        headers: { authorization: `Bearer ${token}` }
+      });
+      return dispatch({
+        type: VERIFYACOUNT,
+        payload: result.data
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const pedirVerificacion = (token) => {
+  return async (dispatch) => {
+    try {
+      await axios.post(`${api}/user/validateAcount`, 'data', {
+        headers: { authorization: `Bearer ${token}` }
+      })
+      return dispatch({
+        type: PEDIRVERIFICACION
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

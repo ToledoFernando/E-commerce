@@ -15,10 +15,15 @@ function Login() {
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    form.password = md5(form.password);
-    await dispatch(login(form));
-    navigate(-1);
+    try {
+      e.preventDefault();
+      form.password = md5(form.password);
+      await dispatch(login(form));
+      navigate(-1);
+    } catch (error) {
+      setForm(initial);
+      alert(error.message);
+    }
   };
 
   const handleChange = (e) => {
