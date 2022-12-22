@@ -1,19 +1,30 @@
 const { Router } = require('express');
-const { userLogin, newUser, deleteUser, updateUser, validarTokenUser, getAllUsers } = require('./userController');
+const { userLogin,
+  newUser,
+  deleteUser,
+  updateUser,
+  validarTokenUser,
+  getAllUsers,
+  senEmailVerifyEmail,
+  verifiAcoutn } = require('./userController');
 const verifyToken = require('../../jwt/VerifyToken');
 
 const route = Router();
 
-route.get('/validateToken', validarTokenUser)
+route.get('/validateToken', validarTokenUser);
 
-route.post("/", userLogin)
+route.post("/validateAcount", verifyToken, senEmailVerifyEmail)
 
-route.post("/createUser", newUser)
+route.get("/acountVerify", verifyToken, verifiAcoutn)
 
-route.delete("/deleteUser/:id", verifyToken, deleteUser)
+route.post("/", userLogin);
 
-route.put('/updateUser', verifyToken, updateUser)
+route.post("/createUser", newUser);
 
-route.get("/allUsers", verifyToken, getAllUsers)
+route.delete("/deleteUser/:id", verifyToken, deleteUser);
+
+route.put('/updateUser', verifyToken, updateUser);
+
+route.get("/allUsers", verifyToken, getAllUsers);
 
 module.exports = route;

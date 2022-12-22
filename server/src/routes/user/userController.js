@@ -1,19 +1,24 @@
 const jwt = require('jsonwebtoken');
 const User = require('../../models/Users')
+const sendEsendEmailVerifyAcountmail = require('../email/emailConfig')
 require('dotenv').config();
 
 const userLogin = async (req, res) => {
   try {
     const data = req.body;
-    const result = await User.findOne({ "email": data.Email, 'password': data.password }, { password: 0, status: 0, verify: 0, __v: 0 })
+    const result = await User.findOne({ "email": data.Email, 'password': data.password }, { password: 0, __v: 0 })
     if (!result) throw Error('Usuario no encontrado')
     const { first_name, last_name, email } = result;
-    await User.updateOne({ "email": data.Email, 'password': data.password }, { connection: 'true' })
     const userToken = jwt.sign({ name: first_name, lastName: last_name, email: email }, process.env.SECRET_KEY, { expiresIn: '3h' })
     res.json({ usuario: result, tokenUser: userToken })
   } catch (error) {
     res.status(400).json({ Error: error.message })
   }
+}
+
+const senEmailVerifyEmail = async (req, res) => {
+  await sendEsendEmailVerifyAcountmail(req.user)
+  res.json({ MSG: "Mensaje de prueba" })
 }
 
 const newUser = async (req, res) => {
@@ -32,7 +37,7 @@ const newUser = async (req, res) => {
       rol: result.rol,
       username: result.username,
       _id: result._id,
-      verify: result.verify
+      verify: result.verify,
     }
     res.json({ UsuarioCreado: { userData }, tokenUser: userToken })
   } catch (error) {
@@ -90,4 +95,14 @@ const getAllUsers = async (req, res) => {
   }
 }
 
-module.exports = { userLogin, newUser, deleteUser, updateUser, validarTokenUser, getAllUsers }
+const verifiAcoutn = async (req, res) => {
+  try {
+    await User.updateOne({ email: req.user.email }, { verify: true });
+    const usuario = await User.findOne({ email: req.user.email })
+    res.json(usuario)
+  } catch (error) {
+    res.status(400).json({ Error: error.message })
+  }
+}
+
+module.exports = { userLogin, newUser, deleteUser, updateUser, validarTokenUser, getAllUsers, senEmailVerifyEmail, verifiAcoutn }
