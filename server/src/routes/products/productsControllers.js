@@ -36,9 +36,8 @@ const postProduct = async (req, res) => {
 const updateProducts = async (req, res) => {
   try {
     const userData = req.user;
-    console.log(req.body)
     const user = await User.findOne({ email: userData.email });
-    if (!user.rol.includes('SuperAdmin')) throw Error('Rol no suficiente');
+    if (!user.rol.includes('SuperAdmin') && !user.rol.includes('Admin')) throw Error('Rol no suficiente');
     const productUpdate = await Products.updateOne({ "_id": req.body.id }, req.body);
     console.log(productUpdate)
     res.send(productUpdate);

@@ -18,7 +18,7 @@ function Login() {
     e.preventDefault();
     form.password = md5(form.password);
     await dispatch(login(form));
-    navigate("/about");
+    navigate(-1);
   };
 
   const handleChange = (e) => {
@@ -27,9 +27,13 @@ function Login() {
 
   useEffect(() => {
     const token = localStorage.getItem("tokenUser");
-    dispatch(validarToken(token))
-      .then(() => navigate("/about"))
-      .catch((error) => console.log(error.response.data));
+    if (token) {
+      dispatch(validarToken(token))
+        .then(() => navigate(-1))
+        .catch((error) => {
+          localStorage.clear();
+        });
+    }
   }, []);
 
   return (

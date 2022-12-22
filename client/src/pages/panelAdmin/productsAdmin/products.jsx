@@ -19,6 +19,7 @@ function Products() {
   const dispatch = useDispatch();
   const [newProduct, setNewProduct] = useState(initial);
   const [img, setImg] = useState();
+  const [imgPreviw, setImgPreview] = useState("");
 
   const handlechange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
@@ -58,7 +59,7 @@ function Products() {
         <input
           type="file"
           name="productIMG"
-          onChange={(e) => setImg(e.target.files[0])}
+          onChange={() => setImg(e.target.files[0])}
         />
         <br />
         <label>Nombre del producto</label>

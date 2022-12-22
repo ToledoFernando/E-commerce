@@ -5,7 +5,7 @@ require('dotenv').config();
 const userLogin = async (req, res) => {
   try {
     const data = req.body;
-    const result = await User.findOne({ "email": data.Email, 'password': data.password }, { password: 0, status: 0, verify: 0, connection: 0, __v: 0 })
+    const result = await User.findOne({ "email": data.Email, 'password': data.password }, { password: 0, status: 0, verify: 0, __v: 0 })
     if (!result) throw Error('Usuario no encontrado')
     const { first_name, last_name, email } = result;
     await User.updateOne({ "email": data.Email, 'password': data.password }, { connection: 'true' })
@@ -56,7 +56,7 @@ const updateUser = async (req, res) => {
     const result = await User.updateOne({ "_id": _id }, req.body)
     res.json(result)
   } catch (error) {
-    res.json({ 'Error': error.message })
+    res.status(400).json({ 'Error': error.message })
   }
 }
 
@@ -72,4 +72,22 @@ const validarTokenUser = async (req, res) => {
   }
 }
 
-module.exports = { userLogin, newUser, deleteUser, updateUser, validarTokenUser }
+const getAllUsers = async (req, res) => {
+  try {
+    const result = await User.findOne({ email: req.user.email })
+    if (result.rol[0] == 'Admin') {
+      const usuarios = await User.find({ rol: 'user' })
+      res.json(usuarios)
+    } else if (result.rol[0] == 'SuperAdmin') {
+      const usuarios = await User.find({ rol: 'user' })
+      const admin = await User.find({ rol: 'Admin' })
+      res.json([...usuarios, ...admin])
+    } else {
+      res.status(400).json({ Error: "Problemas con el rol" })
+    }
+  } catch (error) {
+    res.status(400).json({ Error: error.message })
+  }
+}
+
+module.exports = { userLogin, newUser, deleteUser, updateUser, validarTokenUser, getAllUsers }

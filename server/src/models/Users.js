@@ -8,8 +8,8 @@ const UsersScheme = new Schema({
     type: String
   },
   profileIMG: {
-    type: String,
-    default: 'none'
+    type: Number,
+    default: 0
   },
   username: {
     type: String,
@@ -29,13 +29,9 @@ const UsersScheme = new Schema({
     type: Array,
     default: ['user']
   },
-  connection: {
+  status: {
     type: Boolean,
     default: true
-  },
-  status: {
-    type: String,
-    default: 'Enabled'
   }
 })
 

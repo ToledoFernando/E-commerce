@@ -7,6 +7,10 @@ export const TOKENVALIDATE = "TOKENVALIDATE";
 export const UPLOADPRODUCT = "UPLOADPRODUCT";
 export const GETPRODUCTSLIST = "GETPRODUCTSLIST";
 export const UPDATEPRODUCT = "UPDATEPRODUCT";
+export const UPDATEACOUNT = "UPDATEACOUNT";
+export const GETPRODUCTDETAIL = "GETPRODUCTDETAIL";
+export const GETUSERS = "GETUSERS";
+export const SEARCHUSER = "SEARCHUSER";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -34,7 +38,6 @@ export const register = (datas) => {
 export const login = (data) => {
   return async (dispatch) => {
     const result = await axios.post(`${api}/user/`, data)
-    console.log(result.data)
     return dispatch({
       type: LOGIN,
       payload: result.data
@@ -44,12 +47,6 @@ export const login = (data) => {
 
 export const logout = (data) => {
   return async (dispatch) => {
-    data.connection = false;
-    const token = localStorage.getItem('tokenUser');
-    await axios.put(`${api}/user/updateUser`, data, {
-      headers: { authorization: `Bearer ${token}` },
-    })
-
     return dispatch({
       type: LOGOUT
     })
@@ -64,6 +61,39 @@ export const validarToken = (token) => {
     return dispatch({
       type: TOKENVALIDATE,
       payload: user.data
+    })
+  }
+}
+
+export const updateAcout = (form, token) => {
+  return async (dispatch) => {
+    await axios.put(`${api}/user/updateUser`, form, {
+      headers: { authorization: `Bearer ${token}` }
+    });
+
+    return dispatch({
+      type: UPDATEACOUNT
+    });
+  }
+}
+
+export const getAllUsers = (token) => {
+  return async (dispatch) => {
+    const result = await axios.get(`${api}/user/allUsers`, {
+      headers: { authorization: `Bearer ${token}` }
+    });
+    return dispatch({
+      type: GETUSERS,
+      payload: result.data
+    })
+  }
+}
+
+export const searchUser = (value) => {
+  return (dispatch) => {
+    return dispatch({
+      type: SEARCHUSER,
+      payload: value
     })
   }
 }
@@ -112,5 +142,14 @@ export const updateProduct = (data, token) => {
       console.log('error')
       console.log(error)
     }
+  }
+}
+
+export const getProductDetail = (id) => {
+  return (dispatch) => {
+    return dispatch({
+      type: GETPRODUCTDETAIL,
+      payload: id
+    })
   }
 }

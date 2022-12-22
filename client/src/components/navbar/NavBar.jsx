@@ -11,14 +11,9 @@ function NavBar() {
   const dispatch = useDispatch();
 
   const cerrarSession = async () => {
-    try {
-      await dispatch(logout(userAcount));
-      localStorage.clear();
-      navigate("/");
-    } catch (error) {
-      console.log("error");
-      console.log(error);
-    }
+    dispatch(logout());
+    localStorage.clear();
+    navigate("/");
   };
 
   return (
@@ -29,7 +24,7 @@ function NavBar() {
         {userLogin ? (
           <>
             <li>
-              <Link to="/acount">My cuenta</Link>
+              <Link to="/myAcount">My cuenta</Link>
             </li>
             {userAcount.rol == "Admin" || userAcount.rol == "SuperAdmin" ? (
               <>
