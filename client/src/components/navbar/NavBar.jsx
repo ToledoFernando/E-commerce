@@ -1,14 +1,16 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../store/action";
 import "./NavBar.scss";
-import { useDispatch } from "react-redux";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 function NavBar() {
   const navigate = useNavigate();
   const userLogin = useSelector((state) => state.isLogin);
   const userAcount = useSelector((state) => state.myAcount);
   const dispatch = useDispatch();
+  const navbar = useRef();
 
   const cerrarSession = async () => {
     dispatch(logout());
@@ -16,39 +18,40 @@ function NavBar() {
     navigate("/");
   };
 
+  useEffect(() => {
+    window.addEventListener("scroll", (e) => {
+      if (Math.round(e.target.scrollingElement.scrollTop) >= 20) {
+        navbar.current.style.boxShadow = "0px 0px 10px #00000068";
+      } else {
+        navbar.current.style.boxShadow = "none";
+      }
+    });
+  }, []);
+
   return (
-    <nav>
-      <Link to="/">Home</Link>
-      <Link to="/products">Ver Productos</Link>
-      <ul>
+    <nav ref={navbar}>
+      <div>
+        <Link to="/">Home</Link>
+        <Link to="/products">Ver Productos</Link>
+      </div>
+      <div>
         {userLogin ? (
           <>
-            <li>
-              <Link to="/myAcount">My cuenta</Link>
-            </li>
+            <Link to="/myAcount">My cuenta</Link>
             {userAcount.rol == "Admin" || userAcount.rol == "SuperAdmin" ? (
-              <>
-                <li>
-                  <Link to="/dashboardAdmin">Panel Admin</Link>
-                </li>
-              </>
+              <Link to="/dashboardAdmin">Panel Admin</Link>
             ) : null}
-            <li>
-              <button onClick={cerrarSession}>Cerrar Session</button>
-            </li>
+            <button onClick={cerrarSession} className="cerrarSession">
+              Cerrar Session
+            </button>
           </>
         ) : (
           <>
-            <li>
-              <Link to="/login">Iniciar Sesion</Link>
-            </li>
-            <li>
-              <Link to="/register">Registrarse</Link>
-            </li>
+            <Link to="/login">Iniciar Sesion</Link>
+            <Link to="/register">Registrarse</Link>
           </>
         )}
-      </ul>
-      <Link to="/about">about</Link>
+      </div>
     </nav>
   );
 }

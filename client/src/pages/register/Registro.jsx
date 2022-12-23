@@ -3,7 +3,9 @@ import { useDispatch } from "react-redux";
 import { register } from "../../store/action";
 import { useNavigate } from "react-router-dom";
 import { validarToken } from "../../store/action";
+import soportexd from "../../img/contacto.png";
 import md5 from "md5";
+import "./Registro.scss";
 
 const initial = {
   first_name: "",
@@ -42,9 +44,9 @@ function Registro() {
   }, []);
 
   return (
-    <div>
-      <h1>Registrarse</h1>
+    <div className="Registro">
       <form onSubmit={handleSubmit}>
+        <h1>Registrarse</h1>
         <label>Nombre</label>
         <br />
         <input
@@ -106,6 +108,23 @@ function Registro() {
         <br />
         <button>Registrarse</button>
       </form>
+      <div>
+        <img src={soportexd} alt="Icono Soporte" />
+        <div>
+          <p>
+            Coloca un correo que estes usando ya que se pedira que lo{" "}
+            <span className="resaltar">VERIFIQUES</span>
+          </p>
+          <p>
+            Usa una contraseña de al menos 6 digitos para que se un poco mas
+            segura
+          </p>
+          <p>
+            Elige un nombre de usuario unico ya que no se pueden repetir (Puedes
+            cambiarlo despues)
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

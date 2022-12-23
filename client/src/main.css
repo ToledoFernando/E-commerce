@@ -5,3 +5,31 @@
   padding: 0;
   font-family: "Lato", sans-serif;
 }
+
+html {
+  overflow-x: hidden;
+}
+
+:root {
+  --resaltar: #c32323;
+}
+
+body::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+body::-webkit-scrollbar {
+  background-color: #00000000;
+}
+body::-webkit-scrollbar:vertical {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #6b6a6a;
+  border-radius: 20px;
+  border: 0;
+}
+
+body::-webkit-scrollbar-track {
+  border-radius: 10px;
+}

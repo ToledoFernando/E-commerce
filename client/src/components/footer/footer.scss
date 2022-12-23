@@ -1,0 +1,33 @@
+.Footer {
+  background: #070113;
+  color: #aaa9a990;
+
+  .options {
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-evenly;
+
+    h6 {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+    p {
+      margin: 10px 0;
+    }
+  }
+  .copy {
+    position: relative;
+    span {
+      position: absolute;
+      top: 0;
+      background: linear-gradient(to left, #000, #ffffff5a, #000);
+      width: 100%;
+      height: 1px;
+    }
+    p {
+      text-align: center;
+      padding: 5px 0;
+      color: #636364c1;
+    }
+  }
+}

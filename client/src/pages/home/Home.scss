@@ -1,0 +1,231 @@
+.Home {
+  .titulo {
+    text-align: center;
+    margin: 15% 0;
+    font-size: 30px;
+    font-weight: 900;
+    width: 100%;
+
+    h1 {
+      span {
+        color: var(--resaltar);
+      }
+    }
+  }
+
+  .sobre {
+    background-color: #e1dbdb;
+    justify-content: center;
+    margin: 8% 0;
+    display: flex;
+    padding: 3% 0;
+    position: relative;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    .efectoTop {
+      position: absolute;
+      top: -25px;
+      width: 100%;
+      transform: rotate(-2deg);
+      height: 60px;
+      background-color: #e1dbdb;
+    }
+
+    .efectoBotton {
+      position: absolute;
+      bottom: -25px;
+      width: 100%;
+      transform: rotate(-2deg);
+      height: 60px;
+      background-color: #e1dbdb;
+    }
+
+    #sobreTitulo {
+      font-size: 35px;
+      font-weight: 900;
+      text-align: center;
+      margin: 5px 0;
+      width: 100%;
+    }
+    #sobreInfo {
+      width: 600px;
+      padding: 10px 20px;
+      margin-top: 5%;
+    }
+
+    .ContactosSobre {
+      display: flex;
+      justify-content: space-evenly;
+      margin: 10px 0;
+
+      button {
+        font-size: 16px;
+        padding: 10px 20px;
+        border-radius: 20px;
+        border: 0;
+        color: #fff;
+        margin: 0 10px;
+        cursor: pointer;
+      }
+      .Whatsapp {
+        background: linear-gradient(to top left, #1db91d, #119411);
+      }
+      .Facebook {
+        background: linear-gradient(to top left, #1442cc, #0e3383);
+      }
+    }
+
+    img {
+      width: 350px;
+      height: 350px;
+      animation-name: mostrarSobreIMG;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+      transform: translateY(300px);
+    }
+    div {
+      animation-name: mostrarSobre;
+      animation-duration: 1s;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes mostrarSobre {
+      0% {
+        opacity: 0;
+        transform: translateX(300px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0px);
+      }
+    }
+    @keyframes mostrarSobreIMG {
+      0% {
+        opacity: 0;
+        transform: translateX(-300px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0px);
+      }
+    }
+  }
+  .queHacemos {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    transition: all 0.5s;
+
+    img {
+      width: 450px;
+      height: 350px;
+    }
+    .qh {
+      width: 600px;
+
+      h1 {
+        font-weight: 900;
+        font-size: 30px;
+      }
+
+      p {
+        margin-top: 30px;
+      }
+      .ejemploQH {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        b {
+          margin: 5px 0;
+        }
+      }
+    }
+  }
+  .invisible {
+    opacity: 0;
+    transform: translateY(300px);
+  }
+
+  .nuestroCorreo {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #bbbbbb;
+    margin-top: 5%;
+    padding: 5% 0;
+    transition: all 0.5s;
+    position: relative;
+    .ncTOP,
+    .ncBotton {
+      position: absolute;
+      background-color: #bbbbbb;
+      transform: rotate(2deg);
+      left: 0;
+      width: 100%;
+      height: 50px;
+    }
+
+    .ncTOP {
+      top: -20px;
+    }
+    .ncBotton {
+      bottom: -20px;
+    }
+
+    img {
+      width: 350px;
+      height: 350px;
+    }
+    h1 {
+      margin: 3% 0;
+      text-align: center;
+      font-weight: 700;
+    }
+    p {
+      width: 600px;
+    }
+    .email {
+      background-color: var(--resaltar);
+      padding: 10px 25px;
+      border: 0;
+      border-radius: 20px;
+      color: #fff;
+      font-size: 17px;
+      margin-top: 30px;
+      cursor: pointer;
+    }
+  }
+  .recibirOferta {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 5% 0;
+    transition: all 0.5s;
+
+    img {
+      width: 490px;
+      height: 350px;
+    }
+    div {
+      width: 600px;
+      h1 {
+        font-weight: 600;
+      }
+      p {
+        width: 90%;
+        // margin: auto;
+        margin: 3% auto;
+      }
+      .RO {
+        background-color: green;
+        color: #fff;
+        border: 0;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 17px;
+        margin-top: 20px;
+      }
+    }
+  }
+}
