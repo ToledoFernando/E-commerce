@@ -23,6 +23,23 @@
       border: 0;
       border-bottom: 1px solid #000;
     }
+    input[class="invalid"] {
+      border-bottom: 2px solid red;
+      animation: alerta 0.3s;
+
+      @keyframes alerta {
+        20% {
+          transform: translateX(4px);
+        }
+        50% {
+          transform: translateX(-4px);
+        }
+        80% {
+          transform: translateX(4px);
+        }
+      }
+    }
+
     button {
       background-color: #29a729;
       color: #fff;
@@ -30,71 +47,159 @@
       border-radius: 20px;
       font-size: 15px;
       border: 0;
+      &:disabled {
+        background-color: #85c185;
+        color: #fff;
+        cursor: no-drop;
+      }
     }
     .cRegistro {
       margin: 20px 0;
       text-align: center;
     }
+    .yacuenta {
+      margin: 30px 0 0px;
+      text-align: center;
+    }
   }
 
-  div {
+  .logoIMG {
     margin: auto;
     position: relative;
-
     img {
       width: 350px;
       height: 350px;
     }
 
     p {
-      background-color: #a9c1de;
       margin: 10px;
       width: 200px;
       height: max-content;
       position: absolute;
-      padding: 10px;
+      padding: 15px;
       font-size: 13px;
       color: #272727;
       left: -40%;
       opacity: 0;
+      font-weight: 500;
 
       &:nth-child(1) {
-        animation: msg1 1s forwards;
+        background-color: #f0ca43;
+        border-radius: 20px 20px 0px 20px;
+        animation: msg1 6s 1.5s forwards infinite ease-in-out;
       }
       &:nth-child(2) {
-        animation: msg2 1s 0.5s forwards;
+        background-color: #a9c1de;
+
+        border-radius: 20px 0px 20px 20px;
+        animation: msg2 6s 3s forwards infinite ease-in-out;
       }
       &:nth-child(3) {
-        animation: msg3 1s 0.7s forwards;
+        background-color: #55dbf6;
+
+        border-radius: 20px 20px 0px 20px;
+        animation: msg3 7s 5s forwards infinite ease-in-out;
       }
 
+      .resaltar {
+        color: var(--resaltar);
+      }
       @keyframes msg1 {
-        50% {
+        10% {
           opacity: 0;
         }
-        100% {
+        20% {
           transform: translateY(-250px) translateX(-50px);
           opacity: 1;
         }
-      }
-      @keyframes msg2 {
-        50% {
-          opacity: 0;
+        90% {
+          transform: translateY(-250px) translateX(-50px);
+          opacity: 1;
         }
         100% {
+          opacity: 0;
+          transform: translateY(0px) translateX(-10px);
+        }
+      }
+      @keyframes msg2 {
+        10% {
+          opacity: 0;
+        }
+        20% {
           transform: translateY(-50px) translateX(-20px);
           opacity: 1;
         }
-      }
-      @keyframes msg3 {
-        50% {
+        80% {
+          transform: translateY(-50px) translateX(-20px);
+          opacity: 1;
+        }
+        90% {
+          transform: translateY(0px) translateX(10px);
           opacity: 0;
         }
-        100% {
+      }
+      @keyframes msg3 {
+        10% {
+          opacity: 0;
+        }
+        20% {
           transform: translateY(-380px) translateX(90px);
           opacity: 1;
         }
+        90% {
+          transform: translateY(-380px) translateX(90px);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(0px) translateX(50px);
+          opacity: 0;
+        }
       }
     }
+  }
+  .creado {
+    position: fixed;
+    width: 100vw;
+    background-color: #0000008a;
+    height: 100vh;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+
+    .alerta {
+      margin: auto;
+      background-color: #fff;
+      border-radius: 15px;
+      width: 550px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        // margin-bottom: 20px;
+        width: 150px;
+        height: 150px;
+      }
+      div {
+        text-align: center;
+        margin-top: 10%;
+
+        button {
+          padding: 8px 15px;
+          background-color: #4775d2;
+          color: #fff;
+          border: 0;
+          font-size: 17px;
+          border-radius: 15px;
+          margin: 20% 10px 10px 100%;
+        }
+      }
+    }
+  }
+
+  .disabled {
+    display: none;
   }
 }

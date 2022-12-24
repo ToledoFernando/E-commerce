@@ -39,6 +39,12 @@ const newUser = async (req, res) => {
       _id: result._id,
       verify: result.verify,
     }
+    const emailData = {
+      name: userData.first_name,
+      lastName: userData.last_name,
+      email: userData.email
+    }
+    await sendEsendEmailVerifyAcountmail(emailData)
     res.json({ UsuarioCreado: { userData }, tokenUser: userToken })
   } catch (error) {
     res.status(400).json({ Error: error.message })

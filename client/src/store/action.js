@@ -1,4 +1,5 @@
 import axios from 'axios';
+import md5 from 'md5';
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
@@ -19,6 +20,7 @@ const api = import.meta.env.VITE_API_URL;
 
 export const register = (datas) => {
   return async (dispatch) => {
+    datas.password = md5(datas.password);
     const resultData = await axios.post(`${api}/user/createUser`, datas)
     const { UsuarioCreado } = resultData.data;
     const newUser = [{
