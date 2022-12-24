@@ -28,7 +28,7 @@ function VerifyAcount() {
     });
   }, []);
 
-  return <div>{token}</div>;
+  return <div>{cuentaVerificada._id}</div>;
 }
 
 export default VerifyAcount;
