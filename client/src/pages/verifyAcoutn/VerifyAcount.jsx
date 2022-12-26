@@ -1,34 +1,41 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { login, validarToken, verifiAcoutnBT } from "../../store/action";
+import { validarToken, verifiAcoutnBT } from "../../store/action";
 import sweetalert from "sweetalert";
+import cargando from "../../img/load.svg";
+import "./Verify.scss";
 
 function VerifyAcount() {
-  const { token } = useParams();
+  const { token, email } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cuentaVerificada = useSelector((state) => state.myAcount);
+  const tokenUser = localStorage.getItem("tokenUser");
 
   useEffect(() => {
     dispatch(verifiAcoutnBT(token)).then(() => {
-      const tokenUser = localStorage.getItem("tokenUser");
-      dispatch(validarToken(tokenUser));
-      // sweetalert({
-      //   title: "Usuario Verificado",
-      //   text: "Tu cuenta esta verificada",
-      //   icon: "success",
-      //   button: {
-      //     text: "Cerrar",
-      //     closeModal: true,
-      //   },
-      //   dangerMode: true,
-      // });
-      // navigate("/");
+      dispatch(validarToken(tokenUser)).then(() => {
+        sweetalert({
+          title: "Usuario Verificado",
+          text: `La cuenta ${email} a sido verificado/a`,
+          icon: "success",
+          button: {
+            text: "Cerrar",
+            closeModal: true,
+          },
+          dangerMode: true,
+        });
+        navigate("/");
+      });
     });
   }, []);
 
-  return <div>{cuentaVerificada._id}</div>;
+  return (
+    <div className="bod">
+      <img src={cargando} alt="Cargando" />
+      <h1>Verificando Cuenta...</h1>
+    </div>
+  );
 }
 
 export default VerifyAcount;

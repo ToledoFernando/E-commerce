@@ -35,7 +35,7 @@ const sendEmailVerifyAcount = async (data) => {
     >
       <a
         style="text-decoration: none; color: #fff; margin: 10px 0px 20px 0px"
-        href="http://localhost:5173/myAcoutn/Verify/${tokenUserVerify}/algo"
+        href="http://localhost:5173/myAcoutn/Verify/${tokenUserVerify}/${email}/ok"
         >Click para verificar la cuenta</a
       >
     </button>

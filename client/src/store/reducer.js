@@ -97,7 +97,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         myAcount: action.payload
-      }
+      };
     case GETUSERS:
       return {
         ...state,

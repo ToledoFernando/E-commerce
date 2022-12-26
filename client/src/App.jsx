@@ -24,7 +24,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registro />} />
         <Route path="/dashboardAdmin/*" element={<AdminRoutes />} />
-        <Route path="/myAcoutn/Verify/:token/algo" element={<VerifyAcount />} />
+        <Route
+          path="/myAcoutn/Verify/:token/:email/ok"
+          element={<VerifyAcount />}
+        />
       </Routes>
       <Footer />
     </>

@@ -61,12 +61,12 @@ export const logout = (data) => {
 
 export const validarToken = (token) => {
   return async (dispatch) => {
-    const user = await axios.get(`${api}/user/validateToken`, {
+    const { data } = await axios.get(`${api}/user/validateToken`, {
       headers: { authorization: `Bearer ${token}` },
     })
     return dispatch({
       type: TOKENVALIDATE,
-      payload: user.data
+      payload: data
     })
   }
 }
@@ -118,12 +118,12 @@ export const deleteUser = (id, token) => {
 export const verifiAcoutnBT = (token) => {
   return async (dispatch) => {
     try {
-      const result = await axios.get(`${api}/user/acountVerify`, {
+      const { data } = await axios.get(`${api}/user/acountVerify`, {
         headers: { authorization: `Bearer ${token}` }
       });
       return dispatch({
         type: VERIFYACOUNT,
-        payload: result.data
+        payload: data
       })
     } catch (error) {
       console.log(error)
