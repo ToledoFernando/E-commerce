@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import iconF from "../../pages/EdithAcoutn/iconF.png";
 import iconM from "../../pages/EdithAcoutn/iconM.png";
 import { pedirVerificacion } from "../../store/action";
+import "./Acount.scss";
 
 function Acount({ data }) {
   const navigate = useNavigate();
@@ -16,9 +17,9 @@ function Acount({ data }) {
   };
 
   return (
-    <div>
+    <div className="MiAcount">
       {!data.verify ? (
-        <p>
+        <p className="AlertaVerify">
           <b>Debes verificar tu cuenta</b>{" "}
           <button onClick={solicitud}>Varificar</button>
         </p>
@@ -28,11 +29,16 @@ function Acount({ data }) {
       ) : (
         <img width="300" height="300" src={iconM} alt={data.username} />
       )}
-      <p>{data.username}</p>
-      <h1>{data.first_name}</h1>
-      <h1>{data.last_name}</h1>
-      <p>{data.email}</p>
-      <button onClick={() => navigate(data._id)}>Editar cuenta</button>
+      <div className="infoUser">
+        <label>Username</label>
+        <p>{data.username}</p>
+        <label>Nombre y apellido</label>
+        <p>{data.first_name}</p>
+        <p>{data.last_name}</p>
+        <label>Email de la cuenta</label>
+        <p>{data.email}</p>
+        <button onClick={() => navigate(data._id)}>Editar cuenta</button>
+      </div>
     </div>
   );
 }

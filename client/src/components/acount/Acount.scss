@@ -1,0 +1,52 @@
+.MiAcount {
+  border: 1px solid #000;
+  border-radius: 6px;
+  margin: 5% auto;
+  width: 70%;
+  height: 50vh;
+  display: flex;
+  padding: 3%;
+  position: relative;
+  justify-content: center;
+
+  .AlertaVerify {
+    color: #ec2525;
+    position: absolute;
+    width: 95%;
+    top: -15%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 3%;
+    border: 1px solid #c93b3b;
+    background-color: #f0a5a51d;
+
+    button {
+      cursor: pointer;
+      background: linear-gradient(to top left, #d32626, #c12a2a);
+      color: #fff;
+      padding: 5px 10px;
+      border: 0;
+      border-radius: 5px;
+    }
+  }
+
+  .infoUser {
+    width: 80%;
+
+    button {
+      position: absolute;
+      bottom: 5%;
+      right: 5%;
+      width: 20%;
+      background: linear-gradient(to top left, #19b419, #179917);
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 17px;
+      border: 0;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}
