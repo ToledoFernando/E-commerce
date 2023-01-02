@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateAcout } from "../../store/action";
 import iconM from "./iconM.png";
 import iconF from "./iconF.png";
+import sweet from "sweetalert";
+import "./EdithAcoutn.scss";
 
 const initial = {
   first_name: "",
@@ -17,9 +19,15 @@ function EdithAcoutn() {
   const [form, setForm] = useState(initial);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [error, setError] = useState({
+    first_name: false,
+    last_name: false,
+    username: false,
+  });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    validarDatos(e);
   };
 
   const handleSubmit = async (e) => {
@@ -27,10 +35,47 @@ function EdithAcoutn() {
     try {
       const token = localStorage.getItem("tokenUser");
       await dispatch(updateAcout(form, token));
-      alert("usuario actualizado");
+      sweet({
+        title: "Actualizado",
+        text: "Usuario actualizado con exito ",
+        icon: "success",
+        dangerMode: true,
+      });
       navigate(-1);
     } catch (error) {
       alert(error.response.data.Error);
+    }
+  };
+
+  const validarDatos = (e) => {
+    if (e.target.name == "first_name") {
+      if (e.target.value.length < 3) {
+        setError({ ...error, [e.target.name]: true });
+        return (e.target.className = "invalid");
+      } else {
+        setError({ ...error, [e.target.name]: false });
+        return e.target.classList.remove("invalid");
+      }
+    }
+
+    if (e.target.name == "last_name") {
+      if (e.target.value.length < 3) {
+        setError({ ...error, [e.target.name]: true });
+        return (e.target.className = "invalid");
+      } else {
+        setError({ ...error, [e.target.name]: false });
+        return e.target.classList.remove("invalid");
+      }
+    }
+
+    if (e.target.name == "username") {
+      if (e.target.value.length < 3) {
+        setError({ ...error, [e.target.name]: true });
+        return (e.target.className = "invalid");
+      } else {
+        setError({ ...error, [e.target.name]: false });
+        return e.target.classList.remove("invalid");
+      }
     }
   };
 
@@ -45,52 +90,73 @@ function EdithAcoutn() {
   }, []);
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        {form.profileIMG ? (
-          <img width="300" height="300" src={iconF} alt={form.username} />
-        ) : (
-          <img width="300" height="300" src={iconM} alt={form.username} />
-        )}
-        <button
-          type="button"
-          onClick={() => setForm({ ...form, profileIMG: 0 })}
-        >
-          Masculino
-        </button>
-        <button
-          type="button"
-          onClick={() => setForm({ ...form, profileIMG: 1 })}
-        >
-          Femenino
-        </button>
-        <label>Nombre</label>
+    <div className="edith">
+      <span className="back"></span>
+      <span className="back2"></span>
+      <form onSubmit={handleSubmit} className="form">
+        <div className="imgInfo">
+          {form.profileIMG ? (
+            <img src={iconF} alt={form.username} />
+          ) : (
+            <img src={iconM} alt={form.username} />
+          )}
+          <div>
+            <button
+              type="button"
+              onClick={() => setForm({ ...form, profileIMG: 0 })}
+            >
+              Masculino
+            </button>
+            <button
+              type="button"
+              onClick={() => setForm({ ...form, profileIMG: 1 })}
+            >
+              Femenino
+            </button>
+          </div>
+        </div>
+        <label>
+          <b>Nombre</b>
+        </label>
         <input
+          onBlur={validarDatos}
           onChange={handleChange}
           type="text"
           value={form.first_name}
           name="first_name"
         />
         <br />
-        <label>Toledo</label>
+        <label>
+          <b>Apellido</b>
+        </label>
         <input
+          onBlur={validarDatos}
           onChange={handleChange}
           type="text"
           value={form.last_name}
           name="last_name"
         />
         <br />
-        <label>Username</label>
+        <label>
+          <b>Username</b>
+        </label>
         <input
+          onBlur={validarDatos}
           onChange={handleChange}
           name="username"
           type="text"
           value={form.username}
         />
-        <button type="button" onClick={() => navigate(-1)}>
+        <button
+          disabled={error.first_name || error.last_name || error.username}
+          className="actualizar"
+          type="submit"
+        >
+          Actualizar datos
+        </button>
+        <button className="cancelar" type="button" onClick={() => navigate(-1)}>
           Cancelar
         </button>
-        <button type="submit">Actualizar datos</button>
       </form>
     </div>
   );

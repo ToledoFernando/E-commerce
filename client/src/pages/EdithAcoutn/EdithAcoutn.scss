@@ -1,0 +1,111 @@
+.back {
+  position: absolute;
+  z-index: -10;
+  left: 5%;
+  top: 10%;
+  width: 100%;
+  height: 100vh;
+  background: url("../../img/logoPNG.png") no-repeat;
+  opacity: 0%;
+  animation: back 1s forwards;
+  transform: translateX(-300px);
+}
+
+.back2 {
+  position: absolute;
+  z-index: -10;
+  left: 40%;
+  top: 15%;
+  width: 80%;
+  height: 100vh;
+  background: url("../../img/logo2PNG.png") no-repeat;
+  animation: back 1s forwards;
+  opacity: 0%;
+  transform: translateX(300px);
+}
+
+@keyframes back {
+  100% {
+    transform: translateX(0);
+    opacity: 30%;
+  }
+}
+
+.form {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  margin: 70px auto;
+  border-radius: 10px;
+  box-shadow: 0px 0px 50px #00000029;
+  border: 1px solid #00000059;
+  padding: 3% 3% 20px;
+  width: 350px;
+
+  .imgInfo {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+
+    img {
+      width: 100px;
+      height: 100px;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+
+      button {
+        border: 0;
+        padding: 10px 15px;
+        border-radius: 5px;
+        color: #fff;
+        margin: 10px 10px 10px 30px;
+
+        &:nth-child(1) {
+          background-color: #2b2b8c;
+        }
+
+        &:nth-child(2) {
+          background-color: #ea7387;
+        }
+      }
+    }
+  }
+  input {
+    border: 0;
+    border-bottom: 1px solid #000;
+    border-radius: 4px;
+    margin: 10px 0;
+    padding: 5px 10px;
+    outline: none;
+  }
+
+  .actualizar,
+  .cancelar {
+    color: #fff;
+    padding: 8px;
+    font-size: 17px;
+    border: 0;
+    margin: 10px;
+    border-radius: 20px;
+  }
+
+  .actualizar {
+    background-color: #37a837;
+
+    &:disabled {
+      background-color: #76ca76;
+      cursor: not-allowed;
+    }
+  }
+
+  .cancelar {
+    background-color: #b93d3d;
+  }
+
+  .invalid {
+    border: 1px solid #b93d3d;
+  }
+}

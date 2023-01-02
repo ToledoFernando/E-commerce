@@ -20,7 +20,7 @@ function Login() {
       e.preventDefault();
       form.password = md5(form.password);
       await dispatch(login(form));
-      navigate(-1);
+      navigate("/");
     } catch (error) {
       setForm(initial);
       alert(error.message);
@@ -35,7 +35,7 @@ function Login() {
     const token = localStorage.getItem("tokenUser");
     if (token) {
       dispatch(validarToken(token))
-        .then(() => navigate(-1))
+        .then(() => navigate("/"))
         .catch((error) => {
           localStorage.clear();
         });

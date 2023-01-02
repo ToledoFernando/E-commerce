@@ -6,10 +6,15 @@ const productScheme = new Schema({
     required: true
   },
   description: {
-    type: String
+    type: String,
+    required: true
   },
   price: {
     type: Number,
+    required: true
+  },
+  marca: {
+    type: String,
     required: true
   },
   productIMG: {

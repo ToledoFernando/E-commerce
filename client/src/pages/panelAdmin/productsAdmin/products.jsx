@@ -59,7 +59,7 @@ function Products() {
         <input
           type="file"
           name="productIMG"
-          onChange={() => setImg(e.target.files[0])}
+          onChange={(e) => setImg(e.target.files[0])}
         />
         <br />
         <label>Nombre del producto</label>
@@ -91,6 +91,11 @@ function Products() {
         />
         <br />
         <select name="category" onChange={handleSelected}>
+          <option value="algo1">algo1</option>
+          <option value="algo2">algo2</option>
+          <option value="algo3">algo3</option>
+        </select>
+        <select name="marca" onChange={handleSelected}>
           <option value="algo1">algo1</option>
           <option value="algo2">algo2</option>
           <option value="algo3">algo3</option>
