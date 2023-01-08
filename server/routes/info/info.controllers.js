@@ -23,7 +23,6 @@ const getCategories = async (req, res) => {
     });
     res.json(result);
   } catch (error) {
-    console.log(error.message);
     res.status(400).json({ Error: error.message });
   }
 };
