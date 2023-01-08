@@ -57,6 +57,7 @@ function Registro() {
         },
         dangerMode: true,
       });
+      setCargando(!cargando);
       setRegistro(initial);
     }
   };
@@ -130,9 +131,11 @@ function Registro() {
 
   useEffect(() => {
     const token = localStorage.getItem("tokenUser");
-    dispatch(validarToken(token))
-      .then(() => navigate("/about"))
-      .catch((error) => console.log(error.response.data));
+    if (token) {
+      dispatch(validarToken(token))
+        .then(() => navigate("/"))
+        .catch((error) => console.log(error.response.data));
+    }
   }, []);
 
   return (

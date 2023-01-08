@@ -81,7 +81,7 @@ function EdithAcoutn() {
 
   useEffect(() => {
     setForm({
-      _id: misDatos._id,
+      id: misDatos.id,
       first_name: misDatos.first_name,
       last_name: misDatos.last_name,
       profileIMG: misDatos.profileIMG,

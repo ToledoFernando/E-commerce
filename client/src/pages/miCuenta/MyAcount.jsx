@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Acount from "../../components/acount/Acount";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { pedirVerificacion, validarToken } from "../../store/action";
+import { validarToken } from "../../store/action";
 
 function MyAcount() {
   const usuario = useSelector((state) => state.myAcount);
@@ -17,7 +17,7 @@ function MyAcount() {
 
   return (
     <div>
-      {!usuario._id ? (
+      {!usuario.id ? (
         <div>
           <h1>Debes Logearte Primero</h1>{" "}
           <button onClick={() => navigate("/login")}>Iniciar Session</button>

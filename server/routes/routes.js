@@ -1,20 +1,20 @@
-const { Router } = require('express');
-const user = require('./user/user');
-const products = require('./products/products');
-const rol = require('./getRol/getRol');
-const admin = require('./admin/admin');
-const jwt = require('jsonwebtoken');
+const { Router } = require("express");
+const user = require("./user/user");
+const products = require("./products/products");
+const rol = require("./getRol/getRol");
+const admin = require("./admin/admin");
+const info = require("./info/info");
 
 const route = Router();
 
-route.use('/user', user);
+route.use("/user", user);
 
-route.use('/products', products);
+route.use("/products", products);
 
-route.use('/getRol', rol);
+route.use("/getRol", rol);
 
-route.use('/admin', admin);
+route.use("/admin", admin);
 
-route.get("/*", (req, res) => res.send('Not found pibe xd'))
+route.use("/info", info);
 
 module.exports = route;

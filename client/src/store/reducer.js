@@ -12,97 +12,108 @@ import {
   SEARCHUSER,
   DELETEUSER,
   VERIFYACOUNT,
-  PEDIRVERIFICACION
-} from './action'
+  PEDIRVERIFICACION,
+} from "./action";
 
 const initialState = {
   myAcount: {},
   isLogin: false,
   products: [],
   productDetail: {},
-  users: []
-}
+  users: [],
+  marcas: [],
+  categorys: [],
+};
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
     case REGISTER:
-      localStorage.setItem('tokenUser', action.payload[1].token)
-      localStorage.setItem('rol', action.payload[0].rol)
+      localStorage.setItem("tokenUser", action.payload[1].token);
+      localStorage.setItem("rol", action.payload[0].rol.name);
       return {
         ...state,
         myAcount: action.payload[0],
-        isLogin: true
+        isLogin: true,
       };
     case LOGOUT:
       return {
         ...state,
         myAcount: {},
-        isLogin: false
-      }
+        isLogin: false,
+      };
     case LOGIN:
-      localStorage.clear();
-      localStorage.setItem('tokenUser', action.payload.tokenUser)
-      localStorage.setItem('rol', action.payload.usuario.rol)
+      localStorage.removeItem("tokenUser");
+      localStorage.removeItem("rol");
+      //================
+      localStorage.setItem("tokenUser", action.payload.tokenUser);
+      localStorage.setItem("rol", action.payload.usuario.rol.name);
       return {
         ...state,
         myAcount: action.payload.usuario,
-        isLogin: true
-      }
+        isLogin: true,
+      };
     case UPDATEACOUNT:
       return {
-        ...state
-      }
+        ...state,
+      };
     case DELETEUSER:
       return {
-        ...state
-      }
+        ...state,
+      };
     case TOKENVALIDATE:
-      localStorage.setItem('rol', action.payload.rol)
+      localStorage.setItem("rol", action.payload.rol.name);
       return {
         ...state,
         myAcount: action.payload,
-        isLogin: true
-      }
+        isLogin: true,
+      };
     case SEARCHUSER:
-
-      const userFiltro = state.users.filter((us => us.username.includes(action.payload)))
+      const userFiltro = state.users.filter((us) =>
+        us.username.includes(action.payload)
+      );
       return {
         ...state,
-        users: userFiltro
-      }
+        users: userFiltro,
+      };
     case PEDIRVERIFICACION:
       return {
-        ...state
-      }
+        ...state,
+      };
     case UPLOADPRODUCT:
       return {
-        ...state
-      }
+        ...state,
+      };
     case GETPRODUCTSLIST:
       return {
         ...state,
-        products: action.payload
-      }
+        products: action.payload,
+      };
     case UPDATEPRODUCT:
       return {
-        ...state
-      }
+        ...state,
+      };
     case GETPRODUCTDETAIL:
-      const producto = state.products.filter((product) => product._id == action.payload)
+      const producto = state.products.filter(
+        (product) => product._id == action.payload
+      );
       return {
         ...state,
-        productDetail: producto[0]
-      }
+        productDetail: producto[0],
+      };
     case VERIFYACOUNT:
       return {
         ...state,
-        myAcount: action.payload
+        myAcount: action.payload,
       };
     case GETUSERS:
       return {
         ...state,
-        users: action.payload
-      }
+        users: action.payload,
+      };
+    case GETMARCAS:
+      return {
+        ...state,
+      };
     default:
       return state;
   }

@@ -38,7 +38,8 @@ function NavBar() {
         {userLogin ? (
           <>
             <Link to="/myAcount">My cuenta</Link>
-            {userAcount.rol == "Admin" || userAcount.rol == "SuperAdmin" ? (
+            {userAcount.rol.name == "Admin" ||
+            userAcount.rol.name == "SuperAdmin" ? (
               <Link to="/dashboardAdmin">Panel Admin</Link>
             ) : null}
             <button onClick={cerrarSession} className="cerrarSession">

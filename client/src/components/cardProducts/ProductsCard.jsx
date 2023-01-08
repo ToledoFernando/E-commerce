@@ -1,4 +1,4 @@
-import React from "react";
+import "./products.scss";
 
 function ProductsCard({ producto }) {
   const upper = (text) => {

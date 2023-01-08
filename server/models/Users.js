@@ -1,38 +1,40 @@
-const { model, Schema } = require('mongoose');
+const { DataTypes } = require('sequelize');
 
-const UsersScheme = new Schema({
-  first_name: {
-    type: String
-  },
-  last_name: {
-    type: String
-  },
-  profileIMG: {
-    type: Number,
-    default: 0
-  },
-  username: {
-    type: String,
-    unique: true
-  },
-  email: {
-    type: String
-  },
-  password: {
-    type: String
-  },
-  verify: {
-    type: Boolean,
-    default: false
-  },
-  rol: {
-    type: Array,
-    default: ['user']
-  },
-  status: {
-    type: Boolean,
-    default: true
-  }
-})
 
-module.exports = model('users', UsersScheme)
+module.exports = (database) => {
+  database.define('users', {
+    id: {
+      type: DataTypes.STRING,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
+    first_name: {
+      type: DataTypes.STRING,
+    },
+    last_name: {
+      type: DataTypes.STRING,
+    },
+    profileIMG: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
+    username: {
+      type: DataTypes.STRING,
+      unique: true
+    },
+    email: {
+      type: DataTypes.STRING,
+    },
+    password: {
+      type: DataTypes.STRING,
+    },
+    verify: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    }
+  })
+}

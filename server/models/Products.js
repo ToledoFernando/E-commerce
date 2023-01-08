@@ -1,44 +1,36 @@
-const { Schema, model } = require('mongoose');
+const { DataTypes } = require("sequelize");
 
-const productScheme = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  price: {
-    type: Number,
-    required: true
-  },
-  marca: {
-    type: String,
-    required: true
-  },
-  productIMG: {
-    type: String,
-    required: true
-  },
-  imgid: {
-    type: String
-  },
-  category: {
-    type: Array
-  },
-  oferta: {
-    type: Number,
-    default: 0
-  },
-  createAt: {
-    type: Date,
-    default: new Date()
-  },
-  status: {
-    type: Boolean,
-    default: true
-  }
-})
-
-module.exports = model('Products', productScheme);
+module.exports = (database) => {
+  database.define("products", {
+    name: {
+      type: DataTypes.STRING,
+      required: true,
+    },
+    description: {
+      type: DataTypes.STRING,
+      required: true,
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      required: true,
+    },
+    productIMG: {
+      type: DataTypes.STRING,
+      required: true,
+    },
+    imgid: {
+      type: DataTypes.STRING,
+    },
+    category: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+    },
+    oferta: {
+      type: DataTypes.INTEGER,
+      default: 0,
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      default: true,
+    },
+  });
+};

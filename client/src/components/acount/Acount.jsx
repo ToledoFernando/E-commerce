@@ -77,7 +77,7 @@ function Acount({ data }) {
           </div>
         </div>
         <div className="optCuenta">
-          <button className="editar" onClick={() => navigate(data._id)}>
+          <button className="editar" onClick={() => navigate(data.id)}>
             Editar cuenta
           </button>
         </div>
