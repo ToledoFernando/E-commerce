@@ -13,6 +13,8 @@ import {
   DELETEUSER,
   VERIFYACOUNT,
   PEDIRVERIFICACION,
+  GETMARCAS,
+  GETCATEGORY,
 } from "./action";
 
 const initialState = {
@@ -113,6 +115,12 @@ export default function rootReducer(state = initialState, action) {
     case GETMARCAS:
       return {
         ...state,
+        marcas: action.payload,
+      };
+    case GETCATEGORY:
+      return {
+        ...state,
+        categorys: action.payload,
       };
     default:
       return state;

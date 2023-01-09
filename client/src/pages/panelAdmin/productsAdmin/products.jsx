@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { upload } from "../config/firebase";
-import { useDispatch } from "react-redux";
-import { uploadProduct, validarToken } from "../../../store/action";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCategory,
+  getMarcas,
+  uploadProduct,
+  validarToken,
+} from "../../../store/action";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +24,8 @@ function Products() {
   const dispatch = useDispatch();
   const [newProduct, setNewProduct] = useState(initial);
   const [img, setImg] = useState();
-  const [imgPreviw, setImgPreview] = useState("");
+  const marcas = useSelector((state) => state.marcas);
+  const categorys = useSelector((state) => state.categorys);
 
   const handlechange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
@@ -48,6 +54,8 @@ function Products() {
     if (!userToken) navigate("/");
     dispatch(validarToken(userToken));
     setToken(userToken);
+    if (!marcas.length) dispatch(getMarcas());
+    if (!categorys.length) dispatch(getCategory());
   }, []);
 
   return (
@@ -90,15 +98,21 @@ function Products() {
           placeholder="Precio"
         />
         <br />
+        <p>Categorias</p>
         <select name="category" onChange={handleSelected}>
-          <option value="algo1">algo1</option>
-          <option value="algo2">algo2</option>
-          <option value="algo3">algo3</option>
+          {categorys?.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </select>
+        <p>Marcas</p>
         <select name="marca" onChange={handleSelected}>
-          <option value="algo1">algo1</option>
-          <option value="algo2">algo2</option>
-          <option value="algo3">algo3</option>
+          {marcas?.map((marca) => (
+            <option key={marca.id} value={marca.id}>
+              {marca.name}
+            </option>
+          ))}
         </select>
         <label>Oferta</label>
         <input

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../../store/action";
+import { getMarcas, logout } from "../../store/action";
 import "./NavBar.scss";
 import { useRef } from "react";
 import { useEffect } from "react";
@@ -11,6 +11,7 @@ function NavBar() {
   const userAcount = useSelector((state) => state.myAcount);
   const dispatch = useDispatch();
   const navbar = useRef();
+  const marcas = useSelector((state) => state.marcas);
 
   const cerrarSession = async () => {
     dispatch(logout());
@@ -19,6 +20,7 @@ function NavBar() {
   };
 
   useEffect(() => {
+    if (!marcas.length) dispatch(getMarcas());
     window.addEventListener("scroll", (e) => {
       if (Math.round(e.target.scrollingElement.scrollTop) >= 20) {
         navbar.current.style.boxShadow = "0px 0px 10px #00000068";

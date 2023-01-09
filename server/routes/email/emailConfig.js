@@ -1,6 +1,6 @@
-const nodemailer = require('nodemailer');
-const dotenv = require('dotenv');
-const jwt = require('jsonwebtoken');
+const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
+const jwt = require("jsonwebtoken");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -12,17 +12,18 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
 const sendEmailVerifyAcount = async (data) => {
   const { name, lastName, email } = data;
-  const tokenUserVerify = jwt.sign({ email: email }, process.env.SECRET_KEY, { expiresIn: '1h' })
+  const tokenUserVerify = jwt.sign({ email: email }, process.env.SECRET_KEY, {
+    expiresIn: "1h",
+  });
   await transporter.sendMail({
-    from: '"Verificar Cuenta" <salongenesis.online@gmail.com>',
+    from: '"Salon Genesis Online" <salongenesis.online@gmail.com>',
     to: email,
-    subject: "Salon Genesis",
+    subject: "Verifica tu Cuenta",
     text: "Verificar tu cuenta",
     html: `<div style="border: 1px solid #454444; border-radius: 8px; padding: 20px 30px">
-    <h1>Hola ${name + ' ' + lastName}</h1>
+    <h1>Hola ${name + " " + lastName}</h1>
     <p>Para verificar su cuenta de click en el boton de abajo</p>
     <p>El link caducara en 3h, si tiene algun problema consulte en la seccion de "Soporte" en la tienda</p>
     <button
@@ -47,6 +48,6 @@ const sendEmailVerifyAcount = async (data) => {
     </div>
   </div>`,
   });
-}
+};
 
 module.exports = sendEmailVerifyAcount;
