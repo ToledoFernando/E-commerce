@@ -1,12 +1,20 @@
 import "./Filtros.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getMarcas } from "../../store/action";
 
 function Filtros() {
   const [precio, setPrecio] = useState(5000);
+  const marcas = useSelector((state) => state.marcas);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setPrecio(e.target.value);
   };
+
+  useEffect(() => {
+    if (!marcas.length) dispatch(getMarcas());
+  }, []);
 
   return (
     <div className="filtros">
@@ -24,48 +32,9 @@ function Filtros() {
           <button>Filtrar</button>
           <p>{precio}</p>
         </li>
-        <li>
-          <button>marca 1</button>
-        </li>
-        <li>
-          <button>marca 2</button>
-        </li>
-        <li>
-          <button>marca 3</button>
-        </li>
-        <li>
-          <button>marca 4</button>
-        </li>
-        <li>
-          <button>marca 5</button>
-        </li>
-        <li>
-          <button>marca 6</button>
-        </li>
-        <li>
-          <button>marca 7</button>
-        </li>
-        <li>
-          <button>marca 8</button>
-        </li>
-        <li>
-          <button>marca 9</button>
-        </li>
-        <li>
-          <button>marca 10</button>
-        </li>
-        <li>
-          <button>marca 11</button>
-        </li>
-        <li>
-          <button>marca 12</button>
-        </li>
-        <li>
-          <button>marca 13</button>
-        </li>
-        <li>
-          <button>marca 14</button>
-        </li>
+        {marcas?.map((marca) => (
+          <li key={marca.id}>{marca.name}</li>
+        ))}
       </ul>
     </div>
   );

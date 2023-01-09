@@ -27,9 +27,7 @@ export const register = (datas) => {
     const { UsuarioCreado } = resultData.data;
     const newUser = [
       UsuarioCreado.userData,
-      {
-        token: resultData.data.tokenUser,
-      },
+      { token: resultData.data.tokenUser },
     ];
     return dispatch({
       type: REGISTER,
@@ -153,7 +151,6 @@ export const uploadProduct = (newProduct, token, img) => {
     const result = await axios.post(`${api}/products/newProduct`, newProduct, {
       headers: { authorization: `Bearer ${token}` },
     });
-    console.log(result);
     return dispatch({
       type: UPLOADPRODUCT,
     });
@@ -202,10 +199,20 @@ export const getProductDetail = (id) => {
 
 export const getMarcas = () => {
   return async (dispatch) => {
-    const result = await axios.get(`${api}`);
+    const result = await axios.get(`${api}/info/marcas`);
     return dispatch({
       type: GETMARCAS,
-      // payload:
+      payload: result.data,
+    });
+  };
+};
+
+export const getCategory = () => {
+  return async (dispatch) => {
+    const result = await axios.get(`${api}/info/category`);
+    return dispatch({
+      type: GETCATEGORY,
+      payload: result.data,
     });
   };
 };
