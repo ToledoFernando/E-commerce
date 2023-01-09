@@ -1,7 +1,8 @@
-import "./Filtros.scss";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getMarcas } from "../../store/action";
+import { Link } from "react-router-dom";
+import "./Filtros.scss";
 
 function Filtros() {
   const [precio, setPrecio] = useState(5000);
@@ -29,12 +30,19 @@ function Filtros() {
             onChange={handleChange}
             value={precio}
           />{" "}
-          <button>Filtrar</button>
-          <p>{precio}</p>
+          <p>Desde 300 a {precio}</p>
         </li>
         {marcas?.map((marca) => (
-          <li key={marca.id}>{marca.name}</li>
+          <li key={marca.id}>
+            <button>{marca.name}</button>
+          </li>
         ))}
+        <li>
+          <button>Filtrar</button>
+        </li>
+        <li>
+          <Link to="/products">Quitar Filtros</Link>
+        </li>
       </ul>
     </div>
   );

@@ -16,6 +16,7 @@ const initial = {
   price: 0,
   category: [],
   oferta: 0,
+  marcaId: 0,
 };
 
 function Products() {
@@ -107,7 +108,7 @@ function Products() {
           ))}
         </select>
         <p>Marcas</p>
-        <select name="marca" onChange={handleSelected}>
+        <select name="marcaId" onChange={handlechange}>
           {marcas?.map((marca) => (
             <option key={marca.id} value={marca.id}>
               {marca.name}

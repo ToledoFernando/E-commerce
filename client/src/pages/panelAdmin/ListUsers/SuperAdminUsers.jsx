@@ -19,7 +19,7 @@ function SuperAdminUsers() {
 
   const suspender = async (userID, estado) => {
     const update = {
-      _id: userID,
+      id: userID,
       status: estado,
     };
     const token = localStorage.getItem("tokenUser");
@@ -58,9 +58,9 @@ function SuperAdminUsers() {
       ) : (
         cuentas.map((cuenta) => {
           return (
-            <div key={cuenta._id}>
+            <div key={cuenta.id}>
               <p>
-                <b>ROL: {cuenta.rol[0]}</b>
+                <b>ROL: {cuenta.rol.name}</b>
               </p>
               <p>{cuenta.first_name}</p>
               <p>
@@ -71,12 +71,12 @@ function SuperAdminUsers() {
                 Cuenta Verificada:{" "}
                 {cuenta.verify ? "Verificada" : "NO verificada"}
               </p>
-              <button onClick={() => suspender(cuenta._id, !cuenta.status)}>
+              <button onClick={() => suspender(cuenta.id, !cuenta.status)}>
                 {cuenta.status ? "Suspender Cuenta" : "Activar Cuenta"}
               </button>
               <button
                 onClick={() => {
-                  deleteUserAcoutn(cuenta._id, cuenta.username);
+                  deleteUserAcoutn(cuenta.id, cuenta.username);
                 }}
               >
                 Eliminar Cuenta

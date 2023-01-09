@@ -70,7 +70,7 @@ function EdithProduct() {
       if (confirm("Seguro de eliminar el producto?")) {
         const token = localStorage.getItem("tokenUser");
         deleteImg(img.current.id);
-        const result = await axios.delete(
+        await axios.delete(
           `${import.meta.env.VITE_API_URL}/products/deleteProduct/${id}`,
           {
             headers: { authorization: `Bearer ${token}` },

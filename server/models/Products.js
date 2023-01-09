@@ -2,6 +2,11 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (database) => {
   database.define("products", {
+    id: {
+      type: DataTypes.STRING,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
     name: {
       type: DataTypes.STRING,
       required: true,
@@ -26,11 +31,11 @@ module.exports = (database) => {
     },
     oferta: {
       type: DataTypes.INTEGER,
-      default: 0,
+      defaultValue: 0,
     },
     status: {
       type: DataTypes.BOOLEAN,
-      default: true,
+      defaultValue: true,
     },
   });
 };
