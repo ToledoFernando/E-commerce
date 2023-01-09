@@ -9,8 +9,9 @@ function ProductsCard({ producto }) {
   return (
     <div className="producto">
       <img src={producto.productIMG} id={producto.imgid} />
-      <p className="marca">{producto.marca}</p>
       <p>{upper(producto.name)}</p>
+      <p className="marca">{upper(producto.marca.name)}</p>
+      {/* <p>{producto.name}</p> */}
       {producto.oferta ? (
         <p>
           Precio: <b>{producto.oferta}</b>
@@ -21,7 +22,7 @@ function ProductsCard({ producto }) {
       <div className="detalle">
         <button
           className="verDetalle"
-          onClick={() => navigate(`detailP/${producto._id}`)}
+          onClick={() => navigate(`detailP/${producto.id}`)}
         >
           Ver Detalle
         </button>

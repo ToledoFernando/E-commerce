@@ -87,7 +87,7 @@ const newUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    await User.deleteOne({ _id: id });
+    await users.destroy({ where: { id } });
     res.send("Usuario eliminado con exito");
   } catch (error) {
     res.json({ Error: error.message });
@@ -129,13 +129,37 @@ const validarTokenUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const result = await User.findOne({ email: req.user.email });
-    if (result.rol[0] == "Admin") {
-      const usuarios = await User.find({ rol: "user" });
+    const result = await users.findOne({ where: { email: req.user.email } });
+    if (result.rolId === 2) {
+      const usuarios = await users.findAll({
+        where: { rolId: 1 },
+        include: [
+          {
+            model: rol,
+            attributes: ["name"],
+          },
+        ],
+      });
       res.json(usuarios);
-    } else if (result.rol[0] == "SuperAdmin") {
-      const usuarios = await User.find({ rol: "user" });
-      const admin = await User.find({ rol: "Admin" });
+    } else if (result.rolId === 3) {
+      const usuarios = await users.findAll({
+        where: { rolId: 1 },
+        include: [
+          {
+            model: rol,
+            attributes: ["name"],
+          },
+        ],
+      });
+      const admin = await users.findAll({
+        where: { rolId: 2 },
+        include: [
+          {
+            model: rol,
+            attributes: ["name"],
+          },
+        ],
+      });
       res.json([...usuarios, ...admin]);
     } else {
       res.status(400).json({ Error: "Problemas con el rol" });

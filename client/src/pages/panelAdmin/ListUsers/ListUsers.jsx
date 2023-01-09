@@ -14,7 +14,7 @@ function ListUsers() {
 
   const suspender = async (userID, estado) => {
     const update = {
-      _id: userID,
+      id: userID,
       status: estado,
     };
     const token = localStorage.getItem("tokenUser");
@@ -55,7 +55,7 @@ function ListUsers() {
                 Cuenta Verificada:{" "}
                 {cuenta.verify ? "Verificada" : "NO verificada"}
               </p>
-              <button onClick={() => suspender(cuenta._id, !cuenta.status)}>
+              <button onClick={() => suspender(cuenta.id, !cuenta.status)}>
                 {cuenta.status ? "Suspender Cuenta" : "Activar Cuenta"}
               </button>
             </div>
