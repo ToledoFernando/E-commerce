@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { upload } from "../config/firebase";
+import { upload, deleteImg } from "../config/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCategory,
@@ -9,6 +9,8 @@ import {
 } from "../../../store/action";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./AddProduct.scss";
+import imgLoad from "../../../img/loadIMG.svg";
 
 const initial = {
   name: "",
@@ -19,12 +21,15 @@ const initial = {
   marcaId: 0,
 };
 
+const initialIMG = { productIMG: "", imgid: "" };
+
 function Products() {
   const navigate = useNavigate();
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
   const [newProduct, setNewProduct] = useState(initial);
-  const [img, setImg] = useState();
+  const [img, setImg] = useState(initialIMG);
+  const [cargando, setCargando] = useState(false);
   const marcas = useSelector((state) => state.marcas);
   const categorys = useSelector((state) => state.categorys);
 
@@ -35,12 +40,24 @@ function Products() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const imgUrl = await upload(img);
-      await dispatch(uploadProduct(newProduct, token, imgUrl));
+      await dispatch(uploadProduct(newProduct, token));
     } catch (error) {
       console.log("ocurrio un error");
       console.log(error);
     }
+  };
+
+  const setImage = async (e) => {
+    setCargando(true);
+    const imgUrl = await upload(e.target.files[0]);
+    setImg({ productIMG: imgUrl.url, imgid: imgUrl.id });
+    setNewProduct({ ...newProduct, productIMG: imgUrl.url, imgid: imgUrl.id });
+    setCargando(false);
+  };
+
+  const cambiarIMG = async (id) => {
+    await deleteImg(id);
+    setImg(initialIMG);
   };
 
   const handleSelected = (e) => {
@@ -63,12 +80,28 @@ function Products() {
     <div>
       <h1>Agregar producto</h1>
       <form onSubmit={handleSubmit}>
+        {cargando ? <img src={imgLoad} className="cargando" /> : null}
+        {!img.productIMG.length ? null : (
+          <>
+            <img
+              src={img.productIMG}
+              alt="nuevoProducto"
+              width="300"
+              height="300"
+            />
+            <button type="button" onClick={() => cambiarIMG(img.imgid)}>
+              Eliminar Imagen
+            </button>
+          </>
+        )}
         <label>Seleccionar una imagen</label>
         <br />
         <input
+          disabled={img.productIMG.length}
+          accept="image/png,image/jpeg"
           type="file"
           name="productIMG"
-          onChange={(e) => setImg(e.target.files[0])}
+          onChange={setImage}
         />
         <br />
         <label>Nombre del producto</label>
