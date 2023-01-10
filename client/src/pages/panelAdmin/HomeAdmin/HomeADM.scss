@@ -1,5 +1,6 @@
 .homeADM {
-  background: url("../../../img/logoPNG.png") no-repeat center;
+  // background: url("../../../img/logoPNG.png") no-repeat center;
+  // background-position-y: 120px;
   width: 100%;
 
   .titulo {
@@ -10,7 +11,7 @@
     margin-top: 30px;
     color: #000;
     padding: 10px 20px;
-    font-size: 20px;
+    font-size: 25px;
     text-shadow: 0px 0px 30px #0000002b;
 
     span {
@@ -19,8 +20,8 @@
     }
   }
   .info {
-    background-color: #00000086;
-    box-shadow: 0px 0px 30px #000000cf;
+    // background-color: #00000086;
+    // box-shadow: 0px 0px 30px #000000cf;
     border-radius: 10px;
     width: max-content;
     padding: 3% 10%;
@@ -31,7 +32,8 @@
       box-shadow: 0px 0px 30px #000;
     }
     p {
-      color: #fff;
+      color: #000;
+      margin-bottom: 60px;
       font-size: 30px;
       font-weight: 500;
     }
@@ -44,7 +46,7 @@
         display: flex;
         flex-direction: column;
         gap: 30px;
-        color: #fff;
+        color: #000;
         li {
           font-size: 17px;
           transition: all 0.5s;
