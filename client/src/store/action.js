@@ -144,11 +144,9 @@ export const pedirVerificacion = (token) => {
 
 //=======================================================//
 
-export const uploadProduct = (newProduct, token, img) => {
+export const uploadProduct = (newProduct, token) => {
   return async (dispatch) => {
-    newProduct.productIMG = img.url;
-    newProduct.imgid = img.id;
-    const result = await axios.post(`${api}/products/newProduct`, newProduct, {
+    await axios.post(`${api}/products/newProduct`, newProduct, {
       headers: { authorization: `Bearer ${token}` },
     });
     return dispatch({

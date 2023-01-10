@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { validarToken } from "../../../store/action";
+import "./NavBarAdmin.scss";
 
 function NavBarAdmin() {
   const myRol = localStorage.getItem("rol");
@@ -18,10 +19,10 @@ function NavBarAdmin() {
         localStorage.clear();
         navigate("/");
       });
-  });
+  }, []);
 
   return (
-    <div>
+    <div className="navBarAdmin">
       {myRol == "SuperAdmin" ? (
         <ul>
           <li>
@@ -32,6 +33,9 @@ function NavBarAdmin() {
           </li>
           <li>
             <Link to="users">Usuarios</Link>
+          </li>
+          <li>
+            <Link to="addcm">Agregar Otros</Link>
           </li>
         </ul>
       ) : null}

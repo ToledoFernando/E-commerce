@@ -11,7 +11,6 @@ function ProductsCard({ producto }) {
       <img src={producto.productIMG} id={producto.imgid} />
       <p>{upper(producto.name)}</p>
       <p className="marca">{upper(producto.marca.name)}</p>
-      {/* <p>{producto.name}</p> */}
       {producto.oferta ? (
         <p>
           Precio: <b>{producto.oferta}</b>
