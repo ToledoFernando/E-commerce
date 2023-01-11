@@ -10,6 +10,7 @@ import {
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import imgLoad from "../../../img/loadIMG.svg";
+import swalt from "sweetalert";
 import "./AddProduct.scss";
 
 const initial = {
@@ -29,7 +30,7 @@ function Products() {
   const dispatch = useDispatch();
   const [newProduct, setNewProduct] = useState(initial);
   const [img, setImg] = useState(initialIMG);
-  const [cargando, setCargando] = useState(true);
+  const [cargando, setCargando] = useState(false);
   const marcas = useSelector((state) => state.marcas);
   const categorys = useSelector((state) => state.categorys);
 
@@ -40,7 +41,20 @@ function Products() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      newProduct.category = newProduct.category.filter((valor, indice) => {
+        return newProduct.category.indexOf(valor) === indice;
+      });
       await dispatch(uploadProduct(newProduct, token));
+      swalt({
+        title: "Success",
+        text: "Producto agregado con ¡¡Exito!!",
+        icon: "success",
+        dangerMode: true,
+      }).then(() => {
+        setNewProduct(initial);
+        setImg(initialIMG);
+        setCargando(false);
+      });
     } catch (error) {
       console.log("ocurrio un error");
       console.log(error);
@@ -134,9 +148,9 @@ function Products() {
             placeholder="Precio"
           />
           <br />
-          <p>
+          <label>
             Categorias<span className="res">*</span>
-          </p>
+          </label>
           <select name="category" onChange={handleSelected}>
             {categorys?.map((category) => (
               <option key={category.id} value={category.id}>
@@ -144,9 +158,9 @@ function Products() {
               </option>
             ))}
           </select>
-          <p>
+          <label>
             Marcas<span className="res">*</span>
-          </p>
+          </label>
           <select name="marcaId" onChange={handlechange}>
             {marcas?.map((marca) => (
               <option key={marca.id} value={marca.id}>
@@ -164,9 +178,24 @@ function Products() {
             placeholder="Si no tiene oferta dejar vacio"
             name="oferta"
           />
+          <p className="avs">(0 = sin oferta)</p>
           <br />
           <br />
-          <button>Subir Producto</button>
+          <button
+            className="subirProducto"
+            disabled={
+              !newProduct.category.length ||
+              !newProduct.description.length ||
+              !newProduct.marcaId.length ||
+              !newProduct.name.length ||
+              !newProduct.oferta.length ||
+              !newProduct.price.length ||
+              !img.productIMG.length ||
+              !img.imgid.length
+            }
+          >
+            Subir Producto
+          </button>
         </div>
         <div className="loadIMG">
           {cargando ? <img src={imgLoad} className="cargando" /> : null}
@@ -178,7 +207,11 @@ function Products() {
                 width="300"
                 height="300"
               />
-              <button type="button" onClick={() => cambiarIMG(img.imgid)}>
+              <button
+                className="deleteIMG"
+                type="button"
+                onClick={() => cambiarIMG(img.imgid)}
+              >
                 Eliminar Imagen
               </button>
             </>
