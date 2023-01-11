@@ -14,5 +14,5 @@
 
 ## Base de datos y ORM
 
-- MongoDB
-- Mongoose
+- PostgreSQL
+- Sequelize
