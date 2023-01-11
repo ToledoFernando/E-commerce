@@ -1,9 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getMarcas, logout } from "../../store/action";
-import "./NavBar.scss";
 import { useRef } from "react";
 import { useEffect } from "react";
+import flecha from "../../img/arrow.svg";
+import "./NavBar.scss";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ function NavBar() {
   const userAcount = useSelector((state) => state.myAcount);
   const dispatch = useDispatch();
   const navbar = useRef();
+  const subirHref = useRef();
+  const subirSvg = useRef();
   const marcas = useSelector((state) => state.marcas);
 
   const cerrarSession = async () => {
@@ -24,7 +27,11 @@ function NavBar() {
     window.addEventListener("scroll", (e) => {
       if (Math.round(e.target.scrollingElement.scrollTop) >= 20) {
         navbar.current.style.boxShadow = "0px 0px 10px #00000068";
+        subirHref.current.style.display = "block";
+        subirSvg.current.style.transform = "scale(1)";
       } else {
+        subirHref.current.style.display = "none";
+        subirSvg.current.style.transform = "scale(0)";
         navbar.current.style.boxShadow = "none";
       }
     });
@@ -32,6 +39,11 @@ function NavBar() {
 
   return (
     <nav ref={navbar}>
+      <button className="subir">
+        <a ref={subirHref} href="#">
+          <img ref={subirSvg} src={flecha} alt="" />
+        </a>
+      </button>
       <div>
         <Link to="/">Home</Link>
         <Link to="/products">Ver Productos</Link>

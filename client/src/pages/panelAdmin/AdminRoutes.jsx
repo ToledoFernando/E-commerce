@@ -7,6 +7,7 @@ import SuperAdminUsers from "./ListUsers/SuperAdminUsers";
 import NavBarAdmin from "./NavbarAdmin/NavBarAdmin";
 import Products from "./productsAdmin/products";
 import ProductsList from "./productsList/ProductsList";
+import AddCM from "./addcm/AddCM";
 import "./AdminRoutes.scss";
 
 function AdminRoutes() {
@@ -21,6 +22,7 @@ function AdminRoutes() {
         <Route path="/products/edit/:id" element={<EdithProduct />} />
         <Route path="/userClients" element={<ListUsers />} />
         <Route path="/users" element={<SuperAdminUsers />} />
+        <Route path="addcm" element={<AddCM />} />
       </Routes>
     </div>
   );

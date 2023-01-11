@@ -1,90 +1,61 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  deleteUser,
-  getAllUsers,
-  searchUser,
-  updateAcout,
-} from "../../../store/action";
-import "./ListUser.scss";
+import { getAllUsers, getUserCopy, searchUser } from "../../../store/action";
+import lupa from "../../../img/lupa.png";
+import UserCard from "../../../components/userCard/UserCard";
+import cargando from "../../../img/load.svg";
+import "./ListUserADM.scss";
 
 function SuperAdminUsers() {
+  const input = useRef();
   const cuentas = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const token = localStorage.getItem("tokenUser");
-
     dispatch(getAllUsers(token));
   }, []);
 
-  const suspender = async (userID, estado) => {
-    const update = {
-      id: userID,
-      status: estado,
-    };
-    const token = localStorage.getItem("tokenUser");
-    await dispatch(updateAcout(update, token));
-    dispatch(getAllUsers(token));
-  };
-
-  const onSearch = (e) => {
-    if (!e.target.value.length) {
-      const token = localStorage.getItem("tokenUser");
-      dispatch(getAllUsers(token));
+  const onSearch = () => {
+    if (!input.current.value.length) {
+      dispatch(getUserCopy());
       return;
     }
-    return dispatch(searchUser(e.target.value));
-  };
-
-  const deleteUserAcoutn = async (id, username) => {
-    if (confirm(`Seguro de eliminar la cuenta de ${username}?`)) {
-      const token = localStorage.getItem("tokenUser");
-      await dispatch(deleteUser(id, token));
-      await dispatch(getAllUsers(token));
-      alert("cuenta eliminada");
-    }
+    return dispatch(searchUser(input.current.value));
   };
 
   return (
-    <div>
-      <input
-        onChange={onSearch}
-        placeholder='Buscar por "USERNAME"'
-        type="search"
-        name="buscar"
-      />{" "}
+    <div className="listUserADM">
+      <h1>
+        Lista de <span className="res">Usuarios</span>
+      </h1>
+      <label>Usuarios en Total: {cuentas.length}</label>
+      <div className="buscar">
+        <input
+          autoComplete="off"
+          ref={input}
+          placeholder='Buscar por "USERNAME"'
+          type="search"
+          name="buscar"
+        />
+        <label id="aviso">
+          *Click en la lupa para buscar (si el campo esta vacio devolvera todos
+          los usuarios)*
+        </label>
+        <button onClick={onSearch}>
+          <img src={lupa} alt="buscar" />
+        </button>
+      </div>
       {!cuentas.length ? (
-        <h1>Cargando</h1>
+        <div className="cargando">
+          <img src={cargando} alt="" />
+        </div>
       ) : (
-        cuentas.map((cuenta) => {
-          return (
-            <div key={cuenta.id}>
-              <p>
-                <b>ROL: {cuenta.rol.name}</b>
-              </p>
-              <p>{cuenta.first_name}</p>
-              <p>
-                Username: <b>{cuenta.username}</b>
-              </p>
-              <p>Genero: {cuenta.profileIMG ? "Femenino" : "Masculino"}</p>
-              <p>
-                Cuenta Verificada:{" "}
-                {cuenta.verify ? "Verificada" : "NO verificada"}
-              </p>
-              <button onClick={() => suspender(cuenta.id, !cuenta.status)}>
-                {cuenta.status ? "Suspender Cuenta" : "Activar Cuenta"}
-              </button>
-              <button
-                onClick={() => {
-                  deleteUserAcoutn(cuenta.id, cuenta.username);
-                }}
-              >
-                Eliminar Cuenta
-              </button>
-            </div>
-          );
-        })
+        <div className="cuentasList">
+          {cuentas.map((cuenta) => (
+            <UserCard key={cuenta.id} cuenta={cuenta} />
+          ))}
+        </div>
       )}
     </div>
   );

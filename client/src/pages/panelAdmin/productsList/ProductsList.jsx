@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import cargando from "../../../img/load.svg";
 import ProductCardADM from "../../../components/cardProducts/ProductCardADM";
 import "./ProductsLists.scss";
-import ProductsCard from "../../../components/cardProducts/ProductsCard";
 
 function ProductsList() {
   const dispatch = useDispatch();

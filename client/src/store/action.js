@@ -11,6 +11,7 @@ export const UPDATEPRODUCT = "UPDATEPRODUCT";
 export const UPDATEACOUNT = "UPDATEACOUNT";
 export const GETPRODUCTDETAIL = "GETPRODUCTDETAIL";
 export const GETUSERS = "GETUSERS";
+export const GETUSERCOPY = "GETUSERCOPY";
 export const SEARCHUSER = "SEARCHUSER";
 export const DELETEUSER = "DELETEUSER";
 export const VERIFYACOUNT = "VERIFYACOUNT";
@@ -87,6 +88,14 @@ export const getAllUsers = (token) => {
     return dispatch({
       type: GETUSERS,
       payload: result.data,
+    });
+  };
+};
+
+export const getUserCopy = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: GETUSERCOPY,
     });
   };
 };
