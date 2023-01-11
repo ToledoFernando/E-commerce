@@ -1,7 +1,10 @@
 import { getProducts } from "../../../store/action";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import cargando from "../../../img/load.svg";
 import ProductCardADM from "../../../components/cardProducts/ProductCardADM";
+import "./ProductsLists.scss";
+import ProductsCard from "../../../components/cardProducts/ProductsCard";
 
 function ProductsList() {
   const dispatch = useDispatch();
@@ -12,14 +15,20 @@ function ProductsList() {
   }, []);
 
   return (
-    <div>
-      <h1>Product List</h1>
+    <div className="productsList">
+      <h1>
+        Lista de <span className="res">Productos</span>
+      </h1>
       {!productos.length ? (
-        <p>Cargando....</p>
+        <div className="cargando">
+          <img src={cargando} alt="" />
+        </div>
       ) : (
-        productos.map((producto) => (
-          <ProductCardADM key={producto.id} producto={producto} />
-        ))
+        <div className="productosLista">
+          {productos.map((producto) => (
+            <ProductCardADM key={producto.id} producto={producto} />
+          ))}
+        </div>
       )}
     </div>
   );
