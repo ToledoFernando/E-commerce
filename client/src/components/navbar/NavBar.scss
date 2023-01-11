@@ -58,4 +58,29 @@ nav {
       background-color: #c62626;
     }
   }
+  .subir {
+    background-color: transparent;
+    border: 0;
+    width: max-content;
+    z-index: 200;
+    position: fixed;
+    right: 5px;
+    bottom: 20px;
+
+    a {
+      display: none;
+      width: max-content;
+      img {
+        transition: all 0.5s;
+        transform: scale(0);
+        box-shadow: 0px 0px 30px #00000072;
+        background-color: #fff;
+        border: 1px solid #00000033;
+        padding: 10px;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+      }
+    }
+  }
 }

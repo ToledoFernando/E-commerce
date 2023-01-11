@@ -1,0 +1,85 @@
+.userCard {
+  display: flex;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 5px;
+
+  .iconProfile {
+    img {
+      width: 70px;
+      height: 70px;
+    }
+  }
+
+  .estado {
+    .act {
+      color: #05bc05;
+      position: relative;
+      padding-left: 15px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 5px;
+        left: 0px;
+        border-radius: 50%;
+        background-color: #05bc05;
+      }
+    }
+    .des {
+      color: var(--resaltar);
+      position: relative;
+      padding-left: 15px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: 5px;
+        left: 0px;
+        border-radius: 50%;
+        background-color: var(--resaltar);
+      }
+    }
+  }
+  .info {
+    p {
+      padding-left: 10px;
+      font-size: 15px;
+      b {
+        color: #000000b1;
+      }
+    }
+    .verificada {
+      font-size: 13px;
+      margin: 3px 0px;
+    }
+
+    .suspenderCuenta,
+    .eliminarCuenta,
+    .activarCuenta {
+      color: #fff;
+      font-size: 13px;
+      padding: 3px 9px;
+      border: 0;
+      border-radius: 20px;
+      cursor: pointer;
+      margin: 0px 3px;
+
+      &:disabled {
+        background-color: #959595;
+      }
+    }
+    .suspenderCuenta,
+    .eliminarCuenta {
+      background-color: var(--resaltar);
+    }
+    .activarCuenta {
+      background-color: #05bc05;
+    }
+  }
+}

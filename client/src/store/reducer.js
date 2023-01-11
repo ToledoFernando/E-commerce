@@ -15,6 +15,7 @@ import {
   PEDIRVERIFICACION,
   GETMARCAS,
   GETCATEGORY,
+  GETUSERCOPY,
 } from "./action";
 
 const initialState = {
@@ -23,6 +24,7 @@ const initialState = {
   products: [],
   productDetail: {},
   users: [],
+  usersCopy: [],
   marcas: [],
   categorys: [],
 };
@@ -70,12 +72,16 @@ export default function rootReducer(state = initialState, action) {
         isLogin: true,
       };
     case SEARCHUSER:
-      const userFiltro = state.users.filter((us) =>
-        us.username.includes(action.payload)
-      );
+      let a = state.usersCopy;
+      const userFiltro = a.filter((us) => us.username.includes(action.payload));
       return {
         ...state,
         users: userFiltro,
+      };
+    case GETUSERCOPY:
+      return {
+        ...state,
+        users: state.usersCopy,
       };
     case PEDIRVERIFICACION:
       return {
@@ -111,6 +117,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         users: action.payload,
+        usersCopy: action.payload,
       };
     case GETMARCAS:
       return {
