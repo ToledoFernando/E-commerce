@@ -1,0 +1,34 @@
+.productsList {
+  width: 100%;
+  height: max-content;
+  padding: 20px 30px;
+
+  h1 {
+    text-align: center;
+    padding: 10px 0px 30px;
+
+    .res {
+      color: var(--resaltar);
+    }
+  }
+
+  .cargando {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70vh;
+
+    img {
+      width: 100px;
+    }
+  }
+
+  .productosLista {
+    // justify-content: center;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+}

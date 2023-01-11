@@ -6,6 +6,7 @@ import {
   searchUser,
   updateAcout,
 } from "../../../store/action";
+import "./ListUser.scss";
 
 function SuperAdminUsers() {
   const cuentas = useSelector((state) => state.users);
