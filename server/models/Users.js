@@ -1,12 +1,11 @@
-const { DataTypes } = require('sequelize');
-
+const { DataTypes } = require("sequelize");
 
 module.exports = (database) => {
-  database.define('users', {
+  database.define("users", {
     id: {
       type: DataTypes.STRING,
       defaultValue: DataTypes.UUIDV4,
-      primaryKey: true
+      primaryKey: true,
     },
     first_name: {
       type: DataTypes.STRING,
@@ -16,11 +15,11 @@ module.exports = (database) => {
     },
     profileIMG: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      defaultValue: 0,
     },
     username: {
       type: DataTypes.STRING,
-      unique: true
+      unique: true,
     },
     email: {
       type: DataTypes.STRING,
@@ -30,11 +29,11 @@ module.exports = (database) => {
     },
     verify: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
+      defaultValue: false,
     },
     status: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true
-    }
-  })
-}
+      defaultValue: true,
+    },
+  });
+};

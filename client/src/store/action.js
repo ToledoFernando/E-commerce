@@ -18,6 +18,8 @@ export const VERIFYACOUNT = "VERIFYACOUNT";
 export const PEDIRVERIFICACION = "PEDIRVERIFICACION";
 export const GETMARCAS = "GETMARCAS";
 export const GETCATEGORY = "GETCATEGORY";
+export const NEWIMG = "NEWIMG";
+export const DELETEIMG = "DELETEIMG";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -40,6 +42,7 @@ export const register = (datas) => {
 export const login = (data) => {
   return async (dispatch) => {
     const result = await axios.post(`${api}/user/`, data);
+    console.log(result.data);
     if (!result.data.usuario.status) throw Error("Cuenta suspendida");
     return dispatch({
       type: LOGIN,
@@ -152,6 +155,23 @@ export const pedirVerificacion = (token) => {
 };
 
 //=======================================================//
+
+export const newIMG = (data) => {
+  return (dispatch) => {
+    return dispatch({
+      type: NEWIMG,
+      payload: data,
+    });
+  };
+};
+
+export const deleteIMG = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: DELETEIMG,
+    });
+  };
+};
 
 export const uploadProduct = (newProduct, token) => {
   return async (dispatch) => {

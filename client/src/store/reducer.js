@@ -16,6 +16,8 @@ import {
   GETMARCAS,
   GETCATEGORY,
   GETUSERCOPY,
+  NEWIMG,
+  DELETEIMG,
 } from "./action";
 
 const initialState = {
@@ -27,6 +29,7 @@ const initialState = {
   usersCopy: [],
   marcas: [],
   categorys: [],
+  img: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -128,6 +131,16 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         categorys: action.payload,
+      };
+    case NEWIMG:
+      return {
+        ...state,
+        img: action.payload,
+      };
+    case DELETEIMG:
+      return {
+        ...state,
+        img: {},
       };
     default:
       return state;

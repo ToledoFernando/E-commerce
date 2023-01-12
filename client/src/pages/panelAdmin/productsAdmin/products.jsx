@@ -6,6 +6,8 @@ import {
   getMarcas,
   uploadProduct,
   validarToken,
+  newIMG,
+  deleteIMG,
 } from "../../../store/action";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -22,14 +24,12 @@ const initial = {
   marcaId: 0,
 };
 
-const initialIMG = { productIMG: "", imgid: "" };
-
 function Products() {
   const navigate = useNavigate();
   const [token, setToken] = useState("");
   const dispatch = useDispatch();
   const [newProduct, setNewProduct] = useState(initial);
-  const [img, setImg] = useState(initialIMG);
+  const img = useSelector((state) => state.img);
   const [cargando, setCargando] = useState(false);
   const marcas = useSelector((state) => state.marcas);
   const categorys = useSelector((state) => state.categorys);
@@ -52,7 +52,7 @@ function Products() {
         dangerMode: true,
       }).then(() => {
         setNewProduct(initial);
-        setImg(initialIMG);
+        dispatch(deleteIMG());
         setCargando(false);
       });
     } catch (error) {
@@ -64,14 +64,14 @@ function Products() {
   const setImage = async (e) => {
     setCargando(true);
     const imgUrl = await upload(e.target.files[0]);
-    setImg({ productIMG: imgUrl.url, imgid: imgUrl.id });
+    dispatch(newIMG(imgUrl));
     setNewProduct({ ...newProduct, productIMG: imgUrl.url, imgid: imgUrl.id });
     setCargando(false);
   };
 
   const cambiarIMG = async (id) => {
     await deleteImg(id);
-    setImg(initialIMG);
+    dispatch(deleteIMG());
   };
 
   const handleSelected = (e) => {
@@ -104,7 +104,7 @@ function Products() {
           <div className="upload">
             <label htmlFor="img">Subir Imagen</label>
             <input
-              disabled={img.productIMG.length}
+              disabled={!img}
               accept="image/png,image/jpeg"
               type="file"
               id="img"
@@ -190,8 +190,8 @@ function Products() {
               !newProduct.name.length ||
               !newProduct.oferta.length ||
               !newProduct.price.length ||
-              !img.productIMG.length ||
-              !img.imgid.length
+              !img ||
+              !img
             }
           >
             Subir Producto
@@ -199,18 +199,13 @@ function Products() {
         </div>
         <div className="loadIMG">
           {cargando ? <img src={imgLoad} className="cargando" /> : null}
-          {!img.productIMG.length ? null : (
+          {!img.url ? null : (
             <>
-              <img
-                src={img.productIMG}
-                alt="nuevoProducto"
-                width="300"
-                height="300"
-              />
+              <img src={img.url} alt="nuevoProducto" width="300" height="300" />
               <button
                 className="deleteIMG"
                 type="button"
-                onClick={() => cambiarIMG(img.imgid)}
+                onClick={() => cambiarIMG(img.id)}
               >
                 Eliminar Imagen
               </button>
