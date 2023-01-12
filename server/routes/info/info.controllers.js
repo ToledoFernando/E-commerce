@@ -32,7 +32,7 @@ const deleteMarca = async (req, res) => {
   try {
     const usuario = await users.findOne({ where: { email: req.user.email } });
     if (usuario.rolId < 3) throw Error("Rol no suficiente");
-    const result = await marca.destroy({ where: req.body });
+    const result = await marca.destroy({ where: req.params });
     res.json(result);
   } catch (error) {
     console.log(error.message);
@@ -62,7 +62,6 @@ const postCategory = async (req, res) => {
     const existe = await category.findOne({ where: req.body });
     if (existe) throw Error("Ya existe la categoria");
     const result = await category.create(req.body);
-
     res.json(result);
   } catch (error) {
     console.log(error.message);
@@ -74,7 +73,7 @@ const deleteCategory = async (req, res) => {
   try {
     const usuario = await users.findOne({ where: { email: req.user.email } });
     if (usuario.rolId < 3) throw Error("Rol no suficiente");
-    const result = await category.destroy({ where: req.body });
+    const result = await category.destroy({ where: req.params });
     res.json(result);
   } catch (error) {
     console.log(error.message);

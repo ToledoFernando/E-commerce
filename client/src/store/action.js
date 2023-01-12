@@ -20,6 +20,10 @@ export const GETMARCAS = "GETMARCAS";
 export const GETCATEGORY = "GETCATEGORY";
 export const NEWIMG = "NEWIMG";
 export const DELETEIMG = "DELETEIMG";
+export const NEWCATEGORY = "NEWCATEGORY";
+export const DELETECATEGORY = "DELETECATEGORY";
+export const NEWMARCA = "NEWMARCA";
+export const DELETEMARCA = "DELETEMARCA";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -234,12 +238,59 @@ export const getMarcas = () => {
   };
 };
 
+export const postMarca = (data, token) => {
+  return async (dispatch) => {
+    const body = { name: data.marca };
+    await axios.post(`${api}/info/newMarca`, body, {
+      headers: { authorization: `Bearer ${token}` },
+    });
+    return dispatch({
+      type: NEWMARCA,
+    });
+  };
+};
+
+export const deleteMarca = (data, token) => {
+  return async (dispatch) => {
+    await axios.delete(`${api}/info/deleteMarca/${data}`, {
+      headers: { authorization: `Bearer ${token}` },
+    });
+    return dispatch({
+      type: DELETEMARCA,
+    });
+  };
+};
+
 export const getCategory = () => {
   return async (dispatch) => {
     const result = await axios.get(`${api}/info/category`);
     return dispatch({
       type: GETCATEGORY,
       payload: result.data,
+    });
+  };
+};
+
+export const postCategory = (data, token) => {
+  return async (dispatch) => {
+    const body = { name: data.category };
+    console.log(body);
+    await axios.post(`${api}/info/newCategory`, body, {
+      headers: { authorization: `Bearer ${token}` },
+    });
+    return dispatch({
+      type: NEWCATEGORY,
+    });
+  };
+};
+
+export const deleteCategory = (data, token) => {
+  return async (dispatch) => {
+    await axios.delete(`${api}/info/deleteCategory/${data}`, {
+      headers: { authorization: `Bearer ${token}` },
+    });
+    return dispatch({
+      type: DELETECATEGORY,
     });
   };
 };

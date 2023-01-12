@@ -15,12 +15,12 @@ route.get("/marcas", getMarcas);
 
 route.post("/newMarca", verifyToken, postMarca);
 
-route.delete("/deleteMarca", verifyToken, deleteMarca);
+route.delete("/deleteMarca/:name", verifyToken, deleteMarca);
 
 route.get("/category", getCategories);
 
 route.post("/newCategory", verifyToken, postCategory);
 
-route.delete("/deleteCategory", verifyToken, deleteCategory);
+route.delete("/deleteCategory/:name", verifyToken, deleteCategory);
 
 module.exports = route;
