@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { login, validarToken } from "../../store/action";
 import { useNavigate, Link } from "react-router-dom";
 import md5 from "md5";
+import swal from "sweetalert";
 import "./Login.scss";
 
 const initial = {
@@ -23,7 +24,7 @@ function Login() {
       navigate("/");
     } catch (error) {
       setForm(initial);
-      alert(error.message);
+      swal("Error!!", error.response.data.Error, "warning");
     }
   };
 

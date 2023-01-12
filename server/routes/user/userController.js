@@ -39,11 +39,10 @@ const senEmailVerifyEmail = async (req, res) => {
 
 const newUser = async (req, res) => {
   try {
-    const data = req.body;
-    const buscar = await users.findOne({ where: { email: data.email } });
+    const buscar = await users.findOne({ where: { email: req.body.email } });
     if (buscar) throw Error("Ya existe un usuario con ese email");
-    data.rolId = 1; // asignarle rol user por defecto
-    const result = await users.create(data);
+    req.body.rolId = 1; // asignarle rol user por defecto
+    const result = await users.create(req.body);
 
     //Token
     const userToken = jwt.sign(
@@ -79,6 +78,7 @@ const newUser = async (req, res) => {
     sendEsendEmailVerifyAcountmail(emailData);
     res.json({ UsuarioCreado: { userData }, tokenUser: userToken });
   } catch (error) {
+    console.log(error);
     console.log(error.message);
     res.status(400).json({ Error: error.message });
   }
