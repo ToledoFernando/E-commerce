@@ -1,0 +1,77 @@
+.CM {
+  width: 100%;
+
+  .tituloAddMC {
+    text-align: center;
+    margin: 30px 0;
+    .res {
+      color: var(--resaltar);
+    }
+  }
+  .addCM {
+    justify-content: center;
+    display: flex;
+    gap: 40px;
+
+    .addCategory,
+    .addMarca {
+      width: 350px;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 7px;
+      height: max-content;
+
+      p {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+      form {
+        display: flex;
+        margin: 15px 0;
+        input {
+          width: 80%;
+          padding: 5px 10px;
+          border: 1px solid #0000004c;
+          border-radius: 5px 0 0 5px;
+        }
+        button {
+          width: 20%;
+          background-color: #fff;
+          border: 1px solid #0000004c;
+          border-radius: 0 5px 5px 0;
+        }
+      }
+
+      .misCategory,
+      .misMarcas {
+        .category,
+        .marcas {
+          position: relative;
+          width: 80%;
+          display: flex;
+          justify-content: space-between;
+          margin: 15px auto;
+          background-color: #0000000b;
+          padding: 10px 20px;
+          border-radius: 10px;
+
+          label {
+            font-weight: 700;
+            font-size: 17px;
+          }
+
+          button {
+            background-color: var(--resaltar);
+            color: #fff;
+            padding: 5px 10px;
+            border: 0;
+            border-radius: 20px;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}

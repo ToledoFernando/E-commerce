@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { validarToken } from "../../store/action";
 import soportexd from "../../img/contacto.png";
 import load from "../../img/load.svg";
-import correoEnviado from "../../img/correoEnviar.png";
+import correoEnviado from "../../img/correoEnviar.svg";
 import sweet from "sweetalert";
 import "./Registro.scss";
 import { useRef } from "react";
@@ -44,7 +44,11 @@ function Registro() {
       e.preventDefault();
       await dispatch(register(registro));
       setCargando(!cargando);
-      alerta.current.classList = "creado";
+      sweet(
+        "Revisa tu correo",
+        "Se envio un correo de validacion (revisa seccion SPAN)",
+        correoEnviado
+      ).then(() => navigate("/#"));
     } catch (error) {
       console.log(error);
       sweet({
@@ -245,16 +249,6 @@ function Registro() {
             Elige un <span className="resaltar">nombre de usuario unico</span>{" "}
             ya que no se pueden repetir (Puedes cambiarlo despues)
           </p>
-        </div>
-      </div>
-      <div ref={alerta} className="creado disabled">
-        <div className="alerta">
-          <img src={correoEnviado} alt="Correo enviado" />
-          <div>
-            <h1>Verifica tu correo</h1>
-            <p>Se envio un correo para validar tu cuenta</p>
-            <button onClick={() => navigate("/#")}>Cerrar</button>
-          </div>
         </div>
       </div>
     </div>

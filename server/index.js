@@ -12,10 +12,12 @@ app.use(require("./routes/routes"));
 
 app.listen(process.env.PORT || 4000, async () => {
   await database.sync({ force: true });
-
+  await rol.create(process.env.ROL1);
+  await rol.create(process.env.ROL2);
+  await rol.create(process.env.ROL3);
   console.log(`-----------------------------------
 Server on Port ${process.env.PORT || 4000}
 DB is connected :D
------------------------------------
+----------------------------------- 
 `);
 });
