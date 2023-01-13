@@ -1,3 +1,10 @@
+.productAdminList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-left: 10px;
+}
+
 .detalle {
   width: 200px;
   margin: 10px;
@@ -6,6 +13,7 @@
   overflow: hidden;
   border: 0;
   padding: 0;
+  height: max-content;
 
   img {
     width: 100%;
@@ -71,6 +79,32 @@
       &:hover {
         background-color: #1fbb1f;
       }
+    }
+  }
+  .button {
+    padding: 5px 0px;
+    text-align: center;
+
+    .productAct {
+      background-color: #1fbb1f;
+      color: #fff;
+      border: 0;
+      border-radius: 20px;
+      padding: 5px 20px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #25b025;
+      }
+    }
+
+    .productDes {
+      background-color: var(--resaltar);
+      color: #fff;
+      border: 0;
+      border-radius: 20px;
+      padding: 5px 20px;
+      cursor: pointer;
     }
   }
 }
