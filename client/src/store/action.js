@@ -198,24 +198,19 @@ export const getProducts = () => {
       });
     } catch (error) {
       console.log("Error");
-      console.log(error);
+      console.log(error.response.data);
     }
   };
 };
 
 export const updateProduct = (data, token) => {
   return async (dispatch) => {
-    try {
-      await axios.put(`${api}/products/updateProduct`, data, {
-        headers: { authorization: `Bearer ${token}` },
-      });
-      return dispatch({
-        type: UPDATEPRODUCT,
-      });
-    } catch (error) {
-      console.log("error");
-      console.log(error);
-    }
+    await axios.put(`${api}/products/updateProduct`, data, {
+      headers: { authorization: `Bearer ${token}` },
+    });
+    return dispatch({
+      type: UPDATEPRODUCT,
+    });
   };
 };
 
