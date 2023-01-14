@@ -1,47 +1,42 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
+import cart from "../../img/cart.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { getMarcas } from "../../store/action";
-import { Link } from "react-router-dom";
 import "./Filtros.scss";
 
 function Filtros() {
-  const [precio, setPrecio] = useState(5000);
-  const marcas = useSelector((state) => state.marcas);
+  const marcas = useSelector((state) => state.categorys);
   const dispatch = useDispatch();
-
-  const handleChange = (e) => {
-    setPrecio(e.target.value);
-  };
+  const filtros = useRef();
 
   useEffect(() => {
     if (!marcas.length) dispatch(getMarcas());
+    window.addEventListener("scroll", (e) => {
+      if (Math.round(e.target.scrollingElement.scrollTop) >= 20) {
+        filtros.current.style.boxShadow = "0px 8px 10px #0000001e";
+      } else {
+        filtros.current.style.boxShadow = "none";
+      }
+    });
   }, []);
-
   return (
-    <div className="filtros">
+    <div className="filtros" ref={filtros}>
       <ul>
         <li>
-          <p>Rando de precio</p>
-          <p>min-300 max-5000</p>
-          <input
-            type="range"
-            min="300"
-            max="5000"
-            onChange={handleChange}
-            value={precio}
-          />{" "}
-          <p>Desde 300 a {precio}</p>
+          <button className="Todos">Todos</button>
         </li>
-        {marcas?.map((marca) => (
-          <li key={marca.id}>
-            <button>{marca.name}</button>
-          </li>
-        ))}
+        <div className="marcas">
+          {marcas?.map((marca) => (
+            <li key={marca.id}>
+              <button>{marca.name}</button>
+            </li>
+          ))}
+        </div>
+
         <li>
-          <button>Filtrar</button>
-        </li>
-        <li>
-          <Link to="/products">Quitar Filtros</Link>
+          <button className="cart">
+            <img src={cart} alt="Icon-Cart" />
+          </button>
         </li>
       </ul>
     </div>

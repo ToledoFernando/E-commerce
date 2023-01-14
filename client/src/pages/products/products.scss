@@ -1,15 +1,40 @@
 .prductos {
   background-color: #f3f2f2;
-  display: flex;
+  position: relative;
+  padding: 0px 0px 40px;
 
-  .verFiltros {
-    position: absolute;
-    top: 7%;
-    left: 30px;
-    font-size: 30px;
-    background-color: transparent;
-    border: 0;
-    z-index: 300;
+  div {
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 2px;
+      background: black;
+      border: none;
+      outline: none;
+      margin: 10px 0px;
+
+      &::-webkit-slider-runnable-track {
+        height: 5px;
+        border-radius: 20px;
+        background: #e43939;
+      }
+
+      &::-webkit-slider-thumb {
+        transition: all 0.3s;
+        -webkit-appearance: none !important;
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        box-shadow: 0px 0px 13px #0000003e;
+        border-radius: 50%;
+        margin-top: -6px;
+        cursor: pointer;
+      }
+      &::-webkit-slider-thumb:hover {
+        background: #fbf9f9;
+        box-shadow: 0px 0px 13px #00000083;
+      }
+    }
   }
 
   .divFiltros {
@@ -23,6 +48,7 @@
   }
 
   .divProductos {
+    padding-top: 50px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

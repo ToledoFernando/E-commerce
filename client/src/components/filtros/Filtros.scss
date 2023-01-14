@@ -1,12 +1,62 @@
 .filtros {
-  // background-color: red;
-  width: 17%;
+  width: 100%;
   background-color: #fff;
-  height: 100vh;
-  padding: 30px 0px 0px 30px;
+  height: max-content;
+  display: flex;
+  position: fixed;
+  z-index: 200;
+  justify-content: center;
+  transition: all 0.3s;
+
   ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+
+    .marcas {
+      display: flex;
+      flex-wrap: wrap;
+      min-width: 60%;
+      justify-content: center;
+      width: max-content;
+    }
+
     li {
       list-style: none;
+      img {
+        width: 30px;
+      }
+
+      button {
+        text-align: center;
+        width: 100%;
+        text-align: left;
+        padding: 4px 8px;
+        margin: 3px 0px;
+        font-size: 16px;
+        background-color: #fff;
+        border: 0;
+        transition: all 0.4s;
+        cursor: pointer;
+        font-size: 16px;
+
+        &:hover {
+          text-decoration: underline;
+          transform: translateY(-1px);
+        }
+      }
+      .Todos,
+      .cart {
+        padding: 10px 30px;
+        border-radius: 4px;
+        transition: all 0.3s;
+        &:hover {
+          transform: scale(1.1);
+          // background-color: #00000005;
+        }
+      }
     }
   }
 }

@@ -61,7 +61,7 @@ export const login = (data) => {
         "Cuenta suspendida",
         "Su cuenta fue suspendida, contacte con soporte",
         "warning"
-      );
+      ).then(() => window.scrollTo(0, 0));
     }
   };
 };
@@ -79,7 +79,7 @@ export const validarToken = (token) => {
     const { data } = await axios.get(`${api}/user/validateToken`, {
       headers: { authorization: `Bearer ${token}` },
     });
-    // if (!data.status) throw Error("Cuenta suspendida");
+    if (!data.status) throw Error("Cuenta suspendida");
     return dispatch({
       type: TOKENVALIDATE,
       payload: data,
