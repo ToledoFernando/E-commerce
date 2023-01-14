@@ -29,7 +29,7 @@ function EdithProduct() {
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/products/detail/${id}`)
-      .then((result) =>
+      .then((result) => {
         setData({
           ...data,
           imgid: result.data.imgid,
@@ -39,8 +39,8 @@ function EdithProduct() {
           price: result.data.price,
           oferta: result.data.oferta,
           status: result.data.status,
-        })
-      );
+        });
+      });
   }, []);
 
   const handleChange = (e) => {

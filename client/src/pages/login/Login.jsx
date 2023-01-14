@@ -17,15 +17,10 @@ function Login() {
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      form.password = md5(form.password);
-      await dispatch(login(form));
-      navigate("/");
-    } catch (error) {
-      setForm(initial);
-      swal("Error!!", error.response.data.Error, "warning");
-    }
+    e.preventDefault();
+    form.password = md5(form.password);
+    await dispatch(login(form));
+    navigate("/");
   };
 
   const handleChange = (e) => {
@@ -38,6 +33,11 @@ function Login() {
       dispatch(validarToken(token))
         .then(() => navigate("/"))
         .catch((error) => {
+          swal(
+            error.message,
+            "Su cuenta fue suspendida, contacte con soporte",
+            "warning"
+          );
           localStorage.clear();
         });
     }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import md5 from "md5";
+import swal from "sweetalert";
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
@@ -13,6 +14,8 @@ export const GETPRODUCTDETAIL = "GETPRODUCTDETAIL";
 export const GETUSERS = "GETUSERS";
 export const GETUSERCOPY = "GETUSERCOPY";
 export const SEARCHUSER = "SEARCHUSER";
+export const SEARCHPRODUCT = "SEARCHPRODUCT";
+export const GETPRODUCTCOPY = "GETPRODUCTCOPY";
 export const DELETEUSER = "DELETEUSER";
 export const VERIFYACOUNT = "VERIFYACOUNT";
 export const PEDIRVERIFICACION = "PEDIRVERIFICACION";
@@ -45,13 +48,21 @@ export const register = (datas) => {
 
 export const login = (data) => {
   return async (dispatch) => {
-    const result = await axios.post(`${api}/user/`, data);
-    console.log(result.data);
-    if (!result.data.usuario.status) throw Error("Cuenta suspendida");
-    return dispatch({
-      type: LOGIN,
-      payload: result.data,
-    });
+    try {
+      const result = await axios.post(`${api}/user/`, data);
+      if (!result.data.usuario.status) throw Error("Cuenta suspendida");
+      return dispatch({
+        type: LOGIN,
+        payload: result.data,
+      });
+    } catch (error) {
+      console.log(error);
+      swal(
+        "Cuenta suspendida",
+        "Su cuenta fue suspendida, contacte con soporte",
+        "warning"
+      );
+    }
   };
 };
 
@@ -68,6 +79,7 @@ export const validarToken = (token) => {
     const { data } = await axios.get(`${api}/user/validateToken`, {
       headers: { authorization: `Bearer ${token}` },
     });
+    // if (!data.status) throw Error("Cuenta suspendida");
     return dispatch({
       type: TOKENVALIDATE,
       payload: data,
@@ -200,6 +212,27 @@ export const getProducts = () => {
       console.log("Error");
       console.log(error.response.data);
     }
+  };
+};
+
+export const searchProduct = (buscar, productos) => {
+  return (dispatch) => {
+    const filtro = productos.filter((producto) =>
+      producto.name.includes(buscar.toLowerCase())
+    );
+    if (!filtro.length) throw Error("No se encontro ningun producto");
+    return dispatch({
+      type: SEARCHPRODUCT,
+      payload: filtro,
+    });
+  };
+};
+
+export const getProductsCopy = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: GETPRODUCTCOPY,
+    });
   };
 };
 

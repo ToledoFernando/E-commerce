@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteUser, getAllUsers, updateAcout } from "../../store/action";
 import iconM from "../../pages/EdithAcoutn/iconM.png";
@@ -6,7 +6,7 @@ import iconF from "../../pages/EdithAcoutn/iconF.png";
 import swal from "sweetalert";
 import "./UserCard.scss";
 
-function UserCard({ cuenta }) {
+function UserCard({ cuenta, rol }) {
   const [load, setLoad] = useState(false);
   const dispatch = useDispatch();
 
@@ -80,15 +80,17 @@ function UserCard({ cuenta }) {
           >
             {cuenta.status ? "Suspender Cuenta" : "Activar Cuenta"}
           </button>
-          <button
-            disabled={load}
-            className="eliminarCuenta"
-            onClick={() => {
-              deleteUserAcoutn(cuenta.id, cuenta.username);
-            }}
-          >
-            Eliminar Cuenta
-          </button>
+          {rol == "admin" ? null : (
+            <button
+              disabled={load}
+              className="eliminarCuenta"
+              onClick={() => {
+                deleteUserAcoutn(cuenta.id, cuenta.username);
+              }}
+            >
+              Eliminar Cuenta
+            </button>
+          )}
         </div>
       </div>
     </div>

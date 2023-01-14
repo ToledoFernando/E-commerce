@@ -4,6 +4,49 @@
   gap: 20px;
   margin-left: 10px;
 }
+.listAdmin {
+  width: 100%;
+  h1 {
+    margin: 25px 0px;
+    text-align: center;
+    .res {
+      color: var(--resaltar);
+    }
+  }
+}
+
+.buscarProducto {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  margin: 10px 0px 30px 0px;
+
+  input {
+    outline: none;
+    border-radius: 20px 0px 0px 20px;
+    border: 1px solid #0000009d;
+    padding: 3px 20px;
+    border-right: 0;
+    width: 350px;
+  }
+  label {
+    position: absolute;
+    bottom: -20px;
+    color: #0000009d;
+  }
+
+  button {
+    background-color: #fff;
+    border-radius: 0px 20px 20px 0px;
+    border: 1px solid #0000009d;
+    border-left: 0;
+    padding: 5px 10px;
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
 
 .detalle {
   width: 200px;
