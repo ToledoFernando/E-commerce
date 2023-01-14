@@ -18,12 +18,15 @@ import {
   GETUSERCOPY,
   NEWIMG,
   DELETEIMG,
+  SEARCHPRODUCT,
+  GETPRODUCTCOPY,
 } from "./action";
 
 const initialState = {
   myAcount: {},
   isLogin: false,
   products: [],
+  productsCopy: [],
   productDetail: {},
   users: [],
   usersCopy: [],
@@ -81,6 +84,17 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         users: userFiltro,
       };
+    case SEARCHPRODUCT:
+      return {
+        ...state,
+        products: action.payload,
+      };
+    case GETPRODUCTCOPY: {
+      return {
+        ...state,
+        products: state.productsCopy,
+      };
+    }
     case GETUSERCOPY:
       return {
         ...state,
@@ -98,6 +112,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         products: action.payload,
+        productsCopy: action.payload,
       };
     case UPDATEPRODUCT:
       return {

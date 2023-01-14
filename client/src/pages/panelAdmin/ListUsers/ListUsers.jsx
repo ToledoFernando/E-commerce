@@ -1,10 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllUsers, searchUser, updateAcout } from "../../../store/action";
+import "../ListUsers/ListUserADM.scss";
+import "../../../components/userCard/UserCard.scss";
+import UserCard from "../../../components/userCard/UserCard";
+import Paginado from "../../../components/paginado/Paginado";
 
 function ListUsers() {
-  const cuentas = useSelector((state) => state.users);
+  const cuentasTotal = useSelector((state) => state.users);
   const dispatch = useDispatch();
+
+  //===============================
+  const [pagActual, setPagActual] = useState(1);
+  const [cantidad] = useState(9);
+  const final = cantidad * pagActual;
+  const inicio = final - cantidad;
+  const cuentas = cuentasTotal.slice(inicio, final);
+  //===============================
 
   useEffect(() => {
     const token = localStorage.getItem("tokenUser");
@@ -32,7 +44,7 @@ function ListUsers() {
   };
 
   return (
-    <div>
+    <div className="listUserADM">
       <input
         onChange={onSearch}
         placeholder='Buscar por "USERNAME"'
@@ -42,26 +54,13 @@ function ListUsers() {
       {!cuentas.length ? (
         <h1>Cargando</h1>
       ) : (
-        cuentas.map((cuenta) => {
-          return (
-            <div key={cuenta._id}>
-              <p>{cuenta.first_name}</p>
-              <p>
-                Username:<b>{cuenta.username}</b>
-              </p>
-              <p>Genero: {cuenta.profileIMG ? "Femenino" : "Masculino"}</p>
-              <p>Email: {cuenta.email}</p>
-              <p>
-                Cuenta Verificada:{" "}
-                {cuenta.verify ? "Verificada" : "NO verificada"}
-              </p>
-              <button onClick={() => suspender(cuenta.id, !cuenta.status)}>
-                {cuenta.status ? "Suspender Cuenta" : "Activar Cuenta"}
-              </button>
-            </div>
-          );
-        })
+        <div className="cuentasList">
+          {cuentas.map((cuenta) => (
+            <UserCard key={cuenta.id} cuenta={cuenta} rol={"admin"} />
+          ))}
+        </div>
       )}
+      <Paginado value={cuentasTotal.length} cantidad={9} set={setPagActual} />
     </div>
   );
 }
