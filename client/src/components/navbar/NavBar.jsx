@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getMarcas, logout } from "../../store/action";
+import { getCategory, getMarcas, logout } from "../../store/action";
 import { useRef } from "react";
 import { useEffect } from "react";
 import flecha from "../../img/arrow.svg";
@@ -15,6 +15,7 @@ function NavBar() {
   const subirHref = useRef();
   const subirSvg = useRef();
   const marcas = useSelector((state) => state.marcas);
+  const categorys = useSelector((state) => state.categorys);
 
   const cerrarSession = async () => {
     dispatch(logout());
@@ -24,6 +25,7 @@ function NavBar() {
 
   useEffect(() => {
     if (!marcas.length) dispatch(getMarcas());
+    if (!categorys.length) dispatch(getCategory());
     window.addEventListener("scroll", (e) => {
       if (Math.round(e.target.scrollingElement.scrollTop) >= 20) {
         navbar.current.style.boxShadow = "0px 0px 10px #00000068";

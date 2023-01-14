@@ -24,6 +24,7 @@ function Home() {
       typeSpeed: 50,
       showCursor: "",
     });
+    window.scrollTo(0, 0);
   }, []);
 
   return (
