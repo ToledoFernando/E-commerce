@@ -14,7 +14,9 @@ function Paginado({ value, cantidad, set }) {
         {paginas.map((e) => (
           <button
             className="PaginaN"
-            onClick={() => set(e)}
+            onClick={() => {
+              window.location.href = `#`
+              set(e)}}
             key={e}
             type="button"
             value={e}

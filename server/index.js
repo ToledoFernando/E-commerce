@@ -16,8 +16,6 @@ app.listen(process.env.PORT || 4000, async () => {
   // await rol.create(process.env.ROL2);
   // await rol.create(process.env.ROL3);
 
-  
-
   console.log(`-----------------------------------
 Server on Port ${process.env.PORT || 4000}
 DB is connected :D
