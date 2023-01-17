@@ -20,6 +20,7 @@ import {
   DELETEIMG,
   SEARCHPRODUCT,
   GETPRODUCTCOPY,
+  FILTROCATEGORY,
 } from "./action";
 
 const initialState = {
@@ -33,6 +34,7 @@ const initialState = {
   marcas: [],
   categorys: [],
   img: {},
+  filtro: "",
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -156,6 +158,25 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         img: {},
+      };
+    case FILTROCATEGORY:
+      const copy = state.productsCopy;
+
+      const result = copy.filter((producto) => {
+        const xd = producto.categories.filter(
+          (c) => c.name.toLowerCase() == action.payload.toLowerCase()
+        );
+        if (xd.length) return true;
+      });
+
+      if (!result.length)
+        throw Error(
+          "No se encontro producto con esa categoria, intente mas tarde"
+        );
+
+      return {
+        ...state,
+        products: result,
       };
     default:
       return state;

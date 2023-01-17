@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import cart from "../../img/cart.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { getCategory} from "../../store/action";
+import { filtroCategory, getCategory, getProductsCopy} from "../../store/action";
 import "./Filtros.scss";
+import swal from 'sweetalert'
 
 function Filtros() {
   const categorias = useSelector((state) => state.categorys);
@@ -19,16 +20,24 @@ function Filtros() {
       }
     });
   }, []);
+
+  const filtrar = (name) => {
+    try {
+      dispatch(filtroCategory(name));
+    } catch (error) {
+      swal('OPS!!',error.message, 'error')
+    }
+  }
   return (
     <div className="filtros" ref={filtros}>
       <ul>
         <li>
-          <button className="Todos">Todos</button>
+          <button className="Todos" onClick={()=>dispatch(getProductsCopy())}>Todos</button>
         </li>
         <div className="marcas">
           {categorias?.map((categoria) => (
             <li key={categoria.id}>
-              <button onClick={()=>console.log(categoria.name)}>{categoria.name}</button>
+              <button onClick={()=>filtrar(categoria.name)}>{categoria.name}</button>
             </li>
           ))}
         </div>
