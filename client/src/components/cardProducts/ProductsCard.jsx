@@ -1,4 +1,4 @@
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import "./products.scss";
 
 function ProductsCard({ producto }) {
@@ -13,6 +13,7 @@ function ProductsCard({ producto }) {
       <img src={producto.productIMG} id={producto.imgid} />
       <p>{upper(producto.name)}</p>
       <p className="marca">{upper(producto.marca.name)}</p>
+
       {producto.oferta ? (
         <p>
           Precio: <b>{producto.oferta}</b>

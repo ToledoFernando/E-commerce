@@ -6,7 +6,6 @@ function Paginado({ value, cantidad, set }) {
   for (let i = 1; i <= Math.ceil(value / cantidad); i++) {
     paginas.push(i);
   }
-  console.log(paginas);
 
   return (
     <div className="paginado3">
