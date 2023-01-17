@@ -9,6 +9,7 @@ import "./products.scss";
 function Products() {
   const dispatch = useDispatch();
   const productosTotal = useSelector((state) => state.products);
+  const filtro = useSelector(state => state.filtro);
   const [precio, setPrecio] = useState(5000);
   const [pagActual, setPagActual] = useState(1);
   const [cantidad] = useState(21);

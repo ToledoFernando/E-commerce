@@ -27,7 +27,7 @@ export const NEWCATEGORY = "NEWCATEGORY";
 export const DELETECATEGORY = "DELETECATEGORY";
 export const NEWMARCA = "NEWMARCA";
 export const DELETEMARCA = "DELETEMARCA";
-// export const 
+export const FILTROCATEGORY = "FILTROCATEGORY";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -320,6 +320,15 @@ export const deleteCategory = (data, token) => {
     });
     return dispatch({
       type: DELETECATEGORY,
+    });
+  };
+};
+
+export const filtroCategory = (data) => {
+  return (dispatch) => {
+    return dispatch({
+      type: FILTROCATEGORY,
+      payload: data,
     });
   };
 };
