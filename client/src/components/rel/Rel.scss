@@ -1,0 +1,51 @@
+.producto {
+    border: 1px solid #75747446;
+    border-radius: 6px;
+    margin: 1% 20px;
+    width: 200px;
+    overflow: hidden;
+    transition: all 0.4s;
+    background-color: #fff;
+  
+    img {
+      height: 200px;
+      width: 200px;
+      transition: all 0.2s;
+      border-radius: 6px;
+    }
+    p {
+      text-align: center;
+      color: #292828;
+    }
+  
+    .detalle {
+      display: flex;
+      justify-content: center;
+      .verDetalle {
+        background-color: var(--resaltar);
+        padding: 6px 14px;
+        font-size: 16px;
+        margin: 20px auto;
+        border: 0;
+        color: #fff;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s;
+  
+        &:hover {
+          background-color: #821f1f;
+        }
+      }
+    }
+    .marca {
+      margin: 10px 0px 0px;
+      color: #737272;
+    }
+    &:hover {
+      img {
+        transform: scale(1.05);
+      }
+      border: 1px solid #6a6a6a89;
+    }
+  }
+  

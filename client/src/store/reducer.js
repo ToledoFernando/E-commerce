@@ -35,6 +35,8 @@ const initialState = {
   categorys: [],
   img: {},
   filtro: "",
+  mismaMarca: [],
+  mismaCategory: []
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -123,11 +125,16 @@ export default function rootReducer(state = initialState, action) {
       };
     case GETPRODUCTDETAIL:
       const producto = state.products.filter(
-        (product) => product._id == action.payload
+        (product) => product.id == action.payload
       );
+      const mM = state.products.filter((product) => product.marca.name == producto[0].marca.name)
+      const mC = state.products.filter((product) => product.categories[0].name == producto[0].categories[0].name)
+
       return {
         ...state,
         productDetail: producto[0],
+        mismaMarca: mM.slice(0, 10),
+        mismaCategory: mC.slice(0, 8)
       };
     case VERIFYACOUNT:
       return {

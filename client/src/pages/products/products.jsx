@@ -24,21 +24,29 @@ function Products() {
   return (
     <div className="prductos">
       <Filtros />
-      <div className="divProductos">
-        <Marcas />
-        <div className="productosCards">
-          {!productos.length ? (
-            <h1>Cargando</h1>
-          ) : (
-            productos.map((producto) => (
-              <ProductsCard key={producto.id} producto={producto} />
-            ))
-          )}
-          <Paginado
-            value={productosTotal.length}
-            cantidad={cantidad}
-            set={setPagActual}
-          />
+      <div className="pr">
+        <div className="br">
+          <input className="buscarProducto" type="text" placeholder="Buscar" />
+          <button>Buscar</button>
+        </div>
+        <div className="divProductos">
+          <Marcas />
+          <div className="productosCards">
+            {!productos.length ? (
+              <h1>Cargando</h1>
+            ) : (
+              <>
+                {productos.map((producto) => (
+                  <ProductsCard key={producto.id} producto={producto} />
+                ))}
+              </>
+            )}
+            <Paginado
+              value={productosTotal.length}
+              cantidad={cantidad}
+              set={setPagActual}
+            />
+          </div>
         </div>
       </div>
     </div>

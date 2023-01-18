@@ -22,7 +22,19 @@ const getProducts = async (req, res) => {
 
 const getProductDetail = async (req, res) => {
   try {
-    const result = await products.findOne({ where: { id: req.params.id } });
+    const result = await products.findOne({
+      where: { id: req.params.id },
+      include: [
+        {
+          model: category,
+          attributes: ["name"],
+        },
+        { model: marca, attributes: ["name"] },
+      ],
+      attributes: {
+        exclude: ["marcaId", "category", "updatedAt"],
+      },
+    });
     res.json(result);
   } catch (error) {
     console.log(error.message);

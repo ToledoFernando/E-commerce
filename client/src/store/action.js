@@ -28,6 +28,7 @@ export const DELETECATEGORY = "DELETECATEGORY";
 export const NEWMARCA = "NEWMARCA";
 export const DELETEMARCA = "DELETEMARCA";
 export const FILTROCATEGORY = "FILTROCATEGORY";
+export const SEARCHpRODUCTS = "SEARCHpRODUCTS"; 
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -51,16 +52,14 @@ export const login = (data) => {
   return async (dispatch) => {
     try {
       const result = await axios.post(`${api}/user/`, data);
-      if (!result.data.usuario.status) throw Error("Cuenta suspendida");
       return dispatch({
         type: LOGIN,
         payload: result.data,
       });
     } catch (error) {
-      console.log(error);
       swal(
-        "Cuenta suspendida",
-        "Su cuenta fue suspendida, contacte con soporte",
+        "Error",
+        error.response.data.Error,
         "warning"
       ).then(() => window.scrollTo(0, 0));
     }
@@ -249,7 +248,7 @@ export const updateProduct = (data, token) => {
 };
 
 export const getProductDetail = (id) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     return dispatch({
       type: GETPRODUCTDETAIL,
       payload: id,
@@ -332,3 +331,12 @@ export const filtroCategory = (data) => {
     });
   };
 };
+
+export const SearchProducts = (data) => {
+  return (dispatch) => {
+    return dispatch({
+      type: SEARCHPRODUCT,
+      payload: data
+    })
+  }
+}

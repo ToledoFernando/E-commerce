@@ -20,6 +20,7 @@ const userLogin = async (req, res) => {
       ],
     });
     if (!result) throw Error("Usuario no encontrado");
+    if (!result.status) throw Error("Cuenta suspendida");
     const { first_name, last_name, email } = result;
     const userToken = jwt.sign(
       { name: first_name, lastName: last_name, email: email },
