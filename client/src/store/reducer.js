@@ -95,6 +95,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         products: state.productsCopy,
+        filtro: "",
       };
     }
     case GETUSERCOPY:
@@ -169,14 +170,12 @@ export default function rootReducer(state = initialState, action) {
         if (xd.length) return true;
       });
 
-      if (!result.length)
-        throw Error(
-          "No se encontro producto con esa categoria, intente mas tarde"
-        );
+      if (!result.length) throw Error("");
 
       return {
         ...state,
         products: result,
+        filtro: action.payload,
       };
     default:
       return state;
