@@ -1,13 +1,16 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import "./products.scss";
+import { getProductDetail } from "../../store/action";
+import "./Rel.scss";
 
-function ProductsCard({ producto }) {
-  const navigate = useNavigate();
+function Relacionados({ producto }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
   const upper = (text) => {
     const pri = text[0].toUpperCase();
     return pri + text.slice(1, text.length);
   };
-
   return (
     <div className="producto">
       <img src={producto.productIMG} id={producto.imgid} />
@@ -24,7 +27,11 @@ function ProductsCard({ producto }) {
       <div className="detalle">
         <button
           className="verDetalle"
-          onClick={() =>navigate(`/products/detailP/${producto.id}`)}>
+          onClick={() => {
+            dispatch(getProductDetail(producto.id));
+            window.location.href = '#'
+        }}
+        >
           Ver Detalle
         </button>
       </div>
@@ -32,4 +39,4 @@ function ProductsCard({ producto }) {
   );
 }
 
-export default ProductsCard;
+export default Relacionados;
