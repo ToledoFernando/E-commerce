@@ -28,7 +28,9 @@ export const DELETECATEGORY = "DELETECATEGORY";
 export const NEWMARCA = "NEWMARCA";
 export const DELETEMARCA = "DELETEMARCA";
 export const FILTROCATEGORY = "FILTROCATEGORY";
-export const SEARCHpRODUCTS = "SEARCHpRODUCTS"; 
+export const SEARCHpRODUCTS = "SEARCHpRODUCTS";
+export const AGREGARCARRITO = "AGREGARCARRITO";
+export const BUY = "BUY";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -57,11 +59,9 @@ export const login = (data) => {
         payload: result.data,
       });
     } catch (error) {
-      swal(
-        "Error",
-        error.response.data.Error,
-        "warning"
-      ).then(() => window.scrollTo(0, 0));
+      swal("Error", error.response.data.Error, "warning").then(() =>
+        window.scrollTo(0, 0)
+      );
     }
   };
 };
@@ -336,7 +336,16 @@ export const SearchProducts = (data) => {
   return (dispatch) => {
     return dispatch({
       type: SEARCHPRODUCT,
-      payload: data
-    })
-  }
-}
+      payload: data,
+    });
+  };
+};
+
+export const agregarAcarrito = (product) => {
+  return (dispatch) => {
+    return dispatch({
+      type: AGREGARCARRITO,
+      payload: product,
+    });
+  };
+};

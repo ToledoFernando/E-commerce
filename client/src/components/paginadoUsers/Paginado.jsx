@@ -1,6 +1,6 @@
 import "./Paginado.scss";
 
-function Paginado({ value, cantidad, set }) {
+function Paginado({ value, cantidad, set, pagAct }) {
   const paginas = [];
 
   for (let i = 1; i <= Math.ceil(value / cantidad); i++) {
@@ -12,10 +12,11 @@ function Paginado({ value, cantidad, set }) {
       <div className="paginas">
         {paginas.map((e) => (
           <button
-            className="PaginaN"
+            className={pagAct == e ? "PaginaN actual" : "PaginaN"}
             onClick={() => {
-              window.location.href = `#`
-              set(e)}}
+              window.location.href = `#`;
+              set(e);
+            }}
             key={e}
             type="button"
             value={e}
