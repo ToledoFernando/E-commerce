@@ -21,6 +21,7 @@ import {
   SEARCHPRODUCT,
   GETPRODUCTCOPY,
   FILTROCATEGORY,
+  AGREGARCARRITO,
 } from "./action";
 
 const initialState = {
@@ -36,7 +37,8 @@ const initialState = {
   img: {},
   filtro: "",
   mismaMarca: [],
-  mismaCategory: []
+  mismaCategory: [],
+  carrito: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -127,14 +129,19 @@ export default function rootReducer(state = initialState, action) {
       const producto = state.products.filter(
         (product) => product.id == action.payload
       );
-      const mM = state.products.filter((product) => product.marca.name == producto[0].marca.name)
-      const mC = state.products.filter((product) => product.categories[0].name == producto[0].categories[0].name)
+      const mM = state.products.filter(
+        (product) => product.marca.name == producto[0].marca.name
+      );
+      const mC = state.products.filter(
+        (product) =>
+          product.categories[0].name == producto[0].categories[0].name
+      );
 
       return {
         ...state,
         productDetail: producto[0],
         mismaMarca: mM.slice(0, 10),
-        mismaCategory: mC.slice(0, 8)
+        mismaCategory: mC.slice(0, 8),
       };
     case VERIFYACOUNT:
       return {
@@ -183,6 +190,12 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         products: result,
         filtro: action.payload,
+      };
+
+    case AGREGARCARRITO:
+      return {
+        ...state,
+        carrito: [...state.carrito, action.payload],
       };
     default:
       return state;

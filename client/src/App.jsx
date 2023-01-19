@@ -10,6 +10,7 @@ import MyAcount from "./pages/miCuenta/MyAcount";
 import EdithAcoutn from "./pages/EdithAcoutn/EdithAcoutn";
 import VerifyAcount from "./pages/verifyAcoutn/VerifyAcount";
 import Footer from "./components/footer/Footer";
+import Payment from "./pages/payments/Payments";
 
 function App() {
   return (
@@ -84,6 +85,7 @@ function App() {
           path="/myAcoutn/Verify/:token/:email/ok"
           element={<VerifyAcount />}
         />
+        <Route path="/payment/:tokenuser/ar" element={<Payment />} />
       </Routes>
     </>
   );

@@ -12,7 +12,7 @@ function Products() {
   const productosTotal = useSelector((state) => state.products);
 
   const [pagActual, setPagActual] = useState(1);
-  const [cantidad] = useState(21);
+  const [cantidad] = useState(30);
   const final = cantidad * pagActual;
   const inicio = final - cantidad;
   const productos = productosTotal.slice(inicio, final);
@@ -45,6 +45,7 @@ function Products() {
               value={productosTotal.length}
               cantidad={cantidad}
               set={setPagActual}
+              pagAct={pagActual}
             />
           </div>
         </div>

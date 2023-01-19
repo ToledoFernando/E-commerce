@@ -1,37 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { getProductDetail, getProducts } from "../../store/action";
+import {
+  agregarAcarrito,
+  getProductDetail,
+  getProducts,
+} from "../../store/action";
 import Relacionados from "../../components/rel/Relacionados";
 import swal from "sweetalert";
 import "./ProductDetail.scss";
 
 function ProductDetail() {
   const productDetail = useSelector((state) => state.productDetail);
-  console.log(productDetail);
   const mismaMarca = useSelector((state) => state.mismaMarca);
   const mismaCategory = useSelector((state) => state.mismaCategory);
   const products = useSelector((state) => state.products);
   const isLogin = useSelector((state) => state.isLogin);
-
   const [Marcas, setMarcas] = useState(1);
   const [Categorias, setCategoria] = useState(1);
-
   const dispatch = useDispatch();
-
   const { id } = useParams();
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!products.length) {
-      dispatch(getProducts()).then(() => {
-        dispatch(getProductDetail(id));
-      });
-    } else {
-      dispatch(getProductDetail(id));
-    }
-  }, []);
+  const img = useRef();
 
   const sliderMarcas = (num, b) => {
     if (b) {
@@ -41,9 +31,9 @@ function ProductDetail() {
     } else {
       const result = Marcas - num;
 
-      if (result > -1290) setMarcas(result);
+      if (result > -920) setMarcas(result);
       else {
-        setMarcas(-1290);
+        setMarcas(-920);
       }
     }
   };
@@ -55,65 +45,124 @@ function ProductDetail() {
     } else {
       const result = Categorias - num;
 
-      if (result > -800) setCategoria(result);
+      if (result > -400) setCategoria(result);
       else {
-        setCategoria(-800);
+        setCategoria(-400);
       }
     }
   };
 
-  const comprar = () => {
-    if (!isLogin)
-      swal(
+  const comprar = (producto) => {
+    if (!isLogin) {
+      return swal(
         "Debes Logearte",
         "Para realizar una compra debes de estar Logeado",
-        "warning"
-      ).then(() => (window.location.href = "/login"));
+        "warning",
+        {
+          buttons: [true, "Iniciar Sesion"],
+        }
+      ).then((e) => {
+        if (e) window.location.href = "/login";
+      });
+    }
+
+    const token = localStorage.getItem("tokenUser");
+    dispatch(agregarAcarrito(producto));
+    navigate(`/payment/${token}/ar`);
   };
+
+  let x = 0;
+  let y = 0;
+
+  const lupa = (e) => {
+    x = x + e.movementX;
+    y = y + e.movementY;
+
+    img.current.style.transform = `scale(1.5) translate(${-(x * 0.18)}px, ${-(
+      y * 0.18
+    )}px)`;
+  };
+  const quitarLupa = (e) => {
+    x = 0;
+    y = 0;
+    img.current.style.transform = `scale(1) translate(0px, 0px)`;
+  };
+
+  useEffect(() => {
+    if (!products.length) {
+      dispatch(getProducts()).then(() => {
+        dispatch(getProductDetail(id));
+      });
+    } else {
+      dispatch(getProductDetail(id));
+    }
+  }, []);
 
   return !productDetail ? (
     <h1>Cargando...</h1>
   ) : (
     <div className="detalles">
       <div className="infoProducto">
-        <button onClick={() => navigate(-1)}>Volver</button>
+        <button className="volver" onClick={() => navigate(-1)}>
+          Volver
+        </button>
         <div className="infoCompleta">
-          <img src={productDetail.productIMG} alt={productDetail.name} />
+          <div className="img">
+            <img
+              onMouseMove={lupa}
+              onMouseOut={quitarLupa}
+              ref={img}
+              src={productDetail.productIMG}
+              alt={productDetail.name}
+            />
+          </div>
           <div className="masInfo">
-            <h1>{productDetail.name}</h1>
-            <p>Marca: {productDetail.marca?.name}</p>
-            <div>
-              Categoria/s:{" "}
-              {productDetail.categories?.map((c) => (
-                <p key={c.name}>{c.name}</p>
-              ))}
+            <div className="nm">
+              <h1>{productDetail.name}</h1>
+              <p>{productDetail.marca?.name}</p>
             </div>
-            <p>{productDetail.description}</p>
-            <p>
-              {productDetail.category?.map((e) => (
-                <label key={e}>{e}</label>
-              ))}
-            </p>
-            <p>
+            <div className="dc">
+              <textarea
+                cols="30"
+                rows="10"
+                value={productDetail.description?.slice("\n")}
+                disabled
+              ></textarea>
+              <div className="cat">
+                Categoria/s:{" "}
+                {productDetail.categories?.map((c) => (
+                  <p key={c.name}>{c.name}</p>
+                ))}
+              </div>
+            </div>
+            <div className="precio">
+              Precio:
               {productDetail.oferta ? (
                 <label>
-                  <del>{productDetail.price}</del>
-                  {productDetail.oferta}
+                  <del>${productDetail.price}</del>${productDetail.oferta}
                 </label>
               ) : (
                 <label>{productDetail.price}</label>
               )}
-            </p>
-            <p>{`${productDetail.createdAt}`.slice(0, 10)}</p>
+            </div>
             <div className="comprar">
-              <button disabled={!productDetail.status} onClick={comprar}>
+              <button
+                disabled={!productDetail.status}
+                onClick={() => comprar(productDetail)}
+              >
                 {productDetail.status ? "Comprar" : "No disponible"}
+              </button>
+              <button disabled={!productDetail.status}>
+                {" "}
+                Agregar al Carrito
               </button>
             </div>
           </div>
         </div>
       </div>
-      <h1>Productos Relacionados</h1>
+      <p className="relacionados">
+        Productos <span className="res">Relacionados</span>
+      </p>
       <div className="mmMarca">
         <h1>con la misma Marca </h1>
         <div className="cmp" style={{ transform: `translateX(${Marcas}px)` }}>
