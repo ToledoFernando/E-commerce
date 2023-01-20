@@ -31,6 +31,7 @@ export const FILTROCATEGORY = "FILTROCATEGORY";
 export const SEARCHpRODUCTS = "SEARCHpRODUCTS";
 export const AGREGARCARRITO = "AGREGARCARRITO";
 export const BUY = "BUY";
+export const GETDETAILPAY = "GETDETAILPAY";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -346,6 +347,16 @@ export const agregarAcarrito = (product) => {
     return dispatch({
       type: AGREGARCARRITO,
       payload: product,
+    });
+  };
+};
+
+export const getDetailApi = (id) => {
+  return async (dispatch) => {
+    const result = await axios.get(`${api}/products/detail/${id}`);
+    return dispatch({
+      type: GETDETAILPAY,
+      payload: result.data,
     });
   };
 };

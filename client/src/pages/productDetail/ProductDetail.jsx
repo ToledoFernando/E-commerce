@@ -67,8 +67,7 @@ function ProductDetail() {
     }
 
     const token = localStorage.getItem("tokenUser");
-    dispatch(agregarAcarrito(producto));
-    navigate(`/payment/${token}/ar`);
+    navigate(`/paymentOne/${token}/${producto.id}/ar`);
   };
 
   let x = 0;
@@ -88,6 +87,29 @@ function ProductDetail() {
     img.current.style.transform = `scale(1) translate(0px, 0px)`;
   };
 
+  const addCart = (product) => {
+    try {
+      if (!isLogin) throw Error("Debes Iniciar sesion primero");
+      dispatch(agregarAcarrito(product));
+      swal(
+        "Agregado",
+        'Producto agregado con exito, revisa tu carro de compras en la seccion de "My cuenta"',
+        "success"
+      );
+    } catch (error) {
+      swal(
+        "Debes Logearte",
+        "Para utilizar el carro de compras debes estar Logeado",
+        "warning",
+        {
+          buttons: [true, "Iniciar Sesion"],
+        }
+      ).then((e) => {
+        if (e) window.location.href = "/login";
+      });
+    }
+  };
+
   useEffect(() => {
     if (!products.length) {
       dispatch(getProducts()).then(() => {
@@ -96,6 +118,7 @@ function ProductDetail() {
     } else {
       dispatch(getProductDetail(id));
     }
+    window.scrollTo(0, 0);
   }, []);
 
   return !productDetail ? (
@@ -152,8 +175,10 @@ function ProductDetail() {
               >
                 {productDetail.status ? "Comprar" : "No disponible"}
               </button>
-              <button disabled={!productDetail.status}>
-                {" "}
+              <button
+                disabled={!productDetail.status}
+                onClick={() => addCart(productDetail)}
+              >
                 Agregar al Carrito
               </button>
             </div>

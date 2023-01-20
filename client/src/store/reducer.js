@@ -22,6 +22,7 @@ import {
   GETPRODUCTCOPY,
   FILTROCATEGORY,
   AGREGARCARRITO,
+  GETDETAILPAY,
 } from "./action";
 
 const initialState = {
@@ -39,6 +40,7 @@ const initialState = {
   mismaMarca: [],
   mismaCategory: [],
   carrito: [],
+  detailPay: {},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -196,6 +198,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         carrito: [...state.carrito, action.payload],
+      };
+    case GETDETAILPAY:
+      return {
+        ...state,
+        detailPay: action.payload,
       };
     default:
       return state;

@@ -1,27 +1,27 @@
 .MiAcount {
   border: 1px solid #00000068;
-  background: linear-gradient(to bottom right, #0000000b, #fff);
+  // background: linear-gradient(to bottom right, #0000000b, #fff);
+  background-color: #fff;
   border-radius: 6px;
-  margin: 5% auto;
-  width: 50%;
-  height: 40vh;
+  margin: 20px auto;
+  width: 70%;
+  height: max-content;
   display: flex;
+  flex-direction: column;
   padding: 3%;
   position: relative;
   justify-content: center;
 
   .AlertaVerify {
     color: #ec2525;
-    position: absolute;
     width: 95%;
-    top: -15%;
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 5px 3%;
     border: 1px solid #c93b3b;
-    background-color: #f0a5a51d;
+    background-color: #d73b3b3a;
 
     button {
       cursor: pointer;
@@ -33,38 +33,39 @@
     }
   }
 
-  .infoUser {
-    width: 90%;
+  .inf {
+    .infoUser {
+      width: 90%;
 
-    .name_lastName,
-    .infocontact {
-      display: flex;
-      margin: 10% 3%;
+      .name_lastName,
+      .infocontact {
+        display: flex;
+        margin: 10% 3%;
 
-      .email,
-      .appl {
-        margin: 0 30%;
+        .email,
+        .appl {
+          margin: 0 30%;
+        }
+        p {
+          border-bottom: 1px dashed #00000075;
+          width: max-content;
+        }
       }
-      p {
-        // border-style: dashed;
-        border-bottom: 1px dashed #00000075;
-        width: max-content;
-      }
-    }
 
-    .optCuenta {
-      .editar {
-        position: absolute;
-        bottom: 5%;
-        right: 5%;
-        width: 20%;
-        background: linear-gradient(to top left, #19b419, #179917);
-        color: #fff;
-        padding: 10px 20px;
-        font-size: 17px;
-        border: 0;
-        border-radius: 5px;
-        cursor: pointer;
+      .optCuenta {
+        .editar {
+          position: absolute;
+          bottom: 5%;
+          right: 5%;
+          width: 20%;
+          background: linear-gradient(to top left, #19b419, #179917);
+          color: #fff;
+          padding: 10px 20px;
+          font-size: 17px;
+          border: 0;
+          border-radius: 5px;
+          cursor: pointer;
+        }
       }
     }
   }

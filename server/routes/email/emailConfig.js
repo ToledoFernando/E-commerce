@@ -50,4 +50,26 @@ const sendEmailVerifyAcount = async (data) => {
   });
 };
 
-module.exports = sendEmailVerifyAcount;
+const ventaRealizada = async (info) => {
+  console.log(info);
+  const { userID, name, marca, total } = info;
+  await transporter.sendMail({
+    from: '"Salon Genesis Online" <salongenesis.online@gmail.com>',
+    to: process.env.EMAILADMIN,
+    subject: "Producto Vendido",
+    text: "Producto Vendido",
+    html: `<div style="border: 1px solid #454444; border-radius: 8px; padding: 20px 30px">
+    <p>ID de Usuario: ${userID} </p>
+    <p>Producto: ${name} </p>
+    <p>Marca: ${marca} </p>
+    <p>Total: $${total} </p>
+    <div style="margin: 20px">
+      <a href="http://localhost:5173" style="color: #a5a5a5; width: 300px"
+        >@SalonGenesis</a
+      >
+    </div>
+  </div>`,
+  });
+};
+
+module.exports = { sendEmailVerifyAcount, ventaRealizada };

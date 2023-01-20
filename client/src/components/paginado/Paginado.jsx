@@ -14,7 +14,8 @@ function Paginado({ value, cantidad, set }) {
           <button
             className="PaginaN"
             onClick={() => {
-              return set(e)}}
+              return set(e);
+            }}
             key={e}
             type="button"
             value={e}

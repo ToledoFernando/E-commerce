@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import cart from "../../img/cart.svg";
 import { useSelector, useDispatch } from "react-redux";
 import {
   filtroCategory,
@@ -52,12 +51,6 @@ function Filtros() {
             </li>
           ))}
         </div>
-
-        <li>
-          <button className="cart">
-            <img src={cart} alt="Icon-Cart" />
-          </button>
-        </li>
       </ul>
     </div>
   );
