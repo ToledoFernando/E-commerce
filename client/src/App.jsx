@@ -10,7 +10,10 @@ import MyAcount from "./pages/miCuenta/MyAcount";
 import EdithAcoutn from "./pages/EdithAcoutn/EdithAcoutn";
 import VerifyAcount from "./pages/verifyAcoutn/VerifyAcount";
 import Footer from "./components/footer/Footer";
-import Payment from "./pages/payments/Payments";
+import Cart from "./pages/cart/Cart";
+import History from "./pages/history/Histori";
+import Payment from "./pages/payments/Payment";
+import Payments from "./pages/payments/Payments";
 
 function App() {
   return (
@@ -54,10 +57,28 @@ function App() {
           }
         />
         <Route
-          path="/myAcount/:id"
+          path="/myAcount/:id/edith"
           element={
             <>
               <EdithAcoutn />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/myAcount/cartShopping"
+          element={
+            <>
+              <Cart />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/myAcount/historiShop"
+          element={
+            <>
+              <History />
               <Footer />
             </>
           }
@@ -85,7 +106,8 @@ function App() {
           path="/myAcoutn/Verify/:token/:email/ok"
           element={<VerifyAcount />}
         />
-        <Route path="/payment/:tokenuser/ar" element={<Payment />} />
+        <Route path="/paymentOne/:tokenuser/:id/ar" element={<Payment />} />
+        <Route path="/payment/:tokenuser/ar" element={<Payments />} />
       </Routes>
     </>
   );

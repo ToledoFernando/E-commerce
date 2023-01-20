@@ -1,12 +1,11 @@
 const jwt = require("jsonwebtoken");
 const { users, rol } = require("../../db");
-const sendEsendEmailVerifyAcountmail = require("../email/emailConfig");
+const { sendEmailVerifyAcount } = require("../email/emailConfig");
 require("dotenv").config();
 
 const userLogin = async (req, res) => {
   try {
     const data = req.body;
-    console.log(data);
     const result = await users.findOne({
       where: { email: data.Email, password: data.password },
       attributes: {
@@ -34,7 +33,7 @@ const userLogin = async (req, res) => {
 };
 
 const senEmailVerifyEmail = async (req, res) => {
-  await sendEsendEmailVerifyAcountmail(req.user);
+  await sendEmailVerifyAcount(req.user);
   res.json({ MSG: "Mensaje de prueba" });
 };
 
@@ -76,10 +75,9 @@ const newUser = async (req, res) => {
       lastName: userData.last_name,
       email: userData.email,
     };
-    sendEsendEmailVerifyAcountmail(emailData);
+    sendEmailVerifyAcount(emailData);
     res.json({ UsuarioCreado: { userData }, tokenUser: userToken });
   } catch (error) {
-    console.log(error);
     console.log(error.message);
     res.status(400).json({ Error: error.message });
   }
