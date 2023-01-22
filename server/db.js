@@ -38,13 +38,7 @@ users.belongsTo(rol);
 marca.hasMany(products);
 products.belongsTo(marca);
 
-// products.hasMany(marca);
-// marca.belongsTo(products);
-
 products.belongsToMany(category, { through: "rel" });
 category.belongsToMany(products, { through: "rel" });
-
-// products.hasMany(category);
-// category.belongsTo(products);
 
 module.exports = { ...database.models, database };

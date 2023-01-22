@@ -65,7 +65,7 @@ function Cart() {
               <p className="total">Total: ${total(carro)} </p>
               <div className="bPagar">
                 <button
-                  className="pagar"
+                  className="pagarB"
                   onClick={() => navigate(`/payment/${token}/ar`)}
                 >
                   Pagar

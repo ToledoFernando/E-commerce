@@ -53,7 +53,7 @@ function NavBar() {
       <div>
         {userLogin ? (
           <>
-            <Link to="/myAcount">My cuenta</Link>
+            <Link to="/myAcount">Mi cuenta</Link>
             {userAcount.rol.name == "Admin" ||
             userAcount.rol.name == "SuperAdmin" ? (
               <Link to="/dashboardAdmin">Panel Admin</Link>
