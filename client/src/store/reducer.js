@@ -1,4 +1,5 @@
 import {
+  INITIALMP,
   LOGIN,
   LOGOUT,
   REGISTER,
@@ -41,10 +42,17 @@ const initialState = {
   mismaCategory: [],
   carrito: [],
   detailPay: {},
+  domicilio: {},
+  mp: null,
 };
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
+    case INITIALMP:
+      return {
+        ...state,
+        mp: action.payload,
+      };
     case REGISTER:
       localStorage.setItem("tokenUser", action.payload[1].token);
       localStorage.setItem("rol", action.payload[0].rol.name);

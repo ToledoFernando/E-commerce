@@ -12,10 +12,23 @@ import VerifyAcount from "./pages/verifyAcoutn/VerifyAcount";
 import Footer from "./components/footer/Footer";
 import Cart from "./pages/cart/Cart";
 import History from "./pages/history/Histori";
-import Payment from "./pages/payments/Payment";
+import AddresOne from "./pages/Oneproduct/addresOne";
 import Payments from "./pages/payments/Payments";
+import PayOne from "./pages/Oneproduct/PayOne";
+import { useDispatch, useSelector } from "react-redux";
+import { initialMP } from "./store/action";
 
 function App() {
+  const dispatch = useDispatch();
+
+  const mp = useSelector((state) => state.mp);
+
+  if (!mp) {
+    const MP = new MercadoPago(import.meta.env.VITE_MPTOKEN);
+    dispatch(initialMP(MP));
+    console.log("mp creado");
+  }
+
   return (
     <>
       <NavBar />
@@ -106,7 +119,8 @@ function App() {
           path="/myAcoutn/Verify/:token/:email/ok"
           element={<VerifyAcount />}
         />
-        <Route path="/paymentOne/:tokenuser/:id/ar" element={<Payment />} />
+        <Route path="/paymentOne/:tokenuser/:id/add" element={<AddresOne />} />
+        <Route path="/paymentOne/:tokenuser/:id/add/pay" element={<PayOne />} />
         <Route path="/payment/:tokenuser/ar" element={<Payments />} />
       </Routes>
     </>

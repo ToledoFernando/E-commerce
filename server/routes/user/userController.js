@@ -118,17 +118,6 @@ const validarTokenUser = async (req, res) => {
           model: rol,
           attributes: ["name"],
         },
-        {
-          model: address,
-          attributes: [
-            "postal",
-            "calle",
-            "localidad",
-            "provincia",
-            "telefono",
-            "cuil",
-          ],
-        },
       ],
     });
     res.json(buscar);

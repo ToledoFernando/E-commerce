@@ -67,7 +67,7 @@ function ProductDetail() {
     }
 
     const token = localStorage.getItem("tokenUser");
-    navigate(`/paymentOne/${token}/${producto.id}/ar`);
+    navigate(`/paymentOne/${token}/${producto.id}/add`);
   };
 
   let x = 0;

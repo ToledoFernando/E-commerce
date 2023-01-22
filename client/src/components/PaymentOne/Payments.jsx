@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { getDetailApi, validarToken } from "../../store/action";
 import swal from "sweetalert";
-import "./pay.scss";
-import load from "../../img/load.svg";
 
-function Payment() {
+let cardForm;
+
+function Payments() {
   const dispatch = useDispatch();
   const { tokenuser, id } = useParams();
   const navigate = useNavigate();
@@ -14,14 +14,12 @@ function Payment() {
   const user = useSelector((state) => state.myAcount);
   const product = useSelector((state) => state.detailPay);
   const xd = useRef();
+  const mp = useSelector((state) => state.mp);
 
-  console.log(user);
-  const mp = new window.MercadoPago(import.meta.env.VITE_MPTOKEN);
-  if (product.price) {
-    const amount = product.price.toString();
-    const cardForm = mp.cardForm({
-      amount: amount,
-      iframe: false,
+  useEffect(() => {
+    if (cardForm) cardForm.unmount();
+    cardForm = mp.cardForm({
+      amount: `${product.oferta ? product.oferta : product.price}`,
       form: {
         id: "form-checkout",
         cardNumber: {
@@ -71,16 +69,15 @@ function Payment() {
           event.preventDefault();
 
           const {
-            amount,
+            paymentMethodId: payment_method_id,
+            issuerId: issuer_id,
             cardholderEmail: email,
+            amount,
+            token,
+            installments,
             identificationNumber,
             identificationType,
-            installments,
-            issuerId: issuer_id,
-            paymentMethodId: payment_method_id,
-            token,
           } = cardForm.getCardFormData();
-          console.log(cardForm.getCardFormData());
 
           fetch(`${import.meta.env.VITE_API_URL}/payment/preferensID`, {
             method: "POST",
@@ -93,12 +90,7 @@ function Payment() {
               payment_method_id,
               transaction_amount: Number(amount),
               installments: Number(installments),
-              description: JSON.stringify({
-                userID: user.id,
-                name: product.name,
-                marca: product.marca.name,
-                total: amount,
-              }),
+              description: "Product Description",
               payer: {
                 email,
                 identification: {
@@ -109,80 +101,72 @@ function Payment() {
             }),
           })
             .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-              setCargando(false);
-              alert("Estado de tu compra " + data.status);
-            })
-            .catch((error) => {
-              setCargando(false);
-              console.log(error);
-            });
+            .then((data) => console.log(data));
         },
       },
     });
-  }
 
-  useEffect(() => {
-    dispatch(validarToken(tokenuser));
     dispatch(getDetailApi(id));
   }, []);
-  return !product ? (
-    <div className="cargando">
-      <img src={load} alt="Cargando" />
-    </div>
-  ) : (
-    <div className="pagar">
-      <h1>Pagar</h1>
-      <form
-        id="form-checkout"
-        className="formC"
-        onSubmit={() => setCargando(true)}
-      >
-        <input type="text" id="form-checkout__cardNumber" />
-        <div className="dataCard">
-          <input id="form-checkout__expirationDate" className="container" />
-          <input id="form-checkout__securityCode" className="container" />
-        </div>
-        <input type="text" id="form-checkout__cardholderName" />
-        <div className="tipC">
-          <select id="form-checkout__issuer"></select>
-          <select id="form-checkout__installments"></select>
-        </div>
-        <div className="ind">
-          <select id="form-checkout__identificationType"></select>
-          <input type="text" id="form-checkout__identificationNumber" />
-        </div>
-        <input
-          type="email"
-          id="form-checkout__cardholderEmail"
-          disabled
-          defaultValue={user.email}
-        />
-        <button type="submit" id="form-checkout__submit" className="Pagar">
-          Pagar
-        </button>
-        {cargando ? (
-          <div className="cargando">
-            <img src={load} alt="" />
-          </div>
-        ) : null}
-      </form>
 
-      <div className="productoInfo titulos">
-        <p>Nombre</p>
-        <p>Marca</p>
-        <p className="precioP">Precio</p>
+  return !product ? (
+    <h1>Cargando</h1>
+  ) : (
+    <div className="cho-container">
+      <div className="pagar">
+        <h1>Pagar</h1>
+        <form
+          id="form-checkout"
+          className="formC"
+          onSubmit={() => setCargando(true)}
+        >
+          <input type="text" id="form-checkout__cardNumber" />
+          <div className="dataCard">
+            <input id="form-checkout__expirationDate" className="container" />
+            <input id="form-checkout__securityCode" className="container" />
+          </div>
+          <input type="text" id="form-checkout__cardholderName" />
+          <div className="tipC">
+            <select id="form-checkout__issuer"></select>
+            <select id="form-checkout__installments"></select>
+          </div>
+          <div className="ind">
+            <select id="form-checkout__identificationType"></select>
+            <input type="text" id="form-checkout__identificationNumber" />
+          </div>
+          <input
+            type="email"
+            id="form-checkout__cardholderEmail"
+            disabled
+            defaultValue={user.email}
+          />
+          <button type="submit" id="form-checkout__submit" className="Pagar">
+            Pagar
+          </button>
+          {cargando ? (
+            <div className="cargando">
+              {/* <img src={load} alt="" /> */}
+              <h1>Cargando</h1>
+            </div>
+          ) : null}
+        </form>
+
+        <div className="productoInfo titulos">
+          <p>Nombre</p>
+          <p>Marca</p>
+          <p className="precioP">Precio</p>
+        </div>
+        <div className="productoInfo">
+          <p>{product.name}</p>
+          <p>{product.marca?.name}</p>
+          <p className="precioP">
+            {!product.oferta ? `$${product.price}` : `$${product.oferta}`}
+          </p>
+        </div>
       </div>
-      <div className="productoInfo">
-        <p>{product.name}</p>
-        <p>{product.marca?.name}</p>
-        <p className="precioP">
-          {!product.oferta ? `$${product.price}` : `$${product.oferta}`}
-        </p>
-      </div>
+      <h1>Pagar</h1>
     </div>
   );
 }
 
-export default Payment;
+export default Payments;

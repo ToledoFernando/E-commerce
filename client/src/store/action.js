@@ -2,6 +2,7 @@ import axios from "axios";
 import md5 from "md5";
 import swal from "sweetalert";
 
+export const INITIALMP = "INITIALMP";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const REGISTER = "REGISTER";
@@ -34,6 +35,15 @@ export const BUY = "BUY";
 export const GETDETAILPAY = "GETDETAILPAY";
 
 const api = import.meta.env.VITE_API_URL;
+
+export const initialMP = (mp) => {
+  return (dispatch) => {
+    return dispatch({
+      type: INITIALMP,
+      payload: mp,
+    });
+  };
+};
 
 export const register = (datas) => {
   return async (dispatch) => {

@@ -27,15 +27,17 @@ function NavBar() {
     if (!marcas.length) dispatch(getMarcas());
     if (!categorys.length) dispatch(getCategory());
     window.addEventListener("scroll", (e) => {
-      if (Math.round(e.target.scrollingElement.scrollTop) >= 20) {
-        navbar.current.style.boxShadow = "0px 0px 10px #00000068";
-        subirHref.current.style.display = "block";
-        subirSvg.current.style.transform = "scale(1)";
-      } else {
-        subirHref.current.style.display = "none";
-        subirSvg.current.style.transform = "scale(0)";
-        navbar.current.style.boxShadow = "none";
-      }
+      try {
+        if (Math.round(e.target.scrollingElement.scrollTop) >= 20) {
+          navbar.current.style.boxShadow = "0px 0px 10px #00000068";
+          subirHref.current.style.display = "block";
+          subirSvg.current.style.transform = "scale(1)";
+        } else {
+          subirHref.current.style.display = "none";
+          subirSvg.current.style.transform = "scale(0)";
+          navbar.current.style.boxShadow = "none";
+        }
+      } catch (error) {}
     });
   }, []);
 
