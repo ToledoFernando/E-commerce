@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import iconF from "../../pages/EdithAcoutn/iconF.png";
 import iconM from "../../pages/EdithAcoutn/iconM.png";
+import Address from "../../components/addres/Address";
 import load from "../../img/load.svg";
 import { pedirVerificacion } from "../../store/action";
 import sweet from "sweetalert";
@@ -87,6 +88,7 @@ function Acount({ data }) {
           </div>
         </div>
       </div>
+      <Address address={data.address} addressId={data.addressId} />
     </div>
   );
 }
