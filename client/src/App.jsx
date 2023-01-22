@@ -12,8 +12,9 @@ import VerifyAcount from "./pages/verifyAcoutn/VerifyAcount";
 import Footer from "./components/footer/Footer";
 import Cart from "./pages/cart/Cart";
 import History from "./pages/history/Histori";
-import Payment from "./pages/payments/Payment";
+import AddresOne from "./pages/Oneproduct/addresOne";
 import Payments from "./pages/payments/Payments";
+import PayOne from "./pages/Oneproduct/PayOne";
 
 function App() {
   return (
@@ -106,7 +107,8 @@ function App() {
           path="/myAcoutn/Verify/:token/:email/ok"
           element={<VerifyAcount />}
         />
-        <Route path="/paymentOne/:tokenuser/:id/ar" element={<Payment />} />
+        <Route path="/paymentOne/:tokenuser/:id/add" element={<AddresOne />} />
+        <Route path="/paymentOne/:tokenuser/:id/add/pay" element={<PayOne />} />
         <Route path="/payment/:tokenuser/ar" element={<Payments />} />
       </Routes>
     </>

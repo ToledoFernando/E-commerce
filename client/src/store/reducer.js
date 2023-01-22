@@ -41,6 +41,7 @@ const initialState = {
   mismaCategory: [],
   carrito: [],
   detailPay: {},
+  domicilio: {},
 };
 
 export default function rootReducer(state = initialState, action) {
