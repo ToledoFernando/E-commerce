@@ -4,6 +4,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getDetailApi, validarToken } from "../../store/action";
 import swal from "sweetalert";
 
+let cardForm;
+
 function Payments() {
   const dispatch = useDispatch();
   const { tokenuser, id } = useParams();
@@ -12,123 +14,105 @@ function Payments() {
   const user = useSelector((state) => state.myAcount);
   const product = useSelector((state) => state.detailPay);
   const xd = useRef();
-  const mp = new MercadoPago(import.meta.env.VITE_MPTOKEN);
+  const mp = useSelector((state) => state.mp);
 
   useEffect(() => {
-    console.log(product);
-    console.log(mp.cardForm);
-    if (product) {
-      mp.cardForm({
-        amount: `${product.price}`,
-        autoMount: true,
-        iframe: false,
-        form: {
-          id: "form-checkout",
-          cardNumber: {
-            id: "form-checkout__cardNumber",
-            placeholder: "Numero de tarjeta",
-          },
-          expirationDate: {
-            id: "form-checkout__expirationDate",
-            placeholder: "MM/YY",
-          },
-          securityCode: {
-            id: "form-checkout__securityCode",
-            placeholder: "Codigo de seguridad",
-          },
-          cardholderName: {
-            id: "form-checkout__cardholderName",
-            placeholder: "Titular de la Tarjeta",
-          },
-          issuer: {
-            id: "form-checkout__issuer",
-            placeholder: "Seleccionar Banco",
-          },
-          installments: {
-            id: "form-checkout__installments",
-            placeholder: "Pago/s",
-          },
-          identificationType: {
-            id: "form-checkout__identificationType",
-            placeholder: "D.N.I",
-          },
-          identificationNumber: {
-            id: "form-checkout__identificationNumber",
-            placeholder: "Numero de documento",
-          },
-          cardholderEmail: {
-            id: "form-checkout__cardholderEmail",
-            placeholder: "Email",
-          },
+    if (cardForm) cardForm.unmount();
+    cardForm = mp.cardForm({
+      amount: `${product.oferta ? product.oferta : product.price}`,
+      form: {
+        id: "form-checkout",
+        cardNumber: {
+          id: "form-checkout__cardNumber",
+          placeholder: "Numero de tarjeta",
         },
-        callbacks: {
-          onFormMounted: (error) => {
-            if (error)
-              return console.warn("Form Mounted handling error: ", error);
-            console.log("Form mounted");
-          },
-          onSubmit: (event) => {
-            event.preventDefault();
+        expirationDate: {
+          id: "form-checkout__expirationDate",
+          placeholder: "MM/YY",
+        },
+        securityCode: {
+          id: "form-checkout__securityCode",
+          placeholder: "Codigo de seguridad",
+        },
+        cardholderName: {
+          id: "form-checkout__cardholderName",
+          placeholder: "Titular de la Tarjeta",
+        },
+        issuer: {
+          id: "form-checkout__issuer",
+          placeholder: "Seleccionar Banco",
+        },
+        installments: {
+          id: "form-checkout__installments",
+          placeholder: "Pago/s",
+        },
+        identificationType: {
+          id: "form-checkout__identificationType",
+          placeholder: "D.N.I",
+        },
+        identificationNumber: {
+          id: "form-checkout__identificationNumber",
+          placeholder: "Numero de documento",
+        },
+        cardholderEmail: {
+          id: "form-checkout__cardholderEmail",
+          placeholder: "Email",
+        },
+      },
+      callbacks: {
+        onFormMounted: (error) => {
+          if (error)
+            return console.warn("Form Mounted handling error: ", error);
+          console.log("Form mounted");
+        },
+        onSubmit: (event) => {
+          event.preventDefault();
 
-            const {
-              amount,
-              cardholderEmail: email,
-              identificationNumber,
-              identificationType,
-              installments,
-              issuerId: issuer_id,
-              paymentMethodId: payment_method_id,
+          const {
+            paymentMethodId: payment_method_id,
+            issuerId: issuer_id,
+            cardholderEmail: email,
+            amount,
+            token,
+            installments,
+            identificationNumber,
+            identificationType,
+          } = cardForm.getCardFormData();
+
+          fetch(`${import.meta.env.VITE_API_URL}/payment/preferensID`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
               token,
-            } = cardForm.getCardFormData();
-            console.log(cardForm.getCardFormData());
-
-            fetch(`${import.meta.env.VITE_API_URL}/payment/preferensID`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                token,
-                issuer_id,
-                payment_method_id,
-                transaction_amount: Number(amount),
-                installments: Number(installments),
-                description: JSON.stringify({
-                  userID: user.id,
-                  name: product.name,
-                  marca: product.marca.name,
-                  total: amount,
-                }),
-                payer: {
-                  email,
-                  identification: {
-                    type: identificationType,
-                    number: identificationNumber,
-                  },
+              issuer_id,
+              payment_method_id,
+              transaction_amount: Number(amount),
+              installments: Number(installments),
+              description: "Product Description",
+              payer: {
+                email,
+                identification: {
+                  type: identificationType,
+                  number: identificationNumber,
                 },
-              }),
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                console.log(data);
-                setCargando(false);
-                alert("Estado de tu compra " + data.status);
-              })
-              .catch((error) => {
-                setCargando(false);
-                console.log(error);
-              });
-          },
+              },
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => console.log(data));
         },
-      });
-    }
+      },
+    });
+
     dispatch(getDetailApi(id));
   }, []);
 
   return !product ? (
     <h1>Cargando</h1>
   ) : (
-    <div>
+    <div className="cho-container">
       <div className="pagar">
         <h1>Pagar</h1>
         <form
@@ -161,7 +145,8 @@ function Payments() {
           </button>
           {cargando ? (
             <div className="cargando">
-              <img src={load} alt="" />
+              {/* <img src={load} alt="" /> */}
+              <h1>Cargando</h1>
             </div>
           ) : null}
         </form>

@@ -15,8 +15,20 @@ import History from "./pages/history/Histori";
 import AddresOne from "./pages/Oneproduct/addresOne";
 import Payments from "./pages/payments/Payments";
 import PayOne from "./pages/Oneproduct/PayOne";
+import { useDispatch, useSelector } from "react-redux";
+import { initialMP } from "./store/action";
 
 function App() {
+  const dispatch = useDispatch();
+
+  const mp = useSelector((state) => state.mp);
+
+  if (!mp) {
+    const MP = new MercadoPago(import.meta.env.VITE_MPTOKEN);
+    dispatch(initialMP(MP));
+    console.log("mp creado");
+  }
+
   return (
     <>
       <NavBar />
