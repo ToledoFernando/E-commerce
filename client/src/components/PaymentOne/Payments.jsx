@@ -1,7 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getDetailApi, validarToken } from "../../store/action";
+import mpLogo from "../../img/logoMercadoPago.png";
+
+import load from "../../img/load.svg";
+import "./Pay.scss";
 import swal from "sweetalert";
 
 let cardForm;
@@ -16,6 +20,9 @@ function Payments() {
   const domicilio = useSelector((state) => state.domicilio);
 
   useEffect(() => {
+    dispatch(validarToken(localStorage.getItem("tokenUser")));
+    dispatch(getDetailApi(id));
+
     if (cardForm) cardForm.unmount();
     cardForm = mp.cardForm({
       amount: `${product.oferta ? product.oferta : product.price}`,
@@ -66,7 +73,7 @@ function Payments() {
         },
         onSubmit: (event) => {
           event.preventDefault();
-
+          setCargando(true);
           const {
             paymentMethodId: payment_method_id,
             issuerId: issuer_id,
@@ -104,70 +111,114 @@ function Payments() {
             }),
           })
             .then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => {
+              setCargando(false);
+              console.log(data);
+              if (data.status == "approved")
+                swal(
+                  "Compra Realizada con Exito",
+                  "Revisa tu correo para ver el comprobando de pago",
+                  "success"
+                );
+            });
         },
       },
     });
-
-    dispatch(getDetailApi(id));
   }, []);
 
   return !product ? (
-    <h1>Cargando</h1>
+    <div className="cargando">
+      <img src={load} alt="" />
+    </div>
   ) : (
     <div className="cho-container">
       <div className="pagar">
-        <h1>Pagar</h1>
+        <div className="info">
+          <img src={product.productIMG} alt="img producto" />
+          <div className="productoInfo">
+            <h1>{product.name}</h1>
+            <h2>{product.marca?.name}</h2>
+            <textarea
+              disabled
+              defaultValue={product.description?.slice("\n")}
+              cols="30"
+              rows="10"
+            ></textarea>
+            <div className="precio">
+              {!product.oferta ? (
+                `$${product.price}`
+              ) : (
+                <div>
+                  <p>
+                    Precio: <del>${product.price}</del>
+                  </p>
+                  <p>Precio en oferta: ${product.oferta}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
         <form
           id="form-checkout"
           className="formC"
-          onSubmit={() => setCargando(true)}
+          onSubmit={() => console.clear()}
         >
-          <input type="text" id="form-checkout__cardNumber" />
+          <input
+            type="text"
+            id="form-checkout__cardNumber"
+            className="cardNumber"
+            name="number"
+          />
           <div className="dataCard">
             <input id="form-checkout__expirationDate" className="container" />
-            <input id="form-checkout__securityCode" className="container" />
+            <input
+              id="form-checkout__securityCode"
+              className="container"
+              name="cvv"
+            />
           </div>
-          <input type="text" id="form-checkout__cardholderName" />
-          <div className="tipC">
-            <select id="form-checkout__issuer"></select>
-            <select id="form-checkout__installments"></select>
+          <input
+            type="text"
+            id="form-checkout__cardholderName"
+            className="cardholderName"
+            name="titular"
+          />
+          <div className="tipLogo">
+            <div className="tipC">
+              <select id="form-checkout__issuer"></select>
+              <select id="form-checkout__installments"></select>
+            </div>
+            <img src={mpLogo} alt="mpLogo" />
           </div>
           <div className="ind">
             <select id="form-checkout__identificationType"></select>
-            <input type="text" id="form-checkout__identificationNumber" />
+            <input
+              type="text"
+              id="form-checkout__identificationNumber"
+              name="numIdn"
+            />
           </div>
           <input
             type="email"
             id="form-checkout__cardholderEmail"
+            className="cardholderEmail"
             disabled
             defaultValue={user.email}
           />
-          <button type="submit" id="form-checkout__submit" className="Pagar">
-            Pagar
-          </button>
+          <div className="pagarDiv">
+            <button type="submit" id="form-checkout__submit">
+              Pagar{" "}
+              {!product.oferta ? `$${product.price}` : `$${product.oferta}`}
+            </button>
+          </div>
           {cargando ? (
             <div className="cargando">
-              {/* <img src={load} alt="" /> */}
-              <h1>Cargando</h1>
+              <img src={load} alt="Cargando" />
             </div>
           ) : null}
         </form>
-
-        <div className="productoInfo titulos">
-          <p>Nombre</p>
-          <p>Marca</p>
-          <p className="precioP">Precio</p>
-        </div>
-        <div className="productoInfo">
-          <p>{product.name}</p>
-          <p>{product.marca?.name}</p>
-          <p className="precioP">
-            {!product.oferta ? `$${product.price}` : `$${product.oferta}`}
-          </p>
-        </div>
       </div>
-      <h1>Pagar</h1>
     </div>
   );
 }
