@@ -8,13 +8,12 @@ let cardForm;
 
 function Payments() {
   const dispatch = useDispatch();
-  const { tokenuser, id } = useParams();
-  const navigate = useNavigate();
+  const { id } = useParams();
   const [cargando, setCargando] = useState(false);
   const user = useSelector((state) => state.myAcount);
   const product = useSelector((state) => state.detailPay);
-  const xd = useRef();
   const mp = useSelector((state) => state.mp);
+  const domicilio = useSelector((state) => state.domicilio);
 
   useEffect(() => {
     if (cardForm) cardForm.unmount();
@@ -90,7 +89,11 @@ function Payments() {
               payment_method_id,
               transaction_amount: Number(amount),
               installments: Number(installments),
-              description: "Product Description",
+              description: JSON.stringify({
+                productID: product.id,
+                userID: user.id,
+                entrega: domicilio,
+              }),
               payer: {
                 email,
                 identification: {
