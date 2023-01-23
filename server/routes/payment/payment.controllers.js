@@ -25,12 +25,13 @@ const paymentID = async (req, res) => {
       },
     });
     const { status, status_detail, id } = response.body;
-    ventaRealizada({
-      product: productResult,
-      user: userResult,
-      payer: req.body.payer,
-      entrega: data1,
-    });
+    if (status == "approved")
+      ventaRealizada({
+        product: productResult,
+        user: userResult,
+        payer: req.body.payer,
+        entrega: data1,
+      });
     res.status(response.status).json({ status, status_detail, id });
   } catch (error) {
     console.log(error);
