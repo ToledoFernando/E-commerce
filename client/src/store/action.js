@@ -33,8 +33,18 @@ export const SEARCHpRODUCTS = "SEARCHpRODUCTS";
 export const AGREGARCARRITO = "AGREGARCARRITO";
 export const BUY = "BUY";
 export const GETDETAILPAY = "GETDETAILPAY";
+export const SETDOMICILIO = "SETDOMICILIO";
 
 const api = import.meta.env.VITE_API_URL;
+
+export const setDomicilio = (data) => {
+  return (dispatch) => {
+    return dispatch({
+      type: SETDOMICILIO,
+      payload: data,
+    });
+  };
+};
 
 export const initialMP = (mp) => {
   return (dispatch) => {

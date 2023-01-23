@@ -31,10 +31,6 @@ function AddresOne() {
   return (
     <div className="oneProduct">
       <div className="addres">
-        <h1>
-          Formulario de <span className="res">Envio</span>/
-          <span className="res">Retiro</span>
-        </h1>
         <FormAddres />
       </div>
     </div>

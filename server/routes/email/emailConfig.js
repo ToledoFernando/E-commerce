@@ -51,7 +51,7 @@ const sendEmailVerifyAcount = async (data) => {
 };
 
 const ventaRealizada = async (info) => {
-  const { result, data1, payer } = info;
+  const { product, user, payer, entrega } = info;
   await transporter.sendMail({
     from: '"Salon Genesis Online" <salongenesis.online@gmail.com>',
     to: "toledof764@gmail.com",
@@ -59,15 +59,16 @@ const ventaRealizada = async (info) => {
     subject: "Producto Vendido",
     text: "Producto Vendido",
     html: `
-  <div
+    <div
     style="
-      margin: 0;
-      background-color: #e8e8e8;
-      width: 100%;
-      height: max-content;
-      min-height: 400px;
-      display: flex;
-      padding: 40px 0px;
+    margin: 0;
+    background-color: #e8e8e8;
+    width: 100%;
+    height: max-content;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 0px;
     "
   >
     <div
@@ -84,41 +85,68 @@ const ventaRealizada = async (info) => {
     >
       <div style="text-align: center; padding: 30px 0px 0px">
         <img
-          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.vexels.com%2Fmedia%2Fusers%2F3%2F157890%2Fisolated%2Fpreview%2F4f2c005416b7f48b3d6d09c5c6763d87-check-mark-circle-icon-by-vexels.png&f=1&nofb=1&ipt=fc82e7ac08bfe018b8c9b2cd1e2ad4fb9c473ecacb8ef17ef663f73bb49e0929&ipo=images"
-          style="width: 50px; height: 50px"
+          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.balneariomontemayor.com%2Fwp-content%2Fuploads%2F2020%2F03%2Ficono_compra.png&f=1&nofb=1&ipt=65a5a6a0939083f254b8aca8e26b528305628980829c7882a270e5d8746f5a73&ipo=images"
+          style="width: 80px; height: 80px"
           alt="CheckPayment"
         />
       </div>
-      <h1 style="text-align: center">Confirmacion de pago</h1>
+      <h1 style="text-align: center">Venta Realizada con exito</h1>
       <div style="border-top: 1px dashed #000; border-bottom: 1px dashed #000">
         <h2>Datos del Usuario:</h2>
-        <p>ID: ${result.id}</p>
-        <p>Nombre: ${result.first_name}</p>
-        <p>Apellido: ${result.last_name}</p>
-        <p>Email: ${result.email}</p>
+        <p>ID: <b>${user.id}</b></p>
+        <p>Nombre: ${user.first_name}</p>
+        <p>Apellido: ${user.last_name}</p>
+        <p>Email: ${user.email}</p>
         <p>${payer.identification.type}: ${payer.identification.number}</p>
       </div>
-      <div style="border-bottom: 1px dashed #000">
+      <div style="border-bottom: 1px dashed #000; padding-bottom: 10px">
         <h2>Detalle de la compra</h2>
-        <p>Id de la compra: ${data1.idProduct}</p>
-        <p>Producto: ${data1.name}</p>
-        <p>Marca: ${data1.marca}</p>
-        <p>Total: $${data1.total}</p>
+        <p>Id de la compra: <b>${product.id}</b></p>
+        <p>Producto: ${product.name}</p>
+        <p>Marca: ${product.marca.dataValues.name}</p>
+        <p>Precio: $${product.price}</p>
+        <img src=${
+          product.productIMG
+        } alt="producto" width="100%" height="350px" />
       </div>
-      <div>
-        <p style="text-align: center; display: flex; flex-direction: column">
-          <a
-            href="http://localhost:4000"
-            style="color: #000000be; text-decoration: none"
-            >@salonGenesis</a
-          >
-          <label style="color: #000000d4; font-size: 13px; margin-top: 3px"
-            >Para consultas visite la seccion "Soporte"</label
-          >
+      <div style="border-bottom: 1px dashed #000; padding-bottom: 10px">
+        <h1>Datos de entrega</h1>
+        <p>
+          Tipo de Entrega:
+          <b>${
+            entrega.entrega.local ? "Retiro del Local" : "Entrega a Domicilio"
+          }</b>
         </p>
+        ${
+          entrega.entrega.local
+            ? `
+            <div>
+              <p>
+                ${payer.identification.type}: ${payer.identification.number}
+              </p>
+            </div>`
+            : `<div>
+              <p>
+                Calle: ${entrega.entrega.calle} ${entrega.entrega.numero}
+              </p>
+              <p>Localidad: ${entrega.entrega.localidad}</p>
+              <p>Ciudad: ${entrega.entrega.ciudad}</p>
+              <p>Envio por ${entrega.entrega.envio}</p>
+              <p>Dato de contacto: ${entrega.entrega.phone}</p>
+              ${
+                entrega.entrega.descripcion.length
+                  ? `<div>
+                  <p>Descripcion:</p>
+                  <p>${entrega.entrega.descripcion}</p>
+                </div>`
+                  : ""
+              }
+            </div>`
+        }
       </div>
     </div>
-  </div>`,
+  </div>
+  `,
   });
 };
 

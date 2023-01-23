@@ -24,6 +24,7 @@ import {
   FILTROCATEGORY,
   AGREGARCARRITO,
   GETDETAILPAY,
+  SETDOMICILIO,
 } from "./action";
 
 const initialState = {
@@ -52,6 +53,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         mp: action.payload,
+      };
+    case SETDOMICILIO:
+      return {
+        ...state,
+        domicilio: action.payload,
       };
     case REGISTER:
       localStorage.setItem("tokenUser", action.payload[1].token);
