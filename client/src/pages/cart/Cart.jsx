@@ -66,7 +66,7 @@ function Cart() {
               <div className="bPagar">
                 <button
                   className="pagarB"
-                  onClick={() => navigate(`/payment/${token}/ar`)}
+                  onClick={() => navigate(`/paymentOne/${token}/123123/add`)}
                 >
                   Pagar
                 </button>

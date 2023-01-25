@@ -2,15 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
-const {
-  database,
-  users,
-  rol,
-  marca,
-  category,
-  products,
-  address,
-} = require("./db");
+const { database, users, rol, marca, category, products } = require("./db");
 const app = express();
 
 app.use(express.json());
