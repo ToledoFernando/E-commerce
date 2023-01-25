@@ -50,6 +50,174 @@ const sendEmailVerifyAcount = async (data) => {
   });
 };
 
+const confirmacionPago = async (info) => {
+  const { product, user, payer, entrega } = info;
+  await transporter.sendMail({
+    from: '"Salon Genesis Online" <salongenesis.online@gmail.com>',
+    to: user.email,
+    // to: process.env.EMAILADMIN,
+    subject: "Producto Vendido",
+    text: "Producto Vendido",
+    html: `
+    <div
+  style="
+  width: 100%;
+  height: 600px;
+  display: grid;
+  place-content: center;
+  padding: 100px 0px 30px;
+  color: #000;
+  overflow-y: auto;
+
+  "
+>
+  <div style="text-align: center">
+    <img
+      src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.icon-icons.com%2Ficons2%2F902%2FPNG%2F512%2Fshopping-bag_icon-icons.com_69305.png&f=1&nofb=1&ipt=2d9ea60b68bececbf400bb4c7f133bbf23f9466623d57a613b821edfe3687c61&ipo=images"
+      alt="icono"
+      width="80px"
+    />
+    <h1>Compra Realizada con exito</h1>
+    <div
+      style="
+        background-color: #fff;
+        width: 400px;
+        margin: auto;
+        text-align: left;
+        padding: 15px 30px;
+      "
+    >
+      <h2>Detalle de la compra</h2>
+      <p>Producto: ${product.name}</p>
+        <p>Marca: ${product.marca.dataValues.name}</p>
+        <p>Precio: $${product.price}</p>
+        <p>Tipo de entrega: <b>${
+          entrega.entrega.local ? "Retiro del Local" : "Entrega a Domicilio"
+        }</b></p>
+        ${
+          entrega.entrega.local
+            ? `<div
+          style="
+            background-color: #c8c9c937;
+            text-align: center;
+            padding: 5px;
+            margin: 10px 0px;
+          "
+        >
+          <p>
+            El producto se entregara solo al cliente con DNI
+            ${payer.identification.number} en mano
+          </p>
+        </div>`
+            : ""
+        }
+        
+        <img src=${
+          product.productIMG
+        } alt="producto" width="100%" height="350px" />
+    </div>
+  </div>
+</div>`,
+  });
+};
+
+const variosProductos = async (info) => {
+  const { productos, user, payer, entrega } = info;
+  let total = 0;
+  productos.map((p) => (total = total + p.precio));
+
+  await transporter.sendMail({
+    from: '"Salon Genesis Online" <salongenesis.online@gmail.com>',
+    to: user.email,
+    subject: "Producto Vendido",
+    text: "Producto Vendido",
+    html: `<div
+  style="
+    width: 100%;
+    height: 600px;
+    display: grid;
+    place-content: center;
+    padding: 100px 0px 30px;
+    color: #000;
+    overflow-y: auto;
+  "
+>
+  <div style="text-align: center">
+    <img
+      src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.icon-icons.com%2Ficons2%2F902%2FPNG%2F512%2Fshopping-bag_icon-icons.com_69305.png&f=1&nofb=1&ipt=2d9ea60b68bececbf400bb4c7f133bbf23f9466623d57a613b821edfe3687c61&ipo=images"
+      alt="icono"
+      width="80px"
+    />
+    <h1>Compra Realizada con exito</h1>
+    <div
+      style="
+        background-color: #fff;
+        width: 400px;
+        margin: auto;
+        text-align: left;
+        padding: 15px 30px;
+      "
+    >
+      <h2>Detalle de la compra</h2>
+
+      <table style="width: 100%; text-align: left">
+        <tr>
+          <th>Producto</th>
+          <th>Marca</th>
+          <th>Precio</th>
+        </tr>
+        ${productos.map(
+          (p) =>
+            `<tr>
+        <th>${p.name}</th>
+        <th>${p.marca}</th>
+        <th>$${p.precio}</th>
+      </tr>`
+        )}
+    </table>
+        
+      <p style="
+      text-align: right;
+      border-top: 1px dashed #000;
+      padding: 10px 50px;
+    "><b>Total: $${total}</b></p>
+
+      <p>
+        Tipo de entrega:
+        <b
+          >${
+            entrega.entrega.local ? "Retiro del Local" : "Entrega a Domicilio"
+          }</b
+        >
+      </p>
+      ${
+        entrega.entrega.local
+          ? `
+      <div
+        style="
+          background-color: #c8c9c937;
+          text-align: center;
+          padding: 5px;
+          margin: 10px 0px;
+        "
+      >
+        <p>
+          El producto se entregara solo al cliente con DNI
+          ${payer.identification.number} en mano
+        </p>
+      </div>
+      `
+          : ""
+      }
+    </div>
+  </div>
+</div>
+`,
+  });
+};
+
+//===============================================================================//
+
 const ventaRealizada = async (info) => {
   const { product, user, payer, entrega } = info;
   await transporter.sendMail({
@@ -147,173 +315,6 @@ const ventaRealizada = async (info) => {
     </div>
   </div>
   `,
-  });
-};
-
-const confirmacionPago = async (info) => {
-  const { product, user, payer, entrega } = info;
-  await transporter.sendMail({
-    from: '"Salon Genesis Online" <salongenesis.online@gmail.com>',
-    to: user.email,
-    // to: process.env.EMAILADMIN,
-    subject: "Producto Vendido",
-    text: "Producto Vendido",
-    html: `
-    <div
-  style="
-  width: 100%;
-  height: 600px;
-  display: grid;
-  place-content: center;
-  padding: 100px 0px 30px;
-  color: #000;
-  overflow-y: auto;
-
-  "
->
-  <div style="text-align: center">
-    <img
-      src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.icon-icons.com%2Ficons2%2F902%2FPNG%2F512%2Fshopping-bag_icon-icons.com_69305.png&f=1&nofb=1&ipt=2d9ea60b68bececbf400bb4c7f133bbf23f9466623d57a613b821edfe3687c61&ipo=images"
-      alt="icono"
-      width="80px"
-    />
-    <h1>Compra Realizada con exito</h1>
-    <div
-      style="
-        background-color: #fff;
-        width: 400px;
-        margin: auto;
-        text-align: left;
-        padding: 15px 30px;
-      "
-    >
-      <h2>Detalle de la compra</h2>
-      <p>Producto: ${product.name}</p>
-        <p>Marca: ${product.marca.dataValues.name}</p>
-        <p>Precio: $${product.price}</p>
-        <p>Tipo de entrega: <b>${
-          entrega.entrega.local ? "Retiro del Local" : "Entrega a Domicilio"
-        }</b></p>
-        ${
-          entrega.entrega.local
-            ? `<div
-          style="
-            background-color: #c8c9c937;
-            text-align: center;
-            padding: 5px;
-            margin: 10px 0px;
-          "
-        >
-          <p>
-            El producto se entregara solo al cliente con DNI
-            ${payer.identification.number} en mano
-          </p>
-        </div>`
-            : ""
-        }
-        
-        <img src=${
-          product.productIMG
-        } alt="producto" width="100%" height="350px" />
-    </div>
-  </div>
-</div>`,
-  });
-};
-
-const variosProductos = async (info) => {
-  const { productos, user, payer, entrega } = info;
-  let total = 0;
-  productos.map((p) => (total = total + p.precio));
-
-  await transporter.sendMail({
-    from: '"Salon Genesis Online" <salongenesis.online@gmail.com>',
-    to: user.email,
-    // to: process.env.EMAILADMIN,
-    subject: "Producto Vendido",
-    text: "Producto Vendido",
-    html: `<div
-  style="
-    width: 100%;
-    height: 600px;
-    display: grid;
-    place-content: center;
-    padding: 100px 0px 30px;
-    color: #000;
-    overflow-y: auto;
-  "
->
-  <div style="text-align: center">
-    <img
-      src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.icon-icons.com%2Ficons2%2F902%2FPNG%2F512%2Fshopping-bag_icon-icons.com_69305.png&f=1&nofb=1&ipt=2d9ea60b68bececbf400bb4c7f133bbf23f9466623d57a613b821edfe3687c61&ipo=images"
-      alt="icono"
-      width="80px"
-    />
-    <h1>Compra Realizada con exito</h1>
-    <div
-      style="
-        background-color: #fff;
-        width: 400px;
-        margin: auto;
-        text-align: left;
-        padding: 15px 30px;
-      "
-    >
-      <h2>Detalle de la compra</h2>
-
-      <table style="width: 100%; text-align: left">
-        <tr>
-          <th>Producto</th>
-          <th>Marca</th>
-          <th>Precio</th>
-        </tr>
-        ${productos.map(
-          (p) =>
-            `<tr>
-        <th>${p.name}</th>
-        <th>${p.marca}</th>
-        <th>$${p.precio}</th>
-      </tr>`
-        )}
-    </table>
-        
-      <p style="
-      text-align: right;
-      border-top: 1px dashed #000;
-      padding: 10px 50px;
-    "><b>Total: $${total}</b></p>
-
-      <p>
-        Tipo de entrega:
-        <b
-          >${
-            entrega.entrega.local ? "Retiro del Local" : "Entrega a Domicilio"
-          }</b
-        >
-      </p>
-      ${
-        entrega.entrega.local
-          ? `
-      <div
-        style="
-          background-color: #c8c9c937;
-          text-align: center;
-          padding: 5px;
-          margin: 10px 0px;
-        "
-      >
-        <p>
-          El producto se entregara solo al cliente con DNI
-          ${payer.identification.number} en mano
-        </p>
-      </div>
-      `
-          : ""
-      }
-    </div>
-  </div>
-</div>
-`,
   });
 };
 
