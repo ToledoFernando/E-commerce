@@ -1,5 +1,5 @@
 const Mercadopago = require("mercadopago");
-const { users, products, category, marca } = require("../../db");
+const { users, products, category, marca, payHistory } = require("../../db");
 require("dotenv").config();
 const {
   ventaRealizada,
@@ -31,6 +31,14 @@ const paymentID = async (req, res) => {
       });
       const { status, status_detail, id } = response.body;
       if (status == "approved") {
+        await payHistory.create({
+          payID: id,
+          importe: productResult.price,
+          estado: "pendiente",
+          payState: status,
+          userId: userResult.id,
+        });
+
         const datosCorreo = {
           product: productResult,
           user: userResult,
@@ -43,6 +51,7 @@ const paymentID = async (req, res) => {
       res.status(response.status).json({ status, status_detail, id });
     } else {
       let productosList = [];
+      let total = 0;
 
       data1.productID.map(async (id) => {
         const producto = await products.findOne({
@@ -67,7 +76,13 @@ const paymentID = async (req, res) => {
         productosList = [...productosList, obj];
         if (productosList.length === data1.productID.length) {
           const { status, status_detail, id } = response.body;
-
+          await payHistory.create({
+            payID: id,
+            importe: total, // falta calcular
+            estado: "pendiente",
+            payState: status,
+            userId: userResult.id,
+          });
           const datosCorreo = {
             productos: productosList,
             user: userResult,
