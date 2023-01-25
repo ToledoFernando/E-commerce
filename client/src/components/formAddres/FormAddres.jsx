@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { setDomicilio } from "../../store/action";
 import "./FormAddres.scss";
 
@@ -8,6 +8,7 @@ function FormAddres() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [envio, setEnvio] = useState("");
+  const { id } = useParams();
 
   const initial = {
     local: false,
@@ -46,8 +47,10 @@ function FormAddres() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("tokenUser");
     dispatch(setDomicilio(form));
-    navigate("pay");
+    if (id.length > 6) return navigate("pay");
+    navigate(`/payment/${token}/ar`);
   };
 
   return (
