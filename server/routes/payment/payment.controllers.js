@@ -30,7 +30,7 @@ const paymentID = async (req, res) => {
         },
       });
       const { status, status_detail, id } = response.body;
-      if (status == "approved") {
+      if (status == "approved" || status == "in_process") {
         await payHistory.create({
           payID: id,
           importe: productResult.price,
@@ -67,6 +67,7 @@ const paymentID = async (req, res) => {
             exclude: ["marcaId", "category", "updatedAt"],
           },
         });
+
         let obj = {
           id: producto.id,
           name: producto.name,
@@ -74,24 +75,30 @@ const paymentID = async (req, res) => {
           precio: producto.price,
         };
         productosList = [...productosList, obj];
+        total = total + producto.price;
         if (productosList.length === data1.productID.length) {
           const { status, status_detail, id } = response.body;
-          await payHistory.create({
-            payID: id,
-            importe: total, // falta calcular
-            estado: "pendiente",
-            payState: status,
-            userId: userResult.id,
-          });
-          const datosCorreo = {
-            productos: productosList,
-            user: userResult,
-            payer: req.body.payer,
-            entrega: data1,
-          };
-          ventasRealizadas(datosCorreo);
-          variosProductos(datosCorreo);
-          res.status(response.status).json({ status, status_detail, id });
+          if (status == "approved" || status == "in_process") {
+            await payHistory.create({
+              payID: id,
+              importe: total,
+              estado: "pendiente",
+              payState: status,
+              userId: userResult.id,
+            });
+
+            const datosCorreo = {
+              productos: productosList,
+              user: userResult,
+              payer: req.body.payer,
+              entrega: data1,
+            };
+
+            ventasRealizadas(datosCorreo);
+            variosProductos(datosCorreo);
+
+            res.status(response.status).json({ status, status_detail, id });
+          }
         }
       });
     }
