@@ -108,4 +108,11 @@ const paymentID = async (req, res) => {
   }
 };
 
-module.exports = { paymentID };
+const getPaymentHistory = (req, res) => {
+  try {
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ Error: error.message });
+  }
+};
+module.exports = { paymentID, getPaymentHistory };
