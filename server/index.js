@@ -15,7 +15,6 @@ app.listen(process.env.PORT || 4000, async () => {
 
   console.log(`-----------------------------------
 Server on Port ${process.env.PORT || 4000}
-DB is connected :D
 ----------------------------------- 
 `);
 });
