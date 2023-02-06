@@ -19,7 +19,8 @@ const sendEmailVerifyAcount = async (data) => {
   });
   await transporter.sendMail({
     from: '"Salon Genesis Online" <salongenesis.online@gmail.com>',
-    to: email,
+    // to: email,
+    to: "toledof764@gmail.com",
     subject: "Verifica tu Cuenta",
     text: "Verificar tu cuenta",
     html: `<div style="border: 1px solid #454444; border-radius: 8px; padding: 20px 30px">
