@@ -10,10 +10,8 @@ function PayForm({ amount, idProduct }) {
   const [cargando, setCargando] = useState(false);
   const mp = useSelector((state) => state.mp);
 
-  console.log(amount);
-  console.log(idProduct);
-
   useEffect(() => {
+    const userToken = localStorage.getItem("tokenUser");
     if (cardForm) cardForm.unmount();
     cardForm = mp.cardForm({
       amount: `${amount}`,
@@ -79,7 +77,7 @@ function PayForm({ amount, idProduct }) {
           fetch(`${import.meta.env.VITE_API_URL}/payment/preferensID`, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+              authorization: `Bearer ${userToken}`,
             },
             body: JSON.stringify({
               token,
@@ -116,6 +114,7 @@ function PayForm({ amount, idProduct }) {
       },
     });
   }, []);
+
   return (
     <div className="cho-container">
       <h1>Productos</h1>
